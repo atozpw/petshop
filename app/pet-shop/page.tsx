@@ -80,7 +80,7 @@ export default function PetShopPage() {
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-3xl font-bold mb-4">Tidak Menemukan yang Anda Cari?</h2>
             <p className="text-lg opacity-90 mb-6">Hubungi kami untuk rekomendasi produk custom</p>
-            <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/6281237661234" target="_blank" rel="noopener noreferrer">
               <button className="px-8 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-gray-100 transition-colors">
                 Hubungi via WhatsApp
               </button>

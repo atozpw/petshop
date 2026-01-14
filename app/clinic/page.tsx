@@ -107,12 +107,12 @@ export default function ClinicPage() {
             <h2 className="text-3xl font-bold mb-4">Butuh Konsultasi Veteriner?</h2>
             <p className="text-lg opacity-90 mb-6">Hubungi kami sekarang untuk jadwal konsultasi Anda</p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/6281237661234" target="_blank" rel="noopener noreferrer">
                 <button className="px-8 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-gray-100">
                   Chat WhatsApp
                 </button>
               </a>
-              <a href="tel:+6281234567890">
+              <a href="tel:+6281188803117">
                 <button className="px-8 py-3 bg-white/20 text-white font-semibold rounded-lg hover:bg-white/30 border border-white">
                   Hubungi Telepon
                 </button>

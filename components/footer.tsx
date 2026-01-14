@@ -79,21 +79,21 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2">
                 <Phone size={16} className="mt-0.5 flex-shrink-0" />
-                <span>+62 812-3456-7890</span>
-              </li>
+                <span>0812-3766-1234 | 0811-8880-3117 </span>
+              </li> 
               <li className="flex items-start gap-2">
                 <MapPin size={16} className="mt-0.5 flex-shrink-0" />
-                <span>Jakarta Selatan, DKI Jakarta</span>
+                <span>PT Jeje Jaya Abadi JL Tukad Batanghari No 77, Kota Denpasar - 80225 </span>
               </li>
               <li className="flex items-start gap-2">
                 <Mail size={16} className="mt-0.5 flex-shrink-0" />
-                <span>info@jjpetshop.com</span>
+                <span>info@jjpethouse.id</span>
               </li>
               <li className="flex items-start gap-2">
                 <Clock size={16} className="mt-0.5 flex-shrink-0" />
                 <span>24 Jam / Buka Setiap Hari</span>
               </li>
-            </ul>
+            </ul> 
           </div>
         </div>
 

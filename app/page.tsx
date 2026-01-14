@@ -51,12 +51,12 @@ export default function Home() {
                   Siap melayani hewan kesayangan Anda kapan saja dengan dokter hewan berpengalaman dan peralatan modern.
                 </p>
                 <div className="flex flex-col sm:flex-row gap-3 pt-4">
-                  <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/6281188803117" target="_blank" rel="noopener noreferrer">
                     <button className="px-6 py-2 bg-white text-primary font-semibold rounded-lg hover:bg-gray-100 transition-colors flex items-center gap-2">
                       <span>💬</span> Hubungi Sekarang
                     </button>
                   </a>
-                  <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/6281237661234" target="_blank" rel="noopener noreferrer">
                     <button className="px-6 py-2 bg-white/20 text-white font-semibold rounded-lg hover:bg-white/30 transition-colors border border-white flex items-center gap-2">
                       <span>💬</span> Chat WhatsApp
                     </button>
@@ -158,7 +158,7 @@ export default function Home() {
                   <Phone className="text-primary" size={24} />
                 </div>
                 <h3 className="font-semibold text-foreground mb-2">Hubungi Kami</h3>
-                <p className="text-muted-foreground">+62 812-3456-7890</p>
+                <p className="text-muted-foreground">0812-3766-1234 | 0811-8880-3117</p>
                 <p className="text-sm text-muted-foreground">Senin - Minggu, 08:00 - 21:00</p>
               </div>
 
@@ -167,8 +167,8 @@ export default function Home() {
                   <MapPin className="text-primary" size={24} />
                 </div>
                 <h3 className="font-semibold text-foreground mb-2">Lokasi</h3>
-                <p className="text-muted-foreground">Jl. Gatot Subroto No.123</p>
-                <p className="text-sm text-muted-foreground">Jakarta Selatan, DKI Jakarta</p>
+                <p className="text-muted-foreground">PT Jeje Jaya Abadi </p>
+                <p className="text-sm text-muted-foreground"> JL Tukad Batanghari No 77, Kota Denpasar - 80225 </p>
               </div>
 
               <div className="text-center">

@@ -111,8 +111,8 @@ export default function ConfirmationPage() {
                 <div className="space-y-2 text-sm">
                   <div className="flex items-center gap-2">
                     <Phone size={16} className="text-primary" />
-                    <a href="tel:+6281234567890" className="text-primary hover:underline">
-                      +62 812-3456-7890
+                    <a href="tel:+6281188803117" className="text-primary hover:underline">
+                      0811-8880-3117
                     </a>
                   </div>
                   <div className="flex items-center gap-2">

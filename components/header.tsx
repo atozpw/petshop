@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -13,10 +14,8 @@ export function Header() {
       <nav className="container mx-auto px-4 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 font-bold text-lg text-primary">
-          <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center text-white text-sm font-bold">
-            JJ
-          </div>
-          <span>PET HOUSE</span>
+          <Image src="/logo.png" alt="JJ Pet House Logo" width={40} height={40} />
+          <span> JJ PET HOUSE</span>
         </Link>
 
         {/* Desktop Menu */}

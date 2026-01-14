@@ -34,7 +34,7 @@ export function HeroSection() {
                   Booking Sekarang
                 </Button>
               </Link>
-              <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/6281237661234" target="_blank" rel="noopener noreferrer">
                 <Button
                   size="lg"
                   variant="outline"
