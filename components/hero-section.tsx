@@ -1,30 +1,37 @@
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { MessageCircle } from "lucide-react"
+import Image from "next/image"
 
 export function HeroSection() {
   return (
-    <section className="relative bg-gradient-to-r from-blue-50 to-blue-100 py-12 md:py-20 overflow-hidden">
-      {/* Background Pattern */}
+    <section className="relative bg-gradient-to-b from-blue-50 to-white py-12 md:py-20 overflow-hidden">
+
       <div className="absolute inset-0 opacity-5">
         <div className="absolute top-10 left-10 w-20 h-20 rounded-full bg-primary"></div>
         <div className="absolute bottom-20 right-20 w-40 h-40 rounded-full bg-accent"></div>
         <div className="absolute top-1/3 right-1/4 w-32 h-32 rounded-full bg-primary/50"></div>
       </div>
+      {/* Decorative blue circles */}
+      <div className="absolute top-8 left-8 w-24 h-24 rounded-full bg-blue-300 opacity-40 blur-2xl"></div>
+      <div className="absolute top-32 left-1/4 w-16 h-16 rounded-full bg-blue-400 opacity-30"></div>
+      <div className="absolute bottom-20 right-1/3 w-32 h-32 rounded-full bg-blue-300 opacity-20 blur-xl"></div>
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          {/* Left Content */}
           <div className="space-y-6">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary leading-tight">
-              One Stop <br className="hidden sm:block" />
-              Pet Care Solution
+            {/* Label */}
+            <p className="text-sm font-semibold text-blue-600 uppercase tracking-wide">JJ Pet House</p>
+
+            {/* Main Headline */}
+            <h1 className="text-5xl md:text-6xl font-bold text-slate-900 leading-tight">
+              A pet store with everything you need
             </h1>
 
-            <p className="text-lg text-foreground/80">Pet Shop • Grooming • Hotel • Klinik 24 Jam</p>
-
-            <p className="text-base text-foreground/70 max-w-md">
-              Siap melayani hewan kesayangan Anda kapan saja dengan profesional berpengalaman dan fasilitas terbaik.
+            {/* Description */}
+            <p className="text-base text-slate-600 max-w-md leading-relaxed">
+              Selalu siap melayani hewan kesayangan Anda dengan produk berkualitas tinggi dan layanan profesional
+              terbaik.
             </p>
 
             {/* CTA Buttons */}
@@ -47,13 +54,14 @@ export function HeroSection() {
             </div>
           </div>
 
-          {/* Right Image Area */}
-          <div className="relative h-80 md:h-96 flex items-center justify-center">
-            <img
-              src="/happy-dog-and-cat-with-grooming-items-petshop.jpg"
-              alt="Pet Care Services"
-              className="object-contain w-full h-full"
-            />
+          <div className="relative flex items-center justify-center">
+            {/* Large blue rounded background */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-400 to-blue-500 rounded-3xl md:rounded-full blur-sm opacity-10"></div>
+
+            {/* Pet images container */}
+            <div className="relative z-10 w-full h-80 md:h-96 flex items-center justify-center">
+              <Image src="/happy-animal.png" alt="cat and dog" width={1000} height={1000} className="object-contain" />
+            </div>
           </div>
         </div>
       </div>

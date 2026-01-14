@@ -1,5 +1,5 @@
 import Link from "next/link"
-import { Phone, MapPin, Mail, Clock } from "lucide-react"
+import { Phone, MapPin, Mail, Clock, Instagram } from "lucide-react"
 
 export function Footer() {
   return (
@@ -88,6 +88,10 @@ export function Footer() {
               <li className="flex items-start gap-2">
                 <Mail size={16} className="mt-0.5 flex-shrink-0" />
                 <span>info@jjpethouse.id</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <Instagram size={16} className="mt-0.5 flex-shrink-0" />
+                <a href="https://www.instagram.com/jjpethouse_jkt/" target="_blank" rel="noopener noreferrer" className="hover:opacity-75">@Jjpethouse_jkt</a>
               </li>
               <li className="flex items-start gap-2">
                 <Clock size={16} className="mt-0.5 flex-shrink-0" />
