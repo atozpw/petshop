@@ -5,14 +5,15 @@ import { Suspense, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { validateLogin } from "@/lib/auth"
+import { login } from "@/lib/auth"
 import Link from "next/link"
 import { Mail, Lock } from "lucide-react"
 
 function LoginContent() {
   const router = useRouter()
-  const [email, setEmail] = useState("customer@petshop.com")
-  const [password, setPassword] = useState("password123")
+
+  const [email, setEmail] = useState("")
+  const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
@@ -22,13 +23,15 @@ function LoginContent() {
     setIsLoading(true)
 
     try {
-      const user = validateLogin(email, password)
-      if (user) {
-        localStorage.setItem("user", JSON.stringify(user))
-        router.push("/dashboard")
-      } else {
-        setError("Email atau password salah")
-      }
+      const data = await login(email, password)
+
+      // ⚠️ sementara (nanti kita ganti ke cookie)
+      localStorage.setItem("token", data.token)
+      localStorage.setItem("user", JSON.stringify(data.user))
+
+      router.push("/dashboard")
+    } catch (err: any) {
+      setError(err.message || "Email atau password salah")
     } finally {
       setIsLoading(false)
     }
@@ -39,25 +42,23 @@ function LoginContent() {
       <div className="container mx-auto px-4">
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg border border-border p-8 space-y-6">
+
             <div className="text-center space-y-2">
               <h1 className="text-3xl font-bold text-primary">Login</h1>
               <p className="text-muted-foreground">Masuk ke akun Anda</p>
             </div>
 
-            {/* Demo Credentials */}
-            <div className="bg-blue-50 border border-primary/20 rounded-lg p-4 text-sm space-y-2">
-              <p className="font-semibold text-foreground">Demo Credentials:</p>
-              <p className="text-muted-foreground">Email: customer@petshop.com</p>
-              <p className="text-muted-foreground">Password: password123</p>
-            </div>
-
             {error && (
-              <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">{error}</div>
+              <div className="bg-red-50 border border-red-200 rounded-lg p-3 text-sm text-red-700">
+                {error}
+              </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <label className="block text-sm font-semibold text-foreground mb-2">Email</label>
+                <label className="block text-sm font-semibold text-foreground mb-2">
+                  Email
+                </label>
                 <div className="relative">
                   <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
                   <input
@@ -71,7 +72,9 @@ function LoginContent() {
               </div>
 
               <div>
-                <label className="block text-sm font-semibold text-foreground mb-2">Password</label>
+                <label className="block text-sm font-semibold text-foreground mb-2">
+                  Password
+                </label>
                 <div className="relative">
                   <Lock className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
                   <input
@@ -105,6 +108,7 @@ function LoginContent() {
                 Kembali ke Beranda
               </button>
             </Link>
+
           </div>
         </div>
       </div>
