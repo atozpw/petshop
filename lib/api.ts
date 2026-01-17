@@ -10,17 +10,24 @@ export async function apiFetch(
       ...options,
       headers: {
         "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...options.headers,
       },
     }
   )
 
-  const data = await res.json()
+  let data: any = null
+
+  try {
+    data = await res.json()
+  } catch {
+    // response bukan JSON (misalnya 204)
+  }
 
   if (!res.ok) {
-    throw data
+    throw data || { message: "Terjadi kesalahan server" }
   }
 
   return data
 }
+

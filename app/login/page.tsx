@@ -1,6 +1,7 @@
 "use client"
 
 import type React from "react"
+import { useEffect } from "react"
 import { Suspense, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Header } from "@/components/header"
@@ -8,6 +9,7 @@ import { Footer } from "@/components/footer"
 import { login } from "@/lib/auth"
 import Link from "next/link"
 import { Mail, Lock } from "lucide-react"
+import { useAuth } from "@/context/auth-context"
 
 function LoginContent() {
   const router = useRouter()
@@ -17,6 +19,14 @@ function LoginContent() {
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
 
+  const { login: authLogin, isAuthenticated, authLoading } = useAuth()
+
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      router.replace("/dashboard")
+    }
+  }, [authLoading, isAuthenticated, router])
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setError("")
@@ -25,16 +35,18 @@ function LoginContent() {
     try {
       const data = await login(email, password)
 
-      // ⚠️ sementara (nanti kita ganti ke cookie)
-      localStorage.setItem("token", data.token)
-      localStorage.setItem("user", JSON.stringify(data.user))
+    authLogin(data.user, data.token)
 
-      router.push("/dashboard")
+      router.replace("/dashboard")
     } catch (err: any) {
       setError(err.message || "Email atau password salah")
     } finally {
       setIsLoading(false)
     }
+  }
+
+  if (authLoading || isAuthenticated) {
+    return null
   }
 
   return (
@@ -120,9 +132,7 @@ export default function LoginPage() {
   return (
     <>
       <Header />
-      <Suspense fallback={null}>
         <LoginContent />
-      </Suspense>
       <Footer />
     </>
   )

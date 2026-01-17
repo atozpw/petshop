@@ -1,16 +1,18 @@
 "use client"
 
 import type React from "react"
-import { Suspense, useState } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { register } from "@/lib/auth"
 import Link from "next/link"
 import { Mail, Lock, User, Phone } from "lucide-react"
+import { useAuth } from "@/context/auth-context"
 
 function RegisterContent() {
   const router = useRouter()
+  const { login: authLogin, isAuthenticated, authLoading } = useAuth()
 
   const [formData, setFormData] = useState({
     name: "",
@@ -22,6 +24,12 @@ function RegisterContent() {
 
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    if (!authLoading && isAuthenticated) {
+      router.replace("/dashboard")
+    }
+  }, [authLoading, isAuthenticated, router])
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -41,16 +49,22 @@ function RegisterContent() {
     try {
       const data = await register(formData)
 
-      // sementara (akan kita ganti HttpOnly cookie)
-      localStorage.setItem("token", data.token)
-      localStorage.setItem("user", JSON.stringify(data.user))
+      authLogin(data.user, data.token)
 
-      router.push("/dashboard")
+      router.replace("/dashboard")
     } catch (err: any) {
       setError(err.message || "Gagal membuat akun")
     } finally {
       setIsLoading(false)
     }
+  }
+
+  if (authLoading || isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Loading...</p>
+      </div>
+    )
   }
 
   return (
@@ -166,9 +180,7 @@ export default function RegisterPage() {
   return (
     <>
       <Header />
-      <Suspense fallback={null}>
-        <RegisterContent />
-      </Suspense>
+      <RegisterContent />
       <Footer />
     </>
   )

@@ -1,9 +1,18 @@
+"use client"
+
+import { useState } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-import { ShoppingCart } from "lucide-react"
+import { ShoppingCart, Plus, Minus } from "lucide-react"
+import { useCart } from "@/context/cart-context"
+import { useAuth } from "@/context/auth-context"
 
 export default function PetShopPage() {
+  const { addToCart } = useCart()
+  const { isAuthenticated } = useAuth()
+  const [selectedQuantities, setSelectedQuantities] = useState<Record<number, number>>({})
+
   const products = [
     { id: 1, name: "Dog Food Premium", price: 150000, category: "Makanan", image: "🥫" },
     { id: 2, name: "Cat Litter", price: 50000, category: "Accessory", image: "🪨" },
@@ -15,65 +24,203 @@ export default function PetShopPage() {
     { id: 8, name: "Pet Carrier", price: 300000, category: "Travel", image: "📦" },
   ]
 
+  const handleAddToCart = (product: (typeof products)[0]) => {
+    const quantity = selectedQuantities[product.id] || 1
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      quantity,
+      image: product.image,
+    })
+    setSelectedQuantities((prev) => ({ ...prev, [product.id]: 1 }))
+    alert(`${product.name} ditambahkan ke keranjang!`)
+  }
+
+  const updateQuantity = (productId: number, change: number) => {
+    setSelectedQuantities((prev) => ({
+      ...prev,
+      [productId]: Math.max(1, (prev[productId] || 1) + change),
+    }))
+  }
+
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+
+  const filteredProducts = selectedCategory
+    ? products.filter((p) => p.category === selectedCategory)
+    : products
+
+  const categories = [...new Set(products.map((p) => p.category))]
+
   return (
     <>
       <Header />
 
       <main className="min-h-screen bg-background">
-        {/* Hero */}
-        <section className="bg-gradient-to-r from-primary/10 to-accent/10 py-12 border-b border-border">
-          <div className="container mx-auto px-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary mb-3">Pet Shop JJ</h1>
-            <p className="text-lg text-muted-foreground max-w-2xl">
-              Lengkapi semua kebutuhan hewan peliharaan Anda dengan produk berkualitas premium
-            </p>
+        <section className="border-b border-border bg-gradient-to-r from-primary/5 to-transparent">
+          <div className="container mx-auto px-4 py-10">
+            <div className="flex flex-col gap-3">
+              
+              {/* Badge */}
+              <span className="w-fit px-3 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">
+                🐾 Pet Shop Terpercaya
+              </span>
+
+              {/* Title */}
+              <h1 className="text-3xl md:text-4xl font-bold text-foreground leading-tight">
+                Pet Shop JJ
+              </h1>
+
+              {/* Subtitle */}
+              <p className="text-sm md:text-base text-muted-foreground max-w-2xl">
+                Makanan, mainan, grooming, dan aksesoris pilihan untuk hewan kesayangan Anda
+              </p>
+
+              {/* Quick highlight */}
+              <div className="flex flex-wrap gap-4 text-sm text-muted-foreground mt-2">
+                <span>✅ Produk pilihan</span>
+                <span>🚚 Siap kirim</span>
+                <span>💬 Konsultasi gratis</span>
+              </div>
+            </div>
           </div>
         </section>
+        {/* Mobile Category Filter */}
+        <div className="md:hidden sticky top-[64px] z-30 bg-background border-b border-border">
+          <div className="flex gap-2 overflow-x-auto px-4 py-3">
+            <button
+              onClick={() => setSelectedCategory(null)}
+              className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold
+                ${!selectedCategory
+                  ? "bg-primary text-white"
+                  : "bg-muted text-foreground"}
+              `}
+            >
+              Semua
+            </button>
+
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`whitespace-nowrap px-4 py-2 rounded-full text-sm font-semibold
+                  ${selectedCategory === category
+                    ? "bg-primary text-white"
+                    : "bg-muted text-foreground"}
+                `}
+              >
+                {category}
+              </button>
+            ))}
+          </div>
+        </div>
+
 
         {/* Products Grid */}
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {products.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-white rounded-lg border border-border overflow-hidden hover:shadow-lg transition-shadow"
-                >
-                  <div className="h-40 bg-muted flex items-center justify-center text-5xl">{product.image}</div>
-                  <div className="p-4 space-y-3">
-                    <div>
-                      <p className="text-xs text-accent font-semibold uppercase">{product.category}</p>
-                      <h3 className="font-semibold text-foreground">{product.name}</h3>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <p className="font-bold text-primary">Rp {product.price.toLocaleString()}</p>
-                      <Button size="sm" className="bg-primary hover:bg-primary/90">
-                        <ShoppingCart size={16} />
-                      </Button>
-                    </div>
-                  </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+              
+              {/* SIDEBAR FILTER */}
+              <aside className="hidden md:block md:col-span-1 bg-white border border-border rounded-xl p-4 h-fit sticky top-24">
+
+                <h3 className="font-bold text-lg mb-4">Kategori</h3>
+
+                <div className="space-y-2">
+                  <button
+                    onClick={() => setSelectedCategory(null)}
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm
+                      ${!selectedCategory ? "bg-primary text-white" : "hover:bg-muted"}
+                    `}
+                  >
+                    Semua Produk
+                  </button>
+
+                  {categories.map((category) => (
+                    <button
+                      key={category}
+                      onClick={() => setSelectedCategory(category)}
+                      className={`w-full text-left px-3 py-2 rounded-lg text-sm
+                        ${selectedCategory === category
+                          ? "bg-primary text-white"
+                          : "hover:bg-muted"}
+                      `}
+                    >
+                      {category}
+                    </button>
+                  ))}
                 </div>
-              ))}
+              </aside>
+
+              {/* PRODUCT GRID */}
+              <div className="md:col-span-3">
+                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {filteredProducts.map((product) => (
+                    <div
+                      key={product.id}
+                      className="group bg-white rounded-xl border border-border overflow-hidden hover:shadow-xl transition-all flex flex-col"
+                    >
+                      {/* Image */}
+                      <div className="relative h-44 bg-muted flex items-center justify-center text-6xl">
+                        {product.image}
+                        <span className="absolute top-3 left-3 bg-primary text-white text-xs px-3 py-1 rounded-full">
+                          {product.category}
+                        </span>
+                      </div>
+
+                      {/* Content */}
+                      <div className="p-4 flex flex-col flex-1">
+                        <h3 className="font-semibold text-sm mb-2">
+                          {product.name}
+                        </h3>
+
+                        <p className="text-lg font-bold text-primary mb-4">
+                          Rp {product.price.toLocaleString()}
+                        </p>
+
+                        <div className="flex items-center justify-between border rounded-lg mb-3">
+                          <button
+                            onClick={() => updateQuantity(product.id, -1)}
+                            className="p-2 hover:bg-muted"
+                          >
+                            <Minus size={16} />
+                          </button>
+
+                          <span className="font-semibold">
+                            {selectedQuantities[product.id] || 1}
+                          </span>
+
+                          <button
+                            onClick={() => updateQuantity(product.id, 1)}
+                            className="p-2 hover:bg-muted"
+                          >
+                            <Plus size={16} />
+                          </button>
+                        </div>
+
+                        <Button
+                          onClick={() => handleAddToCart(product)}
+                          className="mt-auto w-full"
+                        >
+                          <ShoppingCart size={16} className="mr-2" />
+                          Tambah ke Keranjang
+                        </Button>
+                      </div>
+                    </div>
+                  ))}
+
+                  {filteredProducts.length === 0 && (
+                    <p className="col-span-full text-center text-muted-foreground">
+                      Produk tidak ditemukan
+                    </p>
+                  )}
+                </div>
+              </div>
+
             </div>
           </div>
         </section>
 
-        {/* Featured Categories */}
-        <section className="py-16 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <h2 className="text-2xl font-bold text-primary mb-8">Kategori Populer</h2>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              {["Makanan", "Mainan", "Grooming", "Furniture"].map((category) => (
-                <div
-                  key={category}
-                  className="bg-white p-6 rounded-lg border border-border text-center hover:border-primary cursor-pointer transition-colors"
-                >
-                  <p className="font-semibold text-foreground">{category}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* CTA */}
         <section className="py-16 bg-primary text-white">

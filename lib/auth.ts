@@ -15,7 +15,7 @@ export interface AuthResponse {
   user: User
 }
 
-// LOGIN
+
 export async function login(email: string, password: string): Promise<AuthResponse> {
   const res = await apiFetch("/login", {
     method: "POST",
@@ -25,7 +25,7 @@ export async function login(email: string, password: string): Promise<AuthRespon
   return res.data
 }
 
-// REGISTER
+
 export async function register(payload: {
   name: string
   email: string
@@ -33,21 +33,43 @@ export async function register(payload: {
   password_confirmation: string
   phone?: string
 }): Promise<AuthResponse> {
-  const res = await apiFetch("/register", {
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL
+
+  if (!baseUrl) {
+    throw new Error("NEXT_PUBLIC_API_URL is not defined")
+  }
+
+  const res = await fetch(`${baseUrl}/register`, {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json", // ⬅️ INI KUNCI
+    },
     body: JSON.stringify(payload),
+    redirect: "manual", // ⬅️ BLOK REDIRECT
   })
 
-  return res.data
+  // ⛔ Backend redirect → kita anggap error
+  if (res.type === "opaqueredirect" || res.status === 302) {
+    throw {
+      message: "Register gagal (redirect terdeteksi)",
+    }
+  }
+
+  const data = await res.json()
+
+  if (!res.ok) {
+    throw data
+  }
+
+  return data
 }
 
-// PROFILE
-export async function getProfile(token: string): Promise<User> {
+export async function getProfile(token?: string): Promise<User> {
   const res = await apiFetch("/profile", {}, token)
   return res.data.user
 }
 
-// LOGOUT
-export async function logout(token: string) {
+export async function logout(token?: string) {
   return apiFetch("/logout", { method: "POST" }, token)
 }
