@@ -203,7 +203,7 @@ export default function PetShopPage() {
                           className="mt-auto w-full"
                         >
                           <ShoppingCart size={16} className="mr-2" />
-                          Tambah ke Keranjang
+                          Add to Cart
                         </Button>
                       </div>
                     </div>

@@ -7,6 +7,8 @@ import { Button } from "@/components/ui/button"
 import { useAuth } from "@/context/auth-context"
 import { useCart } from "@/context/cart-context"
 import { cn } from "@/lib/utils"
+import { DarkModeSwitch } from "@/components/dark-mode-switch"
+import { LangSwitch } from "@/components/lang-switch"
 
 export function Header() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -77,8 +79,10 @@ export function Header() {
                 </Link>
               </>
             )}
+           
           </div>
-
+           <LangSwitch />
+            <DarkModeSwitch />
           {/* Mobile Hamburger */}
           <button
             className="md:hidden p-2"

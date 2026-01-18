@@ -5,6 +5,7 @@ import "./globals.css"
 import ClientProviders from "./client-providers" 
 import { CartProvider } from "@/context/cart-context"
 import { AuthProvider } from "@/context/auth-context"
+import { DarkReaderProvider } from "@/components/dark-reader-provider"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -32,7 +33,9 @@ export default function RootLayout({
       <body className={`font-sans antialiased`}>
         <AuthProvider>
           <CartProvider>
-            {children}
+            <DarkReaderProvider>
+              {children}
+            </DarkReaderProvider>
           </CartProvider>
         </AuthProvider>
       </body>
