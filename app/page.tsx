@@ -1,10 +1,177 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { HeroSection } from "@/components/hero-section"
+import { ProductSimpleCard } from "@/components/products-card"
 import { ServiceCard } from "@/components/service-card"
 import { SERVICES } from "@/lib/booking-data"
 import { Star, MapPin, Phone } from "lucide-react"
+import { Button } from "@/components/ui/button"
 import Link from "next/link"
+
+const products = [
+  {
+    id: 1,
+    name: "Makanan Anjing Premium Beef 10kg",
+    price: 485000,
+    sold: 1200,
+    rating: 4.9,
+    image: "🥩",
+  },
+  {
+    id: 2,
+    name: "Makanan Kucing Tuna Adult 5kg",
+    price: 275000,
+    sold: 3400,
+    rating: 4.8,
+    image: "🐟",
+  },
+  {
+    id: 3,
+    name: "Pasir Kucing Bentonite Wangi 10L",
+    price: 65000,
+    sold: 7800,
+    rating: 4.7,
+    image: "🪨",
+  },
+  {
+    id: 4,
+    name: "Shampoo Anjing Anti Kutu 250ml",
+    price: 45000,
+    sold: 2100,
+    rating: 4.6,
+    image: "🧴",
+  },
+  {
+    id: 5,
+    name: "Vitamin Kucing Bulu & Nafsu Makan",
+    price: 38000,
+    sold: 5600,
+    rating: 4.8,
+    image: "💊",
+  },
+  {
+    id: 6,
+    name: "Mainan Kucing Bola Lonceng",
+    price: 18000,
+    sold: 9200,
+    rating: 4.7,
+    image: "🎾",
+  },
+  {
+    id: 7,
+    name: "Tali Anjing + Harness Ukuran M",
+    price: 85000,
+    sold: 1900,
+    rating: 4.6,
+    image: "🦮",
+  },
+  {
+    id: 8,
+    name: "Tempat Makan Minum Pet Stainless",
+    price: 55000,
+    sold: 4300,
+    rating: 4.8,
+    image: "🥣",
+  },
+  {
+    id: 9,
+    name: "Kandang Kucing Lipat Portable",
+    price: 325000,
+    sold: 980,
+    rating: 4.7,
+    image: "🏠",
+  },
+  {
+    id: 10,
+    name: "Pet Bed Empuk Anti Slip",
+    price: 195000,
+    sold: 1600,
+    rating: 4.8,
+    image: "🛏️",
+  },
+  {
+    id: 11,
+    name: "Sisir Bulu Kucing Stainless",
+    price: 25000,
+    sold: 6700,
+    rating: 4.7,
+    image: "🪮",
+  },
+  {
+    id: 12,
+    name: "Snack Anjing Dental Care",
+    price: 42000,
+    sold: 5100,
+    rating: 4.9,
+    image: "🦴",
+  },
+  {
+    id: 13,
+    name: "Popok Anjing Sekali Pakai (10 pcs)",
+    price: 60000,
+    sold: 2300,
+    rating: 4.6,
+    image: "🧻",
+  },
+  {
+    id: 14,
+    name: "Air Minum Otomatis Pet Fountain",
+    price: 285000,
+    sold: 1400,
+    rating: 4.8,
+    image: "💧",
+  },
+  {
+    id: 15,
+    name: "Tas Pet Carrier Travel",
+    price: 315000,
+    sold: 1100,
+    rating: 4.7,
+    image: "🎒",
+  },
+  {
+    id: 16,
+    name: "Kalung Kucing Bell Adjustable",
+    price: 20000,
+    sold: 8900,
+    rating: 4.6,
+    image: "🔔",
+  },
+  {
+    id: 17,
+    name: "Obat Tetes Kutu Anjing & Kucing",
+    price: 48000,
+    sold: 3600,
+    rating: 4.8,
+    image: "🧪",
+  },
+  {
+    id: 18,
+    name: "Mainan Gigitan Anjing Rubber",
+    price: 35000,
+    sold: 4200,
+    rating: 4.7,
+    image: "🪀",
+  },
+  {
+    id: 19,
+    name: "Litter Box Kucing Jumbo",
+    price: 155000,
+    sold: 1750,
+    rating: 4.6,
+    image: "🚽",
+  },
+  {
+    id: 20,
+    name: "Spray Penghilang Bau Kandang",
+    price: 52000,
+    sold: 2900,
+    rating: 4.8,
+    image: "🌿",
+  },
+]
+
+
 
 export default function Home() {
   return (
@@ -14,11 +181,34 @@ export default function Home() {
       <main className="min-h-screen bg-background">
         {/* Hero Section */}
         <HeroSection />
-
+        <section className="py-16 bg-gradient-to-r from-primary/5 to-primary/5 text-white">
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
+              {products.map((product) => (
+                <ProductSimpleCard
+                  key={product.id}
+                  product={product}
+                />
+              ))}
+            </div>
+          </div>
+          <div>
+            <div className="mt-8 flex justify-center ">
+                <Link href="/pet-shop">
+                    <Button
+                    variant="outline"
+                    size="lg"
+                    className="px-10 bg-white text-primary hover:bg-blue-500 transition-colors"
+                    >
+                    Klik Untuk Lihat Lainnya
+                    </Button>
+                </Link>
+            </div>
+          </div>
+        </section>
         
-
         {/* Clinic 24 Jam Section */}
-        <section className="py-16 bg-gradient-to-r from-primary to-primary/80 text-white">
+        {/* <section className="py-16 bg-gradient-to-r from-primary to-primary/80 text-white">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
               <div className="space-y-4">
@@ -49,7 +239,7 @@ export default function Home() {
               </div>
             </div>
           </div>
-        </section>
+        </section> */}
 
         {/* Featured Services */}
         <section className="py-16">
