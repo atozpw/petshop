@@ -196,6 +196,30 @@ export function HeroSection() {
           </div>
         </div>
       </div>
+      {/* Service Categories */}
+        
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-4">
+              {[
+                { name: "Pet Shop", icon: "🛍️", href: "/pet-shop" },
+                { name: "Grooming", icon: "✂️", href: "/grooming" },
+                { name: "Pet Hotel", icon: "🏠", href: "/pet-hotel" },
+                { name: "PlayGround", icon: "🎮", href: "/playground" },
+                { name: "Pakan Hewan", icon: "🥩", href: "/nutrition" },
+                { name: "Pool", icon: "🏊", href: "/pool" },
+                { name: "Dokter Hewan", icon: "⚕️", href: "/clinic" },
+                { name: "Delivery", icon: "🚗", href: "/delivery" },
+              ].map((category) => (
+                <Link key={category.name} href={category.href}>
+                  <div className="flex flex-col items-center gap-2 p-3 rounded-lg hover:bg-muted transition-colors cursor-pointer">
+                    <div className="text-3xl">{category.icon}</div>
+                    <p className="text-xs md:text-sm font-medium text-center leading-tight">{category.name}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        
       
       
     </section>

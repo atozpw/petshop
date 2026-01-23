@@ -59,12 +59,34 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.setItem("petshop-token", token)
     }
 
-  const logout = () => {
-    setUser(null)
-    setToken(null)
-    localStorage.removeItem("petshop-user")
-    localStorage.removeItem("petshop-token")
+  // const logout = () => {
+  //   setUser(null)
+  //   setToken(null)
+  //   localStorage.removeItem("petshop-user")
+  //   localStorage.removeItem("petshop-token")
+  // }
+
+  const logout = async () => {
+    try {
+      if (token) {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/logout`, {
+          method: "POST",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+            "Accept": "application/json",
+          },
+        })
+      }
+    } catch (error) {
+      console.error("Logout error:", error)
+    } finally {
+      setUser(null)
+      setToken(null)
+      localStorage.removeItem("petshop-user")
+      localStorage.removeItem("petshop-token")
+    }
   }
+
 
   return (
     <AuthContext.Provider

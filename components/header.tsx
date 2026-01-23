@@ -143,6 +143,7 @@ export function Header() {
             <span>Download</span> */}
           </div>
           <div className="flex gap-4">
+            <DarkModeSwitch />
             <span>Notifikasi</span>
             <span>Bantuan</span>
             <span>Bahasa Indonesia</span>
@@ -181,23 +182,62 @@ export function Header() {
 
           {/* MOBILE SEARCH (SEJAJAR LOGO) */}
           <div className="flex-1 lg:hidden">
-            <div className="bg-white rounded-lg flex items-center px-3 py-2">
-              <Search size={16} className="text-muted-foreground" />
+            <div className="relative w-full">
               <input
                 type="text"
                 placeholder="Cari produk..."
-                className="flex-1 ml-2 outline-none text-sm"
+                className="
+                  w-full
+                  rounded-lg
+                  bg-white
+                  py-2
+                  pl-3
+                  pr-9
+                  text-sm
+                  outline-none
+                "
+              />
+              <Search
+                size={16}
+                className="
+                  absolute
+                  right-3
+                  top-1/2
+                  -translate-y-1/2
+                  text-muted-foreground
+                  pointer-events-none
+                "
               />
             </div>
           </div>
 
           {/* DESKTOP SEARCH */}
           <div className="hidden lg:flex flex-1 mx-8">
-            <div className="w-full bg-white rounded-lg flex items-center px-4 py-2">
+            <div className="relative w-full">
               <input
                 type="text"
-                placeholder="Cari produk pet anda..."
-                className="flex-1 outline-none text-sm"
+                placeholder="Cari produk..."
+                className="
+                  w-full
+                  rounded-lg
+                  bg-white
+                  py-2
+                  pl-3
+                  pr-9
+                  text-sm
+                  outline-none
+                "
+              />
+              <Search
+                size={16}
+                className="
+                  absolute
+                  right-3
+                  top-1/2
+                  -translate-y-1/2
+                  text-muted-foreground
+                  pointer-events-none
+                "
               />
             </div>
           </div>
@@ -208,7 +248,7 @@ export function Header() {
             <Link href="/cart" className="relative p-2 transition-colors hover:text-muted-foreground">
               <ShoppingCart className="h-5 w-5" />
               {cartCount > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-primary text-[10px] font-bold text-white">
+                <span className="absolute -top-1 -right-1 flex h-5 w-5 items-center justify-center rounded-full bg-amber-600 text-[10px] font-bold text-white">
                   {cartCount}
                 </span>
               )}
@@ -317,31 +357,46 @@ function UserDropdown({ user, onLogout }: { user: any; onLogout: () => void }) {
     <div className="relative">
       <button
         onClick={() => setOpen(!open)}
-        className="flex h-9 w-9 items-center justify-center rounded-full bg-primary text-white hover:bg-primary/90 transition-colors"
+        className="flex h-9 w-9 items-center justify-center rounded-full bg-primary/90 text-white hover:bg-blue-600 transition-colors"
       >
-        <User className="h-4.5 w-4.5" />
+        <User className="h-5.5 w-5.5" />
       </button>
 
       {open && (
-        <div className="absolute right-0 mt-2 w-56 origin-top-right rounded-xl border bg-white shadow-lg ring-1 ring-black/5 focus:outline-none">
-          <div className="px-5 py-4 border-b">
-            <p className="text-sm font-semibold">{user.name}</p>
-            <p className="mt-0.5 text-xs text-muted-foreground">{user.email}</p>
+        <div className="absolute right-0 mt-2 w-56 origin-top-right rounded-xl border 
+          bg-white text-gray-900 
+          dark:bg-gray-900 dark:text-gray-100
+          shadow-lg ring-1 ring-black/5 focus:outline-none"
+        >
+          <div className="px-5 py-4 border-b border-gray-200 dark:border-gray-700">
+            <p className="text-sm font-semibold">
+              {user.name}
+            </p>
+            <p className="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
+              {user.email}
+            </p>
           </div>
+
           <div className="py-1">
             <Link
               href="/dashboard"
-              className="block px-5 py-2.5 text-sm hover:bg-muted transition-colors"
+              className="block px-5 py-2.5 text-sm 
+                hover:bg-gray-100 dark:hover:bg-gray-800 
+                transition-colors"
               onClick={() => setOpen(false)}
             >
               Dashboard
             </Link>
+
             <button
               onClick={() => {
                 onLogout()
                 setOpen(false)
               }}
-              className="flex w-full items-center gap-2 px-5 py-2.5 text-sm text-red-600 hover:bg-red-50 transition-colors"
+              className="flex w-full items-center gap-2 px-5 py-2.5 text-sm 
+                text-red-600 dark:text-red-400
+                hover:bg-red-50 dark:hover:bg-red-950/40
+                transition-colors"
             >
               <LogOut className="h-4 w-4" />
               Keluar
@@ -350,6 +405,7 @@ function UserDropdown({ user, onLogout }: { user: any; onLogout: () => void }) {
         </div>
       )}
     </div>
+
   )
 }
 
