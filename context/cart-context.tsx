@@ -10,6 +10,8 @@ export interface CartItem {
   price: number
   quantity: number
   image: string
+  variants?: Record<string, string>
+  variantPrice?: number
 }
 
 interface CartContextType {
@@ -45,23 +47,40 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const addToCart = (item: CartItem) => {
     setCart((prevCart) => {
-      const existingItem = prevCart.find((i) => i.id === item.id)
+      const variantKey = item.variants ? JSON.stringify(item.variants) : ""
+      const existingItem = prevCart.find(
+        (i) => i.id === item.id && JSON.stringify(i.variants || {}) === variantKey
+      )
       if (existingItem) {
-        return prevCart.map((i) => (i.id === item.id ? { ...i, quantity: i.quantity + item.quantity } : i))
+        return prevCart.map((i) =>
+          i.id === item.id && JSON.stringify(i.variants || {}) === variantKey
+            ? { ...i, quantity: i.quantity + item.quantity }
+            : i
+        )
       }
       return [...prevCart, item]
     })
   }
 
-  const removeFromCart = (id: number) => {
-    setCart((prevCart) => prevCart.filter((item) => item.id !== id))
+  const removeFromCart = (id: number, variants?: Record<string, string>) => {
+    setCart((prevCart) => {
+      const variantKey = variants ? JSON.stringify(variants) : ""
+      return prevCart.filter((item) => !(item.id === id && JSON.stringify(item.variants || {}) === variantKey))
+    })
   }
 
-  const updateQuantity = (id: number, quantity: number) => {
+  const updateQuantity = (id: number, quantity: number, variants?: Record<string, string>) => {
     if (quantity <= 0) {
-      removeFromCart(id)
+      removeFromCart(id, variants)
     } else {
-      setCart((prevCart) => prevCart.map((item) => (item.id === id ? { ...item, quantity } : item)))
+      setCart((prevCart) =>
+        prevCart.map((item) => {
+          const variantKey = variants ? JSON.stringify(variants) : ""
+          return item.id === id && JSON.stringify(item.variants || {}) === variantKey
+            ? { ...item, quantity }
+            : item
+        })
+      )
     }
   }
 
@@ -69,7 +88,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
     setCart([])
   }
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+  const total = cart.reduce((sum, item) => {
+    const itemPrice = item.variantPrice || item.price
+    return sum + itemPrice * item.quantity
+  }, 0)
 
   return (
     <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, total }}>
