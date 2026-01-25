@@ -3,6 +3,7 @@
 import { Star } from "lucide-react"
 import Link from "next/link"
 import type { Product } from "@/lib/product-data"
+import Image from "next/image"
 
 interface ProductSimple {
   id: number
@@ -22,38 +23,64 @@ interface ProductSimpleCardProps {
 
 export function ProductSimpleCard({ product }: ProductSimpleCardProps) {
   return (
-    <Link href={`/products/${product.id}`} className="block">
-      <div className="bg-card rounded-lg border border-border overflow-hidden hover:shadow-md transition-shadow">
-        {/* Image */}
-        <div className="h-40 bg-muted flex items-center justify-center text-4xl">
-          {product.image || "📦"}
+    <Link
+      href={`/products/${product.id}`}
+      className="group block"
+    >
+      <div
+        className="bg-card rounded-lg border border-border overflow-hidden
+                  transition-all duration-300
+                  hover:-translate-y-1 hover:shadow-xl"
+      >
+        {/* IMAGE */}
+        <div className="relative h-40 bg-muted overflow-hidden">
+          
+          <Image
+            src={product.image || "/no-image.png"}
+            alt={product.name}
+            className="h-full w-full object-cover
+                      transition-transform duration-300
+                      group-hover:scale-105"
+            onError={(e) => {
+              e.currentTarget.onerror = null
+              e.currentTarget.src = "/no-image.png"
+            }}
+            fill
+          />
+
         </div>
 
-        {/* Content */}
+        {/* CONTENT */}
         <div className="p-3 space-y-1">
-          {/* Name */}
+          {/* NAME */}
           <h3 className="text-sm font-medium text-foreground line-clamp-2">
             {product.name}
           </h3>
 
-          {/* Rating & Sold */}
+          {/* RATING & SOLD */}
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <div className="flex items-center gap-1 text-yellow-500">
               <Star size={12} fill="currentColor" />
-              <span className="text-foreground">{product.rating}</span>
+              <span className="text-foreground">
+                {product.rating}
+              </span>
             </div>
+
             <span>•</span>
-            <span>200+ terjual</span>
+
+            <span>
+              {product.reviews.toLocaleString("id-ID")} terjual
+            </span>
           </div>
 
-          {/* Price */}
+          {/* PRICE */}
           <p className="text-base font-bold text-primary">
             Rp {product.price.toLocaleString("id-ID")}
           </p>
         </div>
-        
       </div>
     </Link>
+
     
     
   )

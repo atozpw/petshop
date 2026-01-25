@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { ShoppingCart, Plus, Minus, Star } from "lucide-react"
 import { useCart } from "@/context/cart-context"
 import { products } from "@/lib/product-data"
+import Image from "next/image"
 
 export default function ProductDetailPage() {
   const router = useRouter()
@@ -89,8 +90,17 @@ export default function ProductDetailPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Product Image */}
-            <div className="flex items-center justify-center bg-muted rounded-lg p-8 h-96">
-              <span className="text-9xl">{product.image}</span>
+            <div className="relative flex items-center justify-center bg-muted rounded-lg p-8 h-96">
+              <Image
+                src={product.image || "/no-image.png"}
+                alt={product.name}
+                className="object-contain"
+                onError={(e) => {
+                  e.currentTarget.onerror = null
+                  e.currentTarget.src = "/no-image.png"
+                }}
+                fill
+              />
             </div>
 
             {/* Product Details */}

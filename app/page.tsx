@@ -19,31 +19,52 @@ export default function Home() {
       <main className="min-h-screen bg-background">
         {/* Hero Section */}
         <HeroSection />
-        <section className="py-16 bg-gradient-to-r from-primary/5 to-primary/5 text-white">
+        <section className="bg-background py-8 md:py-12">
+
           <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-              {products.map((product) => (
+            {/* SECTION TITLE */}
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-lg font-semibold">Produk Terlaris</h2>
+                <p className="text-sm text-muted-foreground">
+                  Favorit pelanggan minggu ini
+                </p>
+              </div>
+
+              <Link href="/pet-shop" className="text-sm text-primary">
+                Lihat semua
+              </Link>
+            </div>  
+
+            {/* PRODUCT GRID */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5
+                            gap-4 md:gap-6">
+              {products.slice(0, 20).map((product) => (
                 <ProductSimpleCard
                   key={product.id}
                   product={product}
                 />
               ))}
             </div>
-          </div>
-          <div>
-            <div className="mt-8 flex justify-center ">
-                <Link href="/pet-shop">
-                    <Button
-                    variant="outline"
-                    size="lg"
-                    className="px-10 bg-white text-primary hover:bg-blue-500 transition-colors"
-                    >
-                    Klik Untuk Lihat Lainnya
-                    </Button>
-                </Link>
+
+            {/* CTA */}
+            <div className="mt-8 md:mt-10 flex justify-center">
+              <Link href="/pet-shop">
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="px-8 bg-white text-primary
+                            hover:bg-primary hover:text-white
+                            transition-colors"
+                >
+                  Lihat Semua Produk
+                </Button>
+              </Link>
             </div>
+
           </div>
         </section>
+
         
         {/* Clinic 24 Jam Section */}
         {/* <section className="py-16 bg-gradient-to-r from-primary to-primary/80 text-white">
