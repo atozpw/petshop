@@ -1,53 +1,35 @@
 "use client"
 
-import { Star } from "lucide-react"
 import Link from "next/link"
-import type { Product } from "@/lib/product-data"
 import Image from "next/image"
-
-interface ProductSimple {
-  id: number
-  name: string
-  price: number
-  sold: number
-  rating: number // contoh: 4.8
-  image?: string
-}
+import type { Product } from "@/lib/product-data"
 
 interface ProductSimpleCardProps {
- product: Pick<
-    Product,
-    "id" | "name" | "price" | "rating" | "image"
-  >
+  product: Pick<Product, "id" | "name" | "price" | "images" | "slug">
 }
 
 export function ProductSimpleCard({ product }: ProductSimpleCardProps) {
+// console.log(product); // Debugging line to check product data
+  const imageUrl =
+    product.images?.[0]?.image_url ?? "/no-image.png"
+
   return (
-    <Link
-      href={`/products/${product.id}`}
-      className="group block"
-    >
+    <Link href={`/products/${product.slug}`} className="group block">
       <div
         className="bg-card rounded-lg border border-border overflow-hidden
-                  transition-all duration-300
-                  hover:-translate-y-1 hover:shadow-xl"
+                   transition-all duration-300
+                   hover:-translate-y-1 hover:shadow-xl"
       >
         {/* IMAGE */}
         <div className="relative h-40 bg-muted overflow-hidden">
-          
           <Image
-            src={product.image || "/no-image.png"}
+            src={imageUrl}
             alt={product.name}
-            className="h-full w-full object-cover
-                      transition-transform duration-300
-                      group-hover:scale-105"
-            onError={(e) => {
-              e.currentTarget.onerror = null
-              e.currentTarget.src = "/no-image.png"
-            }}
             fill
+            className="object-cover transition-transform duration-300
+                       group-hover:scale-105"
+            sizes="(max-width: 768px) 50vw, 20vw"
           />
-
         </div>
 
         {/* CONTENT */}
@@ -57,7 +39,10 @@ export function ProductSimpleCard({ product }: ProductSimpleCardProps) {
             {product.name}
           </h3>
 
-          {/* RATING & SOLD */}
+          {/* 
+          RATING & REVIEW
+          Aktifkan lagi kalau API sudah ada
+          
           <div className="flex items-center gap-2 text-xs text-muted-foreground">
             <div className="flex items-center gap-1 text-yellow-500">
               <Star size={12} fill="currentColor" />
@@ -72,16 +57,14 @@ export function ProductSimpleCard({ product }: ProductSimpleCardProps) {
               {product.reviews.toLocaleString("id-ID")} terjual
             </span>
           </div>
+          */}
 
           {/* PRICE */}
           <p className="text-base font-bold text-primary">
-            Rp {product.price.toLocaleString("id-ID")}
+            Rp {Number(product.price).toLocaleString("id-ID")}
           </p>
         </div>
       </div>
     </Link>
-
-    
-    
   )
 }

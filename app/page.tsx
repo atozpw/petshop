@@ -7,11 +7,19 @@ import { SERVICES } from "@/lib/booking-data"
 import { Star, MapPin, Phone } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
-import { products } from "@/lib/product-data"
+import { fetchProducts } from "@/lib/api"
+import type { Product } from "@/lib/product-data"
 
 
 
-export default function Home() {
+export default async function Home() {
+
+  const res = await fetchProducts(
+    new URLSearchParams({ page: "1" })
+  )
+
+  const products: Product[] = res.data.data
+
   return (  
     <>
       <Header />
