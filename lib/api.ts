@@ -68,3 +68,28 @@ export async function fetchCategories() {
   return res.json()
 }
 
+
+
+export async function validateCartAPI(
+  items: {
+    productId: number
+    variantId: number | null
+    quantity: number
+  }[],
+  token?: string
+) {
+  return apiFetch(
+    `/cart/validate`,
+    {
+      method: "POST",
+      body: JSON.stringify({
+        items: items.map(i => ({
+          product_id: i.productId,
+          product_variant_id: i.variantId,
+          quantity: i.quantity,
+        })),
+      }),
+    },
+    token
+  )
+}

@@ -12,6 +12,7 @@ import type { Product } from "@/lib/product-data"
 
 export default function ProductClient({ product }: { product: Product }) {
   const { addToCart } = useCart()
+
   const [quantity, setQuantity] = useState(1)
   const [selectedVariantId, setSelectedVariantId] = useState<number | null>(null)
 
@@ -24,19 +25,17 @@ export default function ProductClient({ product }: { product: Product }) {
   const subtotal = price * quantity
 
   const handleAddToCart = () => {
-    if (!selectedVariant) return alert("Pilih varian dulu")
+    if (!selectedVariant) {
+      alert("Pilih varian dulu")
+      return
+    }
 
     addToCart({
-      id: product.id,
-      name: product.name,
-      price,
+      productId: product.id,
+      variantId: selectedVariant.id,
       quantity,
-      image: product.image ?? "/no-image.png",
-      variant: {
-        id: selectedVariant.id,
-        name: selectedVariant.name,
-      },
     })
+
 
     alert("Ditambahkan ke keranjang ✓")
     setQuantity(1)
@@ -49,17 +48,11 @@ export default function ProductClient({ product }: { product: Product }) {
 
       <main className="min-h-screen bg-background pb-24 lg:pb-12">
         <div className="container mx-auto max-w-7xl px-4 py-6 lg:py-8">
-          <div className="grid grid-cols-1 lg:grid-cols-[420px_1fr_360px] gap-6 lg:gap-10">
+          <div className="grid grid-cols-1 lg:grid-cols-[420px_1fr] gap-6 lg:gap-10">
 
             {/* GALLERY */}
             <div className="space-y-3">
-              <div className="
-                relative
-                h-[260px] sm:h-[300px]
-                lg:aspect-square lg:h-auto
-                rounded-xl overflow-hidden
-                border bg-white
-              ">
+              <div className="relative h-[260px] sm:h-[300px] lg:aspect-square lg:h-auto rounded-xl overflow-hidden border bg-white">
                 <Image
                   src={product.image ?? "/no-image.png"}
                   alt={product.name}
@@ -81,6 +74,7 @@ export default function ProductClient({ product }: { product: Product }) {
 
             {/* INFO */}
             <div className="space-y-4 lg:space-y-5">
+
               <nav className="text-xs text-muted-foreground">
                 Home / {product.product_category.name}
               </nav>
@@ -129,6 +123,51 @@ export default function ProductClient({ product }: { product: Product }) {
                 </div>
               </div>
 
+              {/* DESKTOP: QTY + ADD TO CART */}
+              <div className="hidden lg:block pt-4 space-y-4 border-t">
+
+                <div className="flex items-center justify-between">
+                  <div className="inline-flex items-center border rounded-lg">
+                    <button
+                      onClick={() => setQuantity(q => Math.max(1, q - 1))}
+                      disabled={quantity <= 1}
+                      className="px-3 py-2"
+                    >
+                      <Minus size={14} />
+                    </button>
+
+                    <span className="px-4 text-sm font-medium">
+                      {quantity}
+                    </span>
+
+                    <button
+                      onClick={() => setQuantity(q => q + 1)}
+                      className="px-3 py-2"
+                    >
+                      <Plus size={14} />
+                    </button>
+                  </div>
+
+                  <span className="text-xs text-muted-foreground">
+                    Stok 11.900
+                  </span>
+                </div>
+
+                <div className="flex justify-between text-sm font-semibold">
+                  <span>Subtotal</span>
+                  <span>Rp {subtotal.toLocaleString("id-ID")}</span>
+                </div>
+
+                <Button
+                  onClick={handleAddToCart}
+                  disabled={!selectedVariant}
+                  className="w-full h-12 text-base gap-2"
+                >
+                  <ShoppingCart size={16} />
+                  Masukkan Keranjang
+                </Button>
+              </div>
+
               {/* DESC */}
               <div className="pt-4 border-t">
                 <h3 className="text-sm font-semibold mb-2">
@@ -138,72 +177,63 @@ export default function ProductClient({ product }: { product: Product }) {
                   {product.description}
                 </p>
               </div>
-            </div>
 
-            {/* BUY BOX */}
-            <div
-              className="
-                fixed inset-x-0 bottom-0 z-20
-                lg:static lg:sticky lg:top-24
-                bg-card border-t lg:border rounded-none lg:rounded-xl
-                p-4 lg:p-6 space-y-4
-              "
-            >
-              {/* QTY */}
-              <div className="flex items-center justify-between">
-                <div className="inline-flex items-center border rounded-lg">
-                  <button
-                    onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                    disabled={quantity <= 1}
-                    className="px-3 py-2"
-                  >
-                    <Minus size={14} />
-                  </button>
-
-                  <span className="px-4 text-sm font-medium">
-                    {quantity}
-                  </span>
-
-                  <button
-                    onClick={() => setQuantity(q => q + 1)}
-                    className="px-3 py-2"
-                  >
-                    <Plus size={14} />
-                  </button>
-                </div>
-
-                <span className="text-xs text-muted-foreground">
-                  Stok 11.900
-                </span>
-              </div>
-
-              {/* SUBTOTAL */}
-              <div className="flex justify-between text-sm font-semibold">
-                <span>Subtotal</span>
-                <span>Rp {subtotal.toLocaleString("id-ID")}</span>
-              </div>
-
-              {/* BUTTON – MOBILE CLEAN */}
-              <Button
-                onClick={handleAddToCart}
-                disabled={!selectedVariant}
-                className="
-                  w-full h-11 lg:h-12
-                  text-sm lg:text-base
-                  gap-2
-                "
-              >
-                <ShoppingCart size={16} />
-                <span className="hidden sm:inline">Masukkan</span>
-                <span className="sm:hidden">Keranjang</span>
-              </Button>
             </div>
           </div>
 
-          {/* Spacer mobile */}
+          {/* Spacer for mobile buy box */}
           <div className="h-24 lg:hidden" />
         </div>
       </main>
+
+      {/* MOBILE BUY BOX */}
+      <div className="
+        lg:hidden
+        fixed inset-x-0 bottom-0 z-20
+        bg-card border-t
+        p-4 space-y-4
+      ">
+        <div className="flex items-center justify-between">
+          <div className="inline-flex items-center border rounded-lg">
+            <button
+              onClick={() => setQuantity(q => Math.max(1, q - 1))}
+              disabled={quantity <= 1}
+              className="px-3 py-2"
+            >
+              <Minus size={14} />
+            </button>
+
+            <span className="px-4 text-sm font-medium">
+              {quantity}
+            </span>
+
+            <button
+              onClick={() => setQuantity(q => q + 1)}
+              className="px-3 py-2"
+            >
+              <Plus size={14} />
+            </button>
+          </div>
+
+          <span className="text-xs text-muted-foreground">
+            Stok 11.900
+          </span>
+        </div>
+
+        <div className="flex justify-between text-sm font-semibold">
+          <span>Subtotal</span>
+          <span>Rp {subtotal.toLocaleString("id-ID")}</span>
+        </div>
+
+        <Button
+          onClick={handleAddToCart}
+          disabled={!selectedVariant}
+          className="w-full h-11 gap-2"
+        >
+          <ShoppingCart size={16} />
+          Masukkan Keranjang
+        </Button>
+      </div>
 
       <Footer />
     </>

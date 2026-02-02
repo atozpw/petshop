@@ -1,109 +1,208 @@
 "use client"
+import { validateCartAPI } from "@/lib/api"
+import { createContext, useContext, useEffect, useState } from "react"
 
-import type React from "react"
-
-import { createContext, useContext, useState, useEffect } from "react"
+/* =========================
+   TYPES
+========================= */
 
 export interface CartItem {
-  id: number
-  name: string
+  productId: number
+  variantId: number | null
+  quantity: number
+}
+
+export interface CartResponseItem {
+  productId: number
+  variantId: number | null
+  name: string | null
+  image: string | null
   price: number
   quantity: number
-  image: string
-  variants?: Record<string, string>
-  variantPrice?: number
+  subtotal: number
+  available: boolean
+  reason?: string | null
 }
 
 interface CartContextType {
   cart: CartItem[]
-  addToCart: (item: CartItem) => void
-  removeFromCart: (id: number) => void
-  updateQuantity: (id: number, quantity: number) => void
-  clearCart: () => void
+  viewCart: CartResponseItem[]
   total: number
+  hasUnavailable: boolean
+  loading: boolean
+  addToCart: (item: CartItem) => void
+  updateQuantity: (item: CartItem) => void
+  removeItem: (productId: number, variantId: number | null) => void
+  clearCart: () => void
+  refresh: () => Promise<void>
 }
+
+/* =========================
+   CONTEXT
+========================= */
 
 const CartContext = createContext<CartContextType | undefined>(undefined)
 
+/* =========================
+   PROVIDER
+========================= */
+
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([])
+  const [viewCart, setViewCart] = useState<CartResponseItem[]>([])
+  const [total, setTotal] = useState(0)
   const [mounted, setMounted] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  // Load cart from localStorage on mount
+
+  /* =========================
+     LOAD localStorage
+  ========================= */
   useEffect(() => {
-    const savedCart = localStorage.getItem("petshop-cart")
-    if (savedCart) {
-      setCart(JSON.parse(savedCart))
+    try {
+      const saved = localStorage.getItem("petshop-cart")
+      if (saved) setCart(JSON.parse(saved))
+    } catch {
+      localStorage.removeItem("petshop-cart")
     }
     setMounted(true)
   }, [])
 
-  // Save cart to localStorage whenever it changes
+  /* =========================
+     SAVE localStorage + VALIDATE
+  ========================= */
   useEffect(() => {
-    if (mounted) {
-      localStorage.setItem("petshop-cart", JSON.stringify(cart))
+    if (!mounted) return
+
+    localStorage.setItem("petshop-cart", JSON.stringify(cart))
+
+    if (cart.length > 0) {
+      validateCart()
+    } else {
+      setViewCart([])
+      setTotal(0)
+      setLoading(false) 
     }
   }, [cart, mounted])
 
-  const addToCart = (item: CartItem) => {
-    setCart((prevCart) => {
-      const variantKey = item.variants ? JSON.stringify(item.variants) : ""
-      const existingItem = prevCart.find(
-        (i) => i.id === item.id && JSON.stringify(i.variants || {}) === variantKey
+
+  /* =========================
+     VALIDATE TO BACKEND
+  ========================= */
+  const validateCart = async () => {
+    setLoading(true)
+    try {
+      const data = await validateCartAPI(cart)
+
+      setViewCart(
+        data.items.map((i: any) => ({
+          productId: i.product_id,
+          variantId: i.product_variant_id,
+          name: i.name ?? null,
+          image: i.image ?? null,
+          price: i.price ?? 0,
+          quantity: i.quantity,
+          subtotal: i.subtotal ?? 0,
+          available: i.available,
+          reason: i.reason ?? null,
+        }))
       )
-      if (existingItem) {
-        return prevCart.map((i) =>
-          i.id === item.id && JSON.stringify(i.variants || {}) === variantKey
+
+      setTotal(data.total ?? 0)
+    } catch (err) {
+      console.error("Cart validation error:", err)
+    } finally {
+      setLoading(false) // 👈 PASTI jalan
+    }
+  }
+
+  /* =========================
+     ACTIONS
+  ========================= */
+
+  const addToCart = (item: CartItem) => {
+    setCart(prev => {
+      const exist = prev.find(
+        i => i.productId === item.productId && i.variantId === item.variantId
+      )
+
+      if (exist) {
+        return prev.map(i =>
+          i.productId === item.productId && i.variantId === item.variantId
             ? { ...i, quantity: i.quantity + item.quantity }
             : i
         )
       }
-      return [...prevCart, item]
+
+      return [...prev, item]
     })
   }
 
-  const removeFromCart = (id: number, variants?: Record<string, string>) => {
-    setCart((prevCart) => {
-      const variantKey = variants ? JSON.stringify(variants) : ""
-      return prevCart.filter((item) => !(item.id === id && JSON.stringify(item.variants || {}) === variantKey))
-    })
-  }
-
-  const updateQuantity = (id: number, quantity: number, variants?: Record<string, string>) => {
-    if (quantity <= 0) {
-      removeFromCart(id, variants)
-    } else {
-      setCart((prevCart) =>
-        prevCart.map((item) => {
-          const variantKey = variants ? JSON.stringify(variants) : ""
-          return item.id === id && JSON.stringify(item.variants || {}) === variantKey
-            ? { ...item, quantity }
-            : item
-        })
+  const updateQuantity = (item: CartItem) => {
+    setCart(prev =>
+      prev.map(i =>
+        i.productId === item.productId && i.variantId === item.variantId
+          ? item
+          : i
       )
-    }
+    )
+  }
+
+  const removeItem = (productId: number, variantId: number | null) => {
+    setCart(prev =>
+      prev.filter(i => !(i.productId === productId && i.variantId === variantId))
+    )
   }
 
   const clearCart = () => {
     setCart([])
+    setViewCart([])
+    setTotal(0)
+    localStorage.removeItem("petshop-cart")
   }
 
-  const total = cart.reduce((sum, item) => {
-    const itemPrice = item.variantPrice || item.price
-    return sum + itemPrice * item.quantity
-  }, 0)
+  const refresh = async () => {
+    if (cart.length) await validateCart()
+  }
+
+  /* =========================
+     DERIVED STATE
+  ========================= */
+
+  const hasUnavailable = viewCart.some(item => !item.available)
+
+  /* =========================
+     PROVIDER
+  ========================= */
 
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, updateQuantity, clearCart, total }}>
+    <CartContext.Provider
+      value={{
+        cart,
+        viewCart,
+        total,
+        hasUnavailable,
+        loading,
+        addToCart,
+        updateQuantity,
+        removeItem,
+        clearCart,
+        refresh,
+      }}
+    >
       {children}
     </CartContext.Provider>
   )
 }
 
+/* =========================
+   HOOK
+========================= */
+
 export function useCart() {
-  const context = useContext(CartContext)
-  if (!context) {
+  const ctx = useContext(CartContext)
+  if (!ctx) {
     throw new Error("useCart must be used within CartProvider")
   }
-  return context
+  return ctx
 }
