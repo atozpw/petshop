@@ -6,6 +6,7 @@ import ClientProviders from "./client-providers"
 import { CartProvider } from "@/context/cart-context"
 import { AuthProvider } from "@/context/auth-context"
 import { DarkReaderProvider } from "@/components/dark-reader-provider"
+import { Toaster } from "@/components/ui/toaster"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -35,8 +36,10 @@ export default function RootLayout({
           <CartProvider>
             <DarkReaderProvider>
               {children}
+             
             </DarkReaderProvider>
           </CartProvider>
+          <Toaster />
         </AuthProvider>
       </body>
     </html>

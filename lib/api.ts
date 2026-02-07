@@ -93,3 +93,76 @@ export async function validateCartAPI(
     token
   )
 }
+export const addCartAPI = async (
+  token: string,
+  item: {
+    productId: number
+    variantId: number | null
+    quantity: number
+  }
+) => {
+  return apiFetch(
+    "/cart",
+    {
+      method: "POST",
+      body: JSON.stringify({
+        items: [
+          {
+            product_id: item.productId,
+            product_variant_id: item.variantId,
+            quantity: item.quantity,
+          },
+        ],
+      }),
+    },
+    token
+  )
+}
+
+export async function updateCartItemAPI(
+  cartItemId: number,
+  quantity: number,
+  token: string
+) {
+  return apiFetch(
+    `/cart/${cartItemId}`,
+    {
+      method: "PUT",
+      body: JSON.stringify({ quantity }),
+    },
+    token
+  )
+}
+
+
+export async function deleteCartItemAPI(
+  cartItemId: number,
+  token: string
+) {
+  return apiFetch(
+    `/cart/${cartItemId}`,
+    { method: "DELETE" },
+    token
+  )
+}
+
+
+export const clearCartAPI = async (token?: string) => {
+  return apiFetch(
+    "/cart/clear",
+    {
+      method: "DELETE",
+    },
+    token
+  )
+}
+
+export const getMyOrdersAPI = async (token?: string) =>{
+  return apiFetch("/orders/my", {
+    method: "GET",
+  }, token)
+}
+  
+
+
+

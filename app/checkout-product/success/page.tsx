@@ -1,43 +1,115 @@
 "use client"
 
-import Link from "next/link"
+import { useEffect, useState } from "react"
+import { useSearchParams } from "next/navigation"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import { CheckCircle } from "lucide-react"
+import { apiFetch } from "@/lib/api"
+import Image from "next/image"
 
 export default function CheckoutSuccessPage() {
+  const params = useSearchParams()
+  const orderNumber = params.get("order")
+
+  const [order, setOrder] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
+
+  useEffect(() => {
+    const fetchOrder = async () => {
+      try {
+        const token = localStorage.getItem("petshop-token")
+
+        const res = await apiFetch(`/orders/${orderNumber}`, {}, token)
+
+        setOrder(res.data)
+      } catch (err) {
+        console.error("Failed load order", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    if (orderNumber) fetchOrder()
+  }, [orderNumber])
+
+  if (loading) {
+    return (
+      <>
+        <Header />
+        <main className="min-h-screen flex items-center justify-center">
+          Memuat detail pesanan...
+        </main>
+        <Footer />
+      </>
+    )
+  }
+
+  if (!order) {
+    return (
+      <>
+        <Header />
+        <main className="min-h-screen flex items-center justify-center">
+          Pesanan tidak ditemukan
+        </main>
+        <Footer />
+      </>
+    )
+  }
+
   return (
     <>
       <Header />
       <main className="min-h-screen bg-background py-12">
-        <div className="container mx-auto px-4">
-          <div className="max-w-md mx-auto text-center space-y-6">
-            <CheckCircle size={64} className="mx-auto text-green-600" />
+        <div className="container mx-auto px-4 max-w-3xl">
 
-            <div>
-              <h1 className="text-3xl font-bold text-primary mb-2">Pesanan Berhasil</h1>
-              <p className="text-muted-foreground">Terima kasih telah berbelanja di JJ Pet House</p>
-            </div>
+          <h1 className="text-3xl font-bold mb-4 text-primary">
+            Pesanan Berhasil Dibuat 🎉
+          </h1>
 
-            <div className="bg-muted p-6 rounded-lg text-left space-y-2">
-              <p className="text-sm text-muted-foreground">Order ID: #OR-2024001</p>
-              <p className="text-sm text-muted-foreground">Status: Menunggu Pembayaran</p>
-              <p className="text-sm text-muted-foreground">Anda akan menerima email konfirmasi dalam beberapa saat</p>
-            </div>
+          <p className="mb-6">
+            Nomor Pesanan:
+            <span className="font-semibold ml-2">
+              {order.number}
+            </span>
+          </p>
 
-            <div className="space-y-3 pt-6 border-t border-border">
-              <Link href="/dashboard">
-                <Button className="w-full bg-primary hover:bg-primary/90">Lihat Pesanan di Dashboard</Button>
-              </Link>
+          <div className="bg-white rounded-lg border p-6 space-y-4">
+            {order.items.map((item: any) => (
+              <div
+                key={item.id}
+                className="flex justify-between items-center"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="w-16 h-16 bg-muted rounded overflow-hidden relative">
+                    <Image
+                      src={item.product?.image || "/no-image.png"}
+                      alt={item.product?.name}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
 
-              <Link href="/pet-shop">
-                <Button variant="ghost" className="w-full border border-primary text-primary">
-                  Lanjut Belanja
-                </Button>
-              </Link>
-            </div>
+                  <div>
+                    <p className="font-semibold">
+                      {item.product?.name}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      Qty: {item.quantity}
+                    </p>
+                  </div>
+                </div>
+
+                <p className="font-semibold">
+                  Rp {(item.subtotal).toLocaleString("id-ID")}
+                </p>
+              </div>
+            ))}
           </div>
+
+          <div className="mt-6 text-right text-lg font-bold">
+            Total: Rp {order.grand_total.toLocaleString("id-ID")}
+          </div>
+
         </div>
       </main>
       <Footer />

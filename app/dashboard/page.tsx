@@ -9,11 +9,13 @@ import { useAuth } from "@/context/auth-context"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
 import type { Booking } from "@/lib/booking-data"
+import { getMyOrdersAPI } from "@/lib/api"
 
 export default function DashboardPage() {
   const { user, logout } = useAuth()
   const router = useRouter()
   const [bookings, setBookings] = useState<Booking[]>([])
+  const [orders, setOrders] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -21,14 +23,37 @@ export default function DashboardPage() {
       router.replace("/login")
       return
     }
-    const data = JSON.parse(localStorage.getItem("bookings") || "[]")
-    setBookings(data)
-    setLoading(false)
-  }, [user, router])
+
+    // sementara masih local
+    const bookingData = JSON.parse(localStorage.getItem("bookings") || "[]")
+    setBookings(bookingData)
+
+    // order dari backend
+    const fetchOrders = async () => {
+      try {
+        const token = localStorage.getItem("petshop-token")
+        if (!token) return
+        const res = await getMyOrdersAPI(token)
+        setOrders(res.data)
+      } catch (err) {
+        console.error("Failed fetch orders", err)
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchOrders()
+  }, [user])
+
 
   if (!user) return null
   if (loading) return <div className="min-h-screen bg-background" />
 
+  const pendingBooking = bookings.filter(b => b.status === "pending").length
+  const completedBooking = bookings.filter(b => b.status === "completed").length
+
+  const totalOrders = orders.length
+  const completedOrders = orders.filter(o => o.status === "completed").length
   const pending = bookings.filter(b => b.status === "pending").length
   const confirmed = bookings.filter(b => b.status === "confirmed").length
 
@@ -88,6 +113,39 @@ export default function DashboardPage() {
               </div>
             )}
           </section>
+
+          {/* Orders */}
+          <section className="mt-16">
+            <h2 className="text-2xl font-bold mb-6">Riwayat Order</h2>
+
+            {orders.length === 0 ? (
+              <div className="text-muted-foreground">Belum ada order</div>
+            ) : (
+              <div className="space-y-4">
+                {orders.map(order => (
+                  <div key={order.id} className="bg-white border rounded-xl p-5">
+                    <div className="flex justify-between">
+                      <div>
+                        <p className="font-semibold">#{order.number}</p>
+                        <p className="text-sm text-muted-foreground">
+                          {order.created_at}
+                        </p>
+                      </div>
+
+                      <span className="text-sm font-medium">
+                        {order.status}
+                      </span>
+                    </div>
+
+                    <div className="text-right font-bold text-primary mt-3">
+                      Rp {Number(order.grand_total).toLocaleString()}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </section>
+
         </div>
       </main>
 

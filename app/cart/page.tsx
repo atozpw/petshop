@@ -4,11 +4,9 @@ import Link from "next/link"
 import Image from "next/image"
 import { useEffect } from "react"
 import { Trash2, Plus, Minus, ShoppingCart } from "lucide-react"
-
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
-
 import { useCart } from "@/context/cart-context"
 import { useAuth } from "@/context/auth-context"
 
@@ -29,6 +27,8 @@ export default function CartPage() {
     window.history.scrollRestoration = "manual"
     window.scrollTo(0, 0)
   }, [])
+  
+  // console.log("VIEW CART DATA:", viewCart)
 
   if (loading) {
     return (
@@ -201,7 +201,7 @@ export default function CartPage() {
                             quantity: item.quantity + 1,
                           })
                         }
-                        className="px-3 py-1 disabled:opacity-50"
+                        className="px-3 py-1 disabled:opacity-50" 
                       >
                         <Plus size={14} />
                       </button>
@@ -214,9 +214,7 @@ export default function CartPage() {
                       </span>
 
                       <button
-                        onClick={() =>
-                          removeItem(item.productId, item.variantId)
-                        }
+                        onClick={() => removeItem(item.cartItemId)}
                         className="text-muted-foreground hover:text-red-600"
                       >
                         <Trash2 size={18} />

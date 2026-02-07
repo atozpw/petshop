@@ -328,7 +328,7 @@ function UserDropdown({ user, onLogout }: { user: any; onLogout: () => void }) {
             <button
               onClick={() => {
                 onLogout()
-                setOpen(false)
+                setOpen(true)
               }}
               className="
                 flex w-full items-center gap-2
