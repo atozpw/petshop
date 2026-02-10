@@ -69,10 +69,13 @@ export function Header() {
             href="/"
             className="flex items-center gap-2 font-bold text-white flex-shrink-0"
           >
-            <div className="w-9 h-9 bg-white rounded-lg flex items-center justify-center text-accent font-bold">
-              JJ
-            </div>
-            <span className="hidden sm:block">PET HOUSE</span>
+            <Image
+              src="/logo.png"
+              alt="JJ Pet House Logo"
+              width={52}
+              height={52}
+            />  
+            <span className="hidden sm:block">JJPETHOUSE</span>
           </Link>
 
           {/* MOBILE SEARCH (SEJAJAR LOGO) */}

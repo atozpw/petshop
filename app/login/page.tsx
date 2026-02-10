@@ -8,16 +8,23 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { login } from "@/lib/auth"
 import Link from "next/link"
-import { Mail, Lock } from "lucide-react"
+import { User, Lock } from "lucide-react"
 import { useAuth } from "@/context/auth-context"
 
 function LoginContent() {
   const router = useRouter()
 
+  const [identifier, setIdentifier] = useState("") 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [error, setError] = useState("")
   const [isLoading, setIsLoading] = useState(false)
+
+  const isNPWP = (value: string) => { 
+    const cleaned = value.replace(/[^0-9]/g, "")
+    return cleaned.length === 16
+  }
+
 
   const { login: authLogin, isAuthenticated, authLoading } = useAuth()
 
@@ -31,15 +38,19 @@ function LoginContent() {
     e.preventDefault()
     setError("")
     setIsLoading(true)
-
+    if (isNPWP(identifier) === false && identifier.includes("@") === false) {
+      setError("Masukkan email atau NPWP 16 digit yang valid")
+      setIsLoading(false)
+      return
+    }
     try {
-      const data = await login(email, password)
+      const data = await login(identifier, password)
 
-    authLogin(data.user, data.token)
-
+      authLogin(data.user, data.token)
       router.replace("/dashboard")
+
     } catch (err: any) {
-      setError(err.message || "Email atau password salah")
+      setError(err.message || "Email / NPWP atau password salah")
     } finally {
       setIsLoading(false)
     }
@@ -69,18 +80,32 @@ function LoginContent() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="block text-sm font-semibold text-foreground mb-2">
-                  Email
+                  Email / NPWP
                 </label>
                 <div className="relative">
-                  <Mail className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
-                  <input
+                  <User className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" size={18} />
+                  {/* <input
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     className="w-full pl-10 pr-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     required
+                  /> */}
+                  <input
+                    type="text"
+                    value={identifier}
+                    onChange={(e) => setIdentifier(e.target.value)}
+                    placeholder="Masukkan email atau NPWP"
+                    className="w-full pl-10 pr-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                    required
                   />
+                 
                 </div>
+                  {identifier && isNPWP(identifier) && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Login menggunakan NPWP
+                    </p>
+                  )}  
               </div>
 
               <div>

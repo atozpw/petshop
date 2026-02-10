@@ -91,7 +91,7 @@
               Kembali ke Keranjang
             </Link>
 
-            <h1 className="text-4xl font-bold text-primary mb-8">Checkout Produk</h1>
+            <h1 className="text-4xl font-bold text-default-foreground mb-8">Checkout Produk</h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Checkout Form */}

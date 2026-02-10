@@ -1,35 +1,50 @@
 // lib/api.ts
+let loadingCount = 0
+let globalLoadingHandler: ((loading: boolean) => void) | null = null
+
+export function setGlobalLoadingHandler(handler: (loading: boolean) => void) {
+  globalLoadingHandler = handler
+}
+
 export async function apiFetch(
   endpoint: string,
   options: RequestInit = {},
-  token?: string
+  token?: string,
+  withLoading: boolean = false
 ) {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}${endpoint}`,
-    {
+  try {
+    if (withLoading) {
+      loadingCount++
+      globalLoadingHandler?.(true)
+    }
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...options.headers,
       },
+    })
+
+    let data: any = null
+    try {
+      data = await res.json()
+    } catch {}
+
+    if (!res.ok) throw data || { message: "Terjadi kesalahan server" }
+
+    return data
+  } finally {
+    if (withLoading) {
+      loadingCount--
+      if (loadingCount === 0) {
+        globalLoadingHandler?.(false)
+      }
     }
-  )
-
-  let data: any = null
-
-  try {
-    data = await res.json()
-  } catch {
-    // response bukan JSON (misalnya 204)
   }
+}
 
-  if (!res.ok) {
-    throw data || { message: "Terjadi kesalahan server" }
-  }
-
-  return data
-} 
 
 export async function fetchProducts(params?: URLSearchParams) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/products${params ? `?${params}` : ""}`
@@ -130,7 +145,8 @@ export async function updateCartItemAPI(
       method: "PUT",
       body: JSON.stringify({ quantity }),
     },
-    token
+    token,
+    true 
   )
 }
 
@@ -142,7 +158,8 @@ export async function deleteCartItemAPI(
   return apiFetch(
     `/cart/${cartItemId}`,
     { method: "DELETE" },
-    token
+    token,
+    true
   )
 }
 
@@ -153,14 +170,15 @@ export const clearCartAPI = async (token?: string) => {
     {
       method: "DELETE",
     },
-    token
+    token,
+    true
   )
 }
 
 export const getMyOrdersAPI = async (token?: string) =>{
   return apiFetch("/orders/my", {
     method: "GET",
-  }, token)
+  }, token, true)
 }
   
 
