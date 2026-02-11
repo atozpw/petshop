@@ -9,13 +9,12 @@
   import { useCart } from "@/context/cart-context"
   import { useAuth } from "@/context/auth-context"
   import { CreditCard, Wallet, Building2, Truck, ArrowLeft } from "lucide-react"
-  import { generateOrderId } from "@/lib/product-order-data"
-  import type { ProductOrder } from "@/lib/product-order-data"
   import Image from "next/image"
+  import { apiFetch, } from "@/lib/api"
 
   export default function CheckoutProductContent() {
     const router = useRouter()
-    const { cart, total, clearCart } = useCart()
+    const { viewCart, total, clearCart } = useCart()
     const { user } = useAuth()
     const [paymentMethod, setPaymentMethod] = useState("credit-card")
     const [isProcessing, setIsProcessing] = useState(false)
@@ -30,31 +29,42 @@
       }
 
       setIsProcessing(true)
-      // Simulate payment processing
-      await new Promise((resolve) => setTimeout(resolve, 2000))
 
-      const orderId = generateOrderId()
-      const newOrder: ProductOrder = {
-        id: orderId,
-        userId: user.id,
-        items: cart,
-        subtotal: total,
-        tax: taxAmount,
-        total: finalTotal,
-        paymentMethod: paymentMethod,
-        status: "confirmed",
-        createdAt: new Date().toISOString(),
+      try {
+        const token = localStorage.getItem("petshop-token")
+
+        const res = await apiFetch(
+          "/checkout",
+          {
+            method: "POST",
+            body: JSON.stringify({
+              shipping_cost: 0,
+              notes: null,
+            }),
+          },
+          token
+        )
+
+        console.log("ORDER CREATED:", res.data)
+
+        // kosongkan cart context
+        clearCart()
+
+        // redirect success
+        router.push(`/checkout-product/success?order=${res.data.number}`)
+      } catch (err: any) {
+        console.error("Checkout error:", err)
+
+        alert(
+          err?.response?.data?.message ||
+          "Terjadi kesalahan saat checkout. Coba lagi."
+        )
+      } finally {
+        setIsProcessing(false)
       }
-
-      const existingOrders = JSON.parse(localStorage.getItem("petshop-product-orders") || "[]")
-      existingOrders.push(newOrder)
-      localStorage.setItem("petshop-product-orders", JSON.stringify(existingOrders))
-
-      clearCart()
-      router.push("/checkout-product/success")
     }
 
-    if (cart.length === 0) {
+    if (viewCart.length === 0) {
       return (
         <>
           <Header />
@@ -81,7 +91,7 @@
               Kembali ke Keranjang
             </Link>
 
-            <h1 className="text-4xl font-bold text-primary mb-8">Checkout Produk</h1>
+            <h1 className="text-4xl font-bold text-default-foreground mb-8">Checkout Produk</h1>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
               {/* Checkout Form */}
@@ -109,51 +119,36 @@
                 <div className="bg-white rounded-lg border border-border p-6">
                   <h2 className="text-2xl font-bold text-foreground mb-4">Pesanan Anda</h2>
                   <div className="space-y-3 border-b border-border pb-6">
-                    {cart.map((item) => {
-                      const displayPrice = item.variantPrice || item.price
+                    {viewCart.map((item) => (
+                    <div
+                      key={item.cartItemId}
+                      className="flex justify-between items-center"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="relative w-16 h-16 rounded-md overflow-hidden border bg-muted">
+                          <Image
+                            src={item.image || "/no-image.png"}
+                            alt={item.name || "Produk"}
+                            fill
+                            className="object-cover"
+                          />
+                        </div>
 
-                      return (
-                        <div key={`${item.id}-${JSON.stringify(item.variants || {})}`}
-                            className="flex justify-between items-center">
-                          
-                          <div className="flex items-center gap-3">
-                            <div className="relative w-16 h-16 rounded-md overflow-hidden border bg-muted">
-                              <Image
-                                src={item.image || "/no-image.png"}
-                                alt={item.name}
-                                onError={(e) => {
-                                  e.currentTarget.onerror = null
-                                  e.currentTarget.src = "/no-image.png"
-                                }}
-                                fill
-                                className="object-cover"
-                              />
-                            </div>
+                        <div>
+                          <p className="font-semibold">{item.name}</p>
 
-                            <div>
-                              <p className="font-semibold">{item.name}</p>
-
-                              {/* VARIAN */}
-                              {item.variants && Object.keys(item.variants).length > 0 && (
-                                <p className="text-xs text-muted-foreground">
-                                  {Object.entries(item.variants)
-                                    .map(([k, v]) => `${k}: ${v}`)
-                                    .join(", ")}
-                                </p>
-                              )}
-
-                              <p className="text-sm text-muted-foreground">
-                                Qty: {item.quantity}
-                              </p>
-                            </div>
-                          </div>
-
-                          <p className="font-semibold">
-                            Rp {(displayPrice * item.quantity).toLocaleString()}
+                          <p className="text-sm text-muted-foreground">
+                            Qty: {item.quantity}
                           </p>
                         </div>
-                      )
-                    })}
+                      </div>
+
+                      <p className="font-semibold">
+                        Rp {(item.price * item.quantity).toLocaleString("id-ID")}
+                      </p>
+                    </div>
+                  ))}
+
 
                   </div>
                 </div>

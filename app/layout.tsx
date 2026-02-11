@@ -3,9 +3,6 @@ import type { Metadata } from "next"
 import { Geist, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import ClientProviders from "./client-providers" 
-import { CartProvider } from "@/context/cart-context"
-import { AuthProvider } from "@/context/auth-context"
-import { DarkReaderProvider } from "@/components/dark-reader-provider"
 
 const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
@@ -30,14 +27,10 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="id">
-      <body className={`font-sans antialiased`}>
-        <AuthProvider>
-          <CartProvider>
-            <DarkReaderProvider>
-              {children}
-            </DarkReaderProvider>
-          </CartProvider>
-        </AuthProvider>
+      <body className="font-sans antialiased">
+        <ClientProviders>
+          {children}
+        </ClientProviders>
       </body>
     </html>
   )

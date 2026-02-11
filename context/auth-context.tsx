@@ -4,6 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react"
 import type { User } from "@/lib/auth"
 import { apiFetch } from "@/lib/api"
 
+
 interface AuthContextType {
   user: User | null
   isAuthenticated: boolean
@@ -77,11 +78,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         token
       )
 
-      // ✅ HAPUS SETELAH BERHASIL
       localStorage.removeItem("petshop-cart")
+      localStorage.setItem("petshop-cart-source", "db")
     } catch (err) {
       console.error("Failed to sync guest cart:", err)
-      // ❗ jangan hapus localStorage kalau gagal
+     
     }
   }
 
@@ -96,7 +97,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem("petshop-user", JSON.stringify(user))
     localStorage.setItem("petshop-token", token)
 
-    // 🔥 INI TEMPAT YANG BENAR
     await syncGuestCartToDB(token)
   }
 
@@ -119,6 +119,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       setToken(null)
       localStorage.removeItem("petshop-user")
       localStorage.removeItem("petshop-token")
+      localStorage.removeItem("petshop-cart")
+      localStorage.removeItem("petshop-cart-source")
+      window.location.href = "/login" 
     }
   }
 

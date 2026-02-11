@@ -10,13 +10,9 @@ export default async function ProductPage({
 }) {
   const { slug } = await params
 
-  // console.log("SLUG FROM ROUTE:", slug)
-
   if (!slug) notFound()
 
   const product: Product | null = await fetchProduct(slug)
-
-  // console.log("SERVER PRODUCT DETAIL:", product)
 
   if (!product) notFound()
 

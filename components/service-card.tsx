@@ -37,9 +37,9 @@ export function ServiceCard({ id, name, description, price, image, duration, rat
           </div>
         </div>
 
-        <p className="text-sm text-muted-foreground line-clamp-2">{description}</p>
+        <p className="text-sm text-default-500 line-clamp-2">{description}</p>
 
-        <div className="flex items-center justify-between text-xs text-muted-foreground">
+        <div className="flex items-center justify-between text-xs text-default-500">
           <span>{duration}</span>
           {price > 0 && <span className="font-semibold">Rp {price.toLocaleString()}</span>}
         </div>

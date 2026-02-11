@@ -9,6 +9,7 @@ import { Footer } from "@/components/footer"
 import { Button } from "@/components/ui/button"
 import { useCart } from "@/context/cart-context"
 import type { Product } from "@/lib/product-data"
+import { toast } from "@/components/ui/use-toast"
 
 export default function ProductClient({ product }: { product: Product }) {
   const { addToCart } = useCart()
@@ -37,7 +38,11 @@ export default function ProductClient({ product }: { product: Product }) {
     })
 
 
-    alert("Ditambahkan ke keranjang ✓")
+    toast({
+      title: "Berhasil ditambahkan ke keranjang",
+      description: "Produk berhasil ditambahkan ke keranjang.",
+      variant: "info",
+    })
     setQuantity(1)
     setSelectedVariantId(null)
   }

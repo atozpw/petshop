@@ -133,7 +133,7 @@
                     <div
                       className="w-15 h-12 flex items-center justify-center
                                 rounded-xl
-                                text-primary
+                                text-default-400 bg-default-100
                                 group-hover:bg-primary/10
                                 transition-colors duration-300"
                     >
