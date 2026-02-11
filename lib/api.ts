@@ -9,6 +9,7 @@ export async function apiFetch(
     {
       ...options,
       headers: {
+        "Accept": "application/json",
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...options.headers,
@@ -29,7 +30,7 @@ export async function apiFetch(
   }
 
   return data
-} 
+}
 
 export async function fetchProducts(params?: URLSearchParams) {
   const url = `${process.env.NEXT_PUBLIC_API_URL}/products${params ? `?${params}` : ""}`
