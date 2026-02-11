@@ -21,6 +21,7 @@ export async function apiFetch(
     const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}${endpoint}`, {
       ...options,
       headers: {
+        "Accept": "application/json",
         "Content-Type": "application/json",
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
         ...options.headers,
@@ -30,7 +31,7 @@ export async function apiFetch(
     let data: any = null
     try {
       data = await res.json()
-    } catch {}
+    } catch { }
 
     if (!res.ok) throw data || { message: "Terjadi kesalahan server" }
 
@@ -146,7 +147,7 @@ export async function updateCartItemAPI(
       body: JSON.stringify({ quantity }),
     },
     token,
-    true 
+    true
   )
 }
 
@@ -175,12 +176,12 @@ export const clearCartAPI = async (token?: string) => {
   )
 }
 
-export const getMyOrdersAPI = async (token?: string) =>{
+export const getMyOrdersAPI = async (token?: string) => {
   return apiFetch("/orders/my", {
     method: "GET",
   }, token, true)
 }
-  
+
 
 
 
