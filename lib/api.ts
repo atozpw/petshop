@@ -165,7 +165,7 @@ export async function deleteCartItemAPI(
 }
 
 
-export const clearCartAPI = async (token?: string) => {
+export async function clearCartAPI (token?: string) {
   return apiFetch(
     "/cart/clear",
     {
@@ -179,8 +179,17 @@ export const clearCartAPI = async (token?: string) => {
 export const getMyOrdersAPI = async (token?: string) => {
   return apiFetch("/orders/my", {
     method: "GET",
-  }, token, true)
+  }, token)
 }
+
+export async function getOrderDetailAPI( orderNumber: string, token?: string ) {
+  return apiFetch(
+    `/orders/${orderNumber}`,
+    { method: "GET" },
+    token
+  )
+}
+
 
 
 

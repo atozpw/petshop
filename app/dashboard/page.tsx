@@ -3,19 +3,32 @@
 import { useEffect, useState } from "react"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { User, LogOut, Calendar, Clock, PawPrint } from "lucide-react"
+import { 
+  User, LogOut, Package, Clock, CheckCircle2, MapPin, 
+  Settings, CreditCard, Heart, ChevronRight, Calendar, PawPrint 
+} from "lucide-react"
 import Link from "next/link"
 import { useAuth } from "@/context/auth-context"
 import { useRouter } from "next/navigation"
 import { cn } from "@/lib/utils"
-import type { Booking } from "@/lib/booking-data"
 import { getMyOrdersAPI } from "@/lib/api"
+import type { Booking } from "@/lib/booking-data"
+
+
+type Order = {
+  id: string
+  number: string
+  created_at: string
+  status: "pending" | "processing" | "shipped" | "completed" | "cancelled"
+  grand_total: number
+  items_count?: number
+}
 
 export default function DashboardPage() {
   const { user, logout } = useAuth()
   const router = useRouter()
+  const [orders, setOrders] = useState<Order[]>([])
   const [bookings, setBookings] = useState<Booking[]>([])
-  const [orders, setOrders] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -24,130 +37,156 @@ export default function DashboardPage() {
       return
     }
 
-    // sementara masih local
-    const bookingData = JSON.parse(localStorage.getItem("bookings") || "[]")
-    setBookings(bookingData)
-
-    // order dari backend
-    const fetchOrders = async () => {
+    const fetchData = async () => {
       try {
         const token = localStorage.getItem("petshop-token")
-        if (!token) return
-        const res = await getMyOrdersAPI(token)
-        setOrders(res.data)
+        if (token) {
+          const res = await getMyOrdersAPI(token)
+          setOrders(res.data || [])
+        }
       } catch (err) {
-        console.error("Failed fetch orders", err)
-      } finally {
-        setLoading(false)
+        console.error(err)
       }
+
+      const bookingData = JSON.parse(localStorage.getItem("bookings") || "[]")
+      setBookings(bookingData)
+
+      setLoading(false)
     }
 
-    fetchOrders()
-  }, [user])
-
+    fetchData()
+  }, [user, router])
 
   if (!user) return null
-  if (loading) return <div className="min-h-screen bg-background" />
+  if (loading) return <div className="min-h-screen bg-background animate-pulse" />
 
-  const pendingBooking = bookings.filter(b => b.status === "pending").length
-  const completedBooking = bookings.filter(b => b.status === "completed").length
-
-  const totalOrders = orders.length
+  const pendingOrders = orders.filter(o => o.status === "pending" || o.status === "processing").length
   const completedOrders = orders.filter(o => o.status === "completed").length
-  const pending = bookings.filter(b => b.status === "pending").length
-  const confirmed = bookings.filter(b => b.status === "confirmed").length
+
+  const pendingBookings = bookings.filter(b => b.status === "pending").length
+  const completedBookings = bookings.filter(b => b.status === "completed").length
 
   return (
     <>
       <Header />
 
-      <main className="min-h-screen bg-gradient-to-b from-background to-muted/30 pb-20">
-        <div className="container max-w-6xl mx-auto px-4 py-10 md:py-16">
-          {/* Profile Card */}
-          <div className="bg-white/70 backdrop-blur-md border border-border/50 rounded-2xl p-6 md:p-8 shadow-sm mb-10">
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6">
-              <div className="flex items-center gap-5">
-                <div className="w-16 h-16 md:w-20 md:h-20 rounded-2xl bg-gradient-to-br from-primary to-accent flex items-center justify-center shadow-md">
-                  <User className="h-8 w-8 md:h-10 md:w-10 text-white" />
+      <main className="min-h-screen bg-muted/30 pb-16">
+        <div className="container max-w-7xl mx-auto px-4 py-8 md:py-12">
+
+          {/* PROFILE */}
+          <div className="bg-card border rounded-2xl p-6 md:p-7 shadow-sm mb-8">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center">
+                  <User className="h-8 w-8 text-primary" />
                 </div>
                 <div>
-                  <h1 className="text-2xl md:text-3xl font-bold tracking-tight">{user.name}</h1>
-                  <p className="text-muted-foreground mt-1">{user.email}</p>
+                  <h1 className="text-2xl font-bold">{user.name}</h1>
+                  <p className="text-muted-foreground">{user.email}</p>
                 </div>
               </div>
 
-              <button
-                onClick={() => { logout(); router.replace("/login") }}
-                className="flex items-center gap-2 px-5 py-2.5 rounded-xl border border-red-200/80 text-red-600 hover:bg-red-50/80 transition-colors font-medium"
-              >
-                <LogOut size={18} />
-                Keluar
-              </button>
-            </div>
-          </div>
+              <div className="flex items-center gap-3">
+                <Link href="/dashboard/profile">
+                  <button className="px-4 py-2 rounded-lg border hover:bg-muted transition">
+                    Edit Profil
+                  </button>
+                </Link>
 
-          {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-12">
-            <StatCard icon={PawPrint} label="Total Booking" value={bookings.length} />
-            <StatCard icon={Calendar} label="Menunggu" value={pending} accent />
-            <StatCard icon={Clock} label="Dikonfirmasi" value={confirmed} accent />
-            <StatCard icon={PawPrint} label="Selesai" value={bookings.filter(b => b.status === "completed").length} />
-          </div>
-
-          {/* Bookings */}
-          <section>
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl md:text-3xl font-bold tracking-tight">Riwayat Booking</h2>
-              <Link href="/booking" className="text-primary hover:underline text-sm font-medium">
-                Pesan baru →
-              </Link>
-            </div>
-
-            {bookings.length === 0 ? (
-              <EmptyState />
-            ) : (
-              <div className="space-y-4 md:space-y-5">
-                {bookings.map(booking => (
-                  <BookingCard key={booking.id} booking={booking} />
-                ))}
+                <button
+                  onClick={() => { logout(); router.replace("/login") }}
+                  className="px-4 py-2 rounded-lg bg-destructive text-white hover:bg-destructive/90"
+                >
+                  Keluar
+                </button>
               </div>
-            )}
-          </section>
 
-          {/* Orders */}
-          <section className="mt-16">
-            <h2 className="text-2xl font-bold mb-6">Riwayat Order</h2>
+            </div>
+          </div>
 
-            {orders.length === 0 ? (
-              <div className="text-muted-foreground">Belum ada order</div>
-            ) : (
-              <div className="space-y-4">
-                {orders.map(order => (
-                  <div key={order.id} className="bg-white border rounded-xl p-5">
-                    <div className="flex justify-between">
-                      <div>
-                        <p className="font-semibold">#{order.number}</p>
-                        <p className="text-sm text-muted-foreground">
-                          {order.created_at}
-                        </p>
-                      </div>
+          {/* STATS */}
+          <div className="grid grid-cols-2 md:grid-cols-5 gap-5 mb-10">
+            <StatCard icon={Package} label="Total Pesanan" value={orders.length} />
+            <StatCard icon={Clock} label="Menunggu" value={pendingOrders} accent />
+            <StatCard icon={CheckCircle2} label="Selesai" value={completedOrders} accent />
+            <StatCard icon={Calendar} label="Booking Pending" value={pendingBookings} accent />
+            <StatCard icon={PawPrint} label="Booking Selesai" value={completedBookings} accent />
+          </div>
 
-                      <span className="text-sm font-medium">
-                        {order.status}
-                      </span>
-                    </div>
+          {/* GRID UTAMA */}
+          <div className="grid md:grid-cols-4 gap-6">
 
-                    <div className="text-right font-bold text-primary mt-3">
-                      Rp {Number(order.grand_total).toLocaleString()}
-                    </div>
+            {/* SIDEBAR */}
+            <div className="md:col-span-1">
+              <div className="bg-card border rounded-xl shadow-sm sticky top-6">
+                <DashboardMenu />
+              </div>
+            </div>
+
+            {/* CONTENT */}
+            <div className="md:col-span-3 space-y-8">
+
+              {/* PESANAN */}
+              <section className="bg-card border rounded-xl p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-bold">Pesanan Terbaru</h2>
+                  <Link href="/orders" className="text-primary text-sm hover:underline">
+                    Lihat semua
+                  </Link>
+                </div>
+
+                {orders.length === 0 ? (
+                  <EmptyOrders />
+                ) : (
+                  <div className="space-y-4">
+                    {orders.slice(0, 2).map(order => (
+                      <OrderCard key={order.id} order={order} />
+                    ))}
                   </div>
-                ))}
-              </div>
-            )}
-          </section>
+                )}
+              </section>
 
+              {/* BOOKING */}
+              <section className="bg-card border rounded-xl p-6 shadow-sm">
+                <div className="flex items-center justify-between mb-6">
+                  <h2 className="text-xl font-bold">Booking Layanan</h2>
+                  <Link href="/booking" className="text-primary text-sm hover:underline">
+                    Buat booking
+                  </Link>
+                </div>
+
+                {bookings.length === 0 ? (
+                  <EmptyBookings />
+                ) : (
+                  <div className="space-y-4">
+                    {bookings.slice(0, 5).map(booking => (
+                      <BookingCard key={booking.id} booking={booking} />
+                    ))}
+                  </div>
+                )}
+              </section>
+
+              {/* SETTINGS */}
+              <section className="bg-card border rounded-xl p-6 shadow-sm">
+                <h2 className="text-xl font-bold mb-6 flex items-center gap-2">
+                  <Settings size={18} />
+                  Pengaturan Akun
+                </h2>
+
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <QuickSettingCard icon={User} title="Profil" desc="Ubah data pribadi" href="/dashboard/profile" />
+                  <QuickSettingCard icon={MapPin} title="Alamat" desc="Kelola alamat pengiriman" href="/dashboard/addresses" />
+                  <QuickSettingCard icon={CreditCard} title="Pembayaran" desc="Metode pembayaran" href="/dashboard/payment" />
+                  <QuickSettingCard icon={Heart} title="Wishlist" desc="Produk favorit" href="/wishlist" />
+                </div>
+              </section>
+
+            </div>
+          </div>
         </div>
       </main>
+
 
       <Footer />
     </>
@@ -156,13 +195,13 @@ export default function DashboardPage() {
 
 function StatCard({ icon: Icon, label, value, accent = false }: any) {
   return (
-    <div className="bg-white/70 backdrop-blur-md border border-border/50 rounded-xl p-5 md:p-6 shadow-sm">
-      <div className="flex items-center gap-3">
+    <div className="bg-card/80 border rounded-xl p-5 shadow-sm hover:shadow transition-shadow">
+      <div className="flex items-center gap-3.5">
         <div className={cn(
-          "p-2.5 rounded-lg",
+          "p-3 rounded-lg",
           accent ? "bg-accent/10 text-accent" : "bg-primary/10 text-primary"
         )}>
-          <Icon size={20} />
+          <Icon size={22} />
         </div>
         <div>
           <p className="text-xs md:text-sm text-muted-foreground">{label}</p>
@@ -173,6 +212,70 @@ function StatCard({ icon: Icon, label, value, accent = false }: any) {
   )
 }
 
+
+function OrderCard({ order }: { order: Order }) {
+  const statusMap: Record<string, string> = {
+    pending: "text-amber-600",
+    processing: "text-blue-600",
+    shipped: "text-indigo-600",
+    completed: "text-emerald-600",
+    cancelled: "text-rose-600",
+  }
+
+  const statusLabel: Record<string, string> = {
+    pending: "Menunggu",
+    processing: "Diproses",
+    shipped: "Dikirim",
+    completed: "Selesai",
+    cancelled: "Dibatalkan",
+  }
+
+console.log(order);
+
+  return (
+    <Link
+      href={`/dashboard/orders/${order.number}`}
+      className="block group"
+    >
+      <div className="border rounded-xl px-5 py-4 bg-card hover:bg-muted/40 transition">
+
+        {/* TOP */}
+        <div className="flex justify-between items-start">
+          <div>
+            <p className="text-sm font-medium">
+              #{order.number}
+            </p>
+            <p className="text-xs text-muted-foreground mt-0.5">
+              {new Date(order.created_at).toLocaleDateString("id-ID", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
+            </p>
+          </div>
+
+          <span
+            className={`text-xs font-medium capitalize ${
+              statusMap[order.status] || "text-muted-foreground"
+            }`}
+          >
+            {statusLabel[order.status] || order.status}
+          </span>
+        </div>
+
+        {/* BOTTOM */}
+        <div className="mt-3 flex justify-between items-end">
+          <p className="text-sm bold text-primary">
+             Rp {Number(order.grand_total).toLocaleString("id-ID")}
+          </p>
+        </div>
+
+      </div>
+    </Link>
+  )
+}
+
+
 function BookingCard({ booking }: { booking: Booking }) {
   const statusStyles = {
     pending:    "bg-amber-50 text-amber-700 border-amber-200",
@@ -182,65 +285,89 @@ function BookingCard({ booking }: { booking: Booking }) {
   }
 
   return (
-    <div className="bg-white/80 backdrop-blur-sm border border-border/40 rounded-xl p-6 hover:shadow-md transition-all duration-200">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+    <div className="bg-card border rounded-xl p-5 hover:shadow-md transition-all">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
         <div>
-          <h3 className="font-semibold text-lg">{booking.serviceId}</h3>
+          <h3 className="font-semibold text-base">{booking.serviceId}</h3>
           <p className="text-sm text-muted-foreground mt-0.5">ID: {booking.id}</p>
         </div>
         <span className={cn(
           "px-3.5 py-1 rounded-full text-xs font-medium border",
-          statusStyles[booking.status] || "bg-gray-50 text-gray-700 border-gray-200"
+          statusStyles[booking.status] || "bg-gray-100 text-gray-700 border-gray-200"
         )}>
           {booking.status === "pending" ? "Menunggu" :
            booking.status === "confirmed" ? "Dikonfirmasi" :
            booking.status === "completed" ? "Selesai" : "Dibatalkan"}
         </span>
       </div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-sm">
+        <div className="flex items-center gap-2 text-muted-foreground"><PawPrint size={16} /> {booking.petName}</div>
+        <div className="flex items-center gap-2 text-muted-foreground"><Calendar size={16} /> {booking.date}</div>
+        <div className="flex items-center gap-2 text-muted-foreground"><Clock size={16} /> {booking.time}</div>
+        <div className="text-right font-bold text-primary">Rp {booking.totalPrice.toLocaleString("id-ID")}</div>
+      </div>
+    </div>
+  )
+}
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 text-sm mb-5">
-        <InfoItem icon={PawPrint} label={booking.petName} />
-        <InfoItem icon={Calendar} label={booking.date} />
-        <InfoItem icon={Clock} label={booking.time} />
-        <div className="text-right font-bold text-primary self-end">
-          Rp {booking.totalPrice.toLocaleString()}
+function QuickSettingCard({ icon: Icon, title, desc, href }: any) {
+  return (
+    <Link href={href} className="group block p-5 border rounded-xl hover:border-primary/50 transition-colors">
+      <div className="flex items-start gap-4">
+        <div className="p-3 rounded-lg bg-primary/5 text-primary"><Icon size={20} /></div>
+        <div className="flex-1">
+          <h4 className="font-semibold group-hover:text-primary transition-colors">{title}</h4>
+          <p className="text-sm text-muted-foreground mt-1">{desc}</p>
         </div>
+        <ChevronRight size={18} className="text-muted-foreground/50 group-hover:text-primary transition-colors" />
       </div>
+    </Link>
+  )
+}
 
-      <div className="flex gap-3 pt-4 border-t border-border/50">
-        <button className="flex-1 py-2.5 border border-primary/30 text-primary rounded-lg text-sm font-medium hover:bg-primary/5 transition-colors">
-          Detail
-        </button>
-        {booking.status === "pending" && (
-          <button className="flex-1 py-2.5 border border-red-200 text-red-600 rounded-lg text-sm font-medium hover:bg-red-50 transition-colors">
-            Batalkan
-          </button>
-        )}
-      </div>
+function DashboardMenu() {
+  const items = [
+    { icon: Package, label: "Pesanan", href: "/dashboard/orders" },
+    { icon: Calendar, label: "Booking", href: "/dashboard/bookings" },
+    { icon: MapPin, label: "Alamat", href: "/dashboard/addresses" },
+    { icon: Settings, label: "Profil", href: "/dashboard/profile" },
+    // { icon: Heart, label: "Wishlist", href: "/wishlist" },
+  ]
+
+  return (
+    <nav className="p-2">
+      {items.map(item => (
+        <Link
+          key={item.href}
+          href={item.href}
+          className="flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-accent/50 transition-colors text-sm font-medium"
+        >
+          <item.icon size={18} className="text-muted-foreground" />
+          {item.label}
+        </Link>
+      ))}
+    </nav>
+  )
+}
+
+function EmptyOrders() {
+  return (
+    <div className="bg-muted/40 rounded-xl p-10 text-center border border-dashed">
+      <Package className="mx-auto h-12 w-12 text-muted-foreground/60 mb-4" />
+      <h3 className="text-lg font-semibold mb-2">Belum ada pesanan</h3>
+      <p className="text-muted-foreground mb-6">Mulai belanja sekarang</p>
+      <Link href="/shop"><button className="px-8 py-3 bg-primary text-white rounded-xl hover:bg-primary/90">Belanja Sekarang</button></Link>
     </div>
   )
 }
 
-function InfoItem({ icon: Icon, label }: { icon: any, label: string }) {
+function EmptyBookings() {
   return (
-    <div className="flex items-center gap-2 text-muted-foreground">
-      <Icon size={16} />
-      <span>{label}</span>
-    </div>
-  )
-}
-
-function EmptyState() {
-  return (
-    <div className="bg-white/60 backdrop-blur-md border border-border/40 rounded-2xl p-12 text-center">
-      <PawPrint className="mx-auto h-12 w-12 text-muted-foreground/50 mb-4" />
-      <h3 className="text-xl font-semibold text-foreground mb-2">Belum ada booking</h3>
-      <p className="text-muted-foreground mb-6">Mulai pesan layanan favorit hewanmu sekarang</p>
-      <Link href="/booking">
-        <button className="px-8 py-3 bg-primary text-white rounded-xl font-medium hover:bg-primary/90 transition-colors shadow-sm">
-          Pesan Sekarang
-        </button>
-      </Link>
+    <div className="bg-muted/40 rounded-xl p-10 text-center border border-dashed">
+      <Calendar className="mx-auto h-12 w-12 text-muted-foreground/60 mb-4" />
+      <h3 className="text-lg font-semibold mb-2">Belum ada booking</h3>
+      <p className="text-muted-foreground mb-6">Reservasi grooming / dokter hewan</p>
+      <Link href="/booking"><button className="px-8 py-3 bg-primary text-white rounded-xl hover:bg-primary/90">Reservasi Sekarang</button></Link>
     </div>
   )
 }
