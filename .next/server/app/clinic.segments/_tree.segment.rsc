@@ -6,4 +6,4 @@
 :HL["/image/Pict 8.jpeg","image"]
 :HL["/image/Pict 10.jpeg","image"]
 :HL["/icondokter.jpg","image"]
-0:{"buildId":"gTEJbnWa6Ypj8ZQP9S2Lp","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"clinic","paramType":null,"paramKey":"clinic","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
+0:{"buildId":"goSzj1xqPJ6jl5PiTiUjf","tree":{"name":"","paramType":null,"paramKey":"","hasRuntimePrefetch":false,"slots":{"children":{"name":"clinic","paramType":null,"paramKey":"clinic","hasRuntimePrefetch":false,"slots":{"children":{"name":"__PAGE__","paramType":null,"paramKey":"__PAGE__","hasRuntimePrefetch":false,"slots":null,"isRootLayout":false}},"isRootLayout":false}},"isRootLayout":true},"staleTime":300}
