@@ -1,9 +1,0 @@
-[00:00:00.657] Server  LOG     ✓ Ready in 459ms
-[00:00:45.184] Server  ERROR   ⨯ Error: Failed to fetch products
-[00:00:45.404] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:00:45.522] Browser ERROR   uncaughtError: Error: Failed to fetch products
-[00:01:01.637] Server  LOG       Reload env: .env.local
-[00:01:01.795] Server  LOG     ✓ Compiled in 100ms
-[00:01:01.819] Server  WARN    ⚠ Fast Refresh had to perform a full reload due to a runtime error.
-[00:01:02.899] Browser INFO    %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold
-[00:01:03.064] Browser WARN    Image with src "http://localhost:3000/logo.png" has either width or height modified, but not the other. If you use CSS to change the size of your image, also include the styles 'width: "auto"' or 'height: "auto"' to maintain the aspect ratio.
