@@ -332,7 +332,7 @@ function Header() {
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                         type: "text",
                                         placeholder: "Cari produk...",
-                                        className: " w-full rounded-xl bg-white py-2.5 pl-4 pr-10 text-sm outline-none shadow-sm "
+                                        className: "   w-full   rounded-xl   bg-white   py-2.5   pl-4   pr-10   text-sm   outline-none   shadow-sm   "
                                     }, void 0, false, {
                                         fileName: "[project]/components/header.tsx",
                                         lineNumber: 84,
@@ -340,7 +340,7 @@ function Header() {
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__["Search"], {
                                         size: 16,
-                                        className: " absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none "
+                                        className: "   absolute   right-3   top-1/2   -translate-y-1/2   text-muted-foreground   pointer-events-none   "
                                     }, void 0, false, {
                                         fileName: "[project]/components/header.tsx",
                                         lineNumber: 100,
@@ -390,7 +390,7 @@ function Header() {
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                             type: "text",
                                             placeholder: "Cari produk...",
-                                            className: " w-full rounded-xl bg-white py-2.5 pl-4 pr-10 text-sm outline-none shadow-sm "
+                                            className: "   w-full   rounded-xl   bg-white   py-2.5   pl-4   pr-10   text-sm   outline-none   shadow-sm   "
                                         }, void 0, false, {
                                             fileName: "[project]/components/header.tsx",
                                             lineNumber: 122,
@@ -398,7 +398,7 @@ function Header() {
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__["Search"], {
                                             size: 16,
-                                            className: " absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none "
+                                            className: "   absolute   right-3   top-1/2   -translate-y-1/2   text-muted-foreground   pointer-events-none   "
                                         }, void 0, false, {
                                             fileName: "[project]/components/header.tsx",
                                             lineNumber: 137,
@@ -594,7 +594,7 @@ function Header() {
                             children: navItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                     href: item.href,
                                     onClick: ()=>setMobileOpen(false),
-                                    className: " block px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted/50 hover:text-primary transition-colors ",
+                                    className: "   block px-3 py-2.5 rounded-lg   text-sm font-medium   text-muted-foreground   hover:bg-muted/50 hover:text-primary   transition-colors   ",
                                     children: item.label
                                 }, item.href, false, {
                                     fileName: "[project]/components/header.tsx",
@@ -689,7 +689,7 @@ function UserDropdown({ user, onLogout }) {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                 onClick: ()=>setOpen(!open),
-                className: "relative p-2 rounded-lg text-white transition-colors hover:bg-white/10",
+                className: "relative p-2 rounded-lg   text-white   transition-colors   hover:bg-white/10",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
                     className: "h-5 w-5"
                 }, void 0, false, {
@@ -703,7 +703,7 @@ function UserDropdown({ user, onLogout }) {
                 columnNumber: 7
             }, this),
             open && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: " absolute right-0 mt-2 w-56 rounded-xl bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 shadow-xl border border-black/5 dark:border-white/10 origin-top-right animate-in fade-in slide-in-from-top-1 ",
+                className: "   absolute right-0 mt-2 w-56   rounded-xl bg-white text-gray-900   dark:bg-gray-900 dark:text-gray-100   shadow-xl   border border-black/5 dark:border-white/10   origin-top-right   animate-in fade-in slide-in-from-top-1   ",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "px-5 py-4 border-b border-black/5 dark:border-white/10",
@@ -735,7 +735,7 @@ function UserDropdown({ user, onLogout }) {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                 href: "/dashboard",
-                                className: " block px-5 py-2.5 text-sm hover:bg-black/5 dark:hover:bg-white/10 transition-colors ",
+                                className: "   block px-5 py-2.5 text-sm   hover:bg-black/5 dark:hover:bg-white/10   transition-colors   ",
                                 onClick: ()=>setOpen(false),
                                 children: "Dashboard"
                             }, void 0, false, {
@@ -748,7 +748,7 @@ function UserDropdown({ user, onLogout }) {
                                     onLogout();
                                     setOpen(true);
                                 },
-                                className: " flex w-full items-center gap-2 px-5 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors ",
+                                className: "   flex w-full items-center gap-2   px-5 py-2.5 text-sm   text-red-600 dark:text-red-400   hover:bg-red-50 dark:hover:bg-red-950/40   transition-colors   ",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$log$2d$out$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__LogOut$3e$__["LogOut"], {
                                         className: "h-4 w-4"
@@ -818,7 +818,7 @@ function MobileUserSection({ user, onLogout, onClose }) {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                         href: "/dashboard",
                         onClick: onClose,
-                        className: " block px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-muted/50 transition-colors ",
+                        className: "   block px-4 py-2.5 rounded-lg text-sm font-medium   hover:bg-muted/50   transition-colors   ",
                         children: "Dashboard"
                     }, void 0, false, {
                         fileName: "[project]/components/header.tsx",
@@ -830,7 +830,7 @@ function MobileUserSection({ user, onLogout, onClose }) {
                             onLogout();
                             onClose();
                         },
-                        className: " flex w-full items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-colors ",
+                        className: "   flex w-full items-center gap-2   px-4 py-2.5 rounded-lg text-sm font-medium   text-red-600   hover:bg-red-50   transition-colors   ",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$log$2d$out$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__LogOut$3e$__["LogOut"], {
                                 className: "h-4 w-4"
@@ -1286,83 +1286,83 @@ __turbopack_context__.s([
 const SERVICES = [
     {
         id: "1",
-        name: "Grooming",
+        name: "Grooming Professional",
         category: "grooming",
-        description: "Perawatan lengkap: mandi, potong rambut, dan grooming profesional untuk hewan peliharaan Anda",
+        description: "Perawatan lengkap: mandi, potong rambut, dan grooming profesional dengan peralatan modern",
         price: 150000,
-        image: "/dog-grooming.png",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pict%203-fp5Osp3HiwIl3fpL2paC5WWNUd7lVs.jpeg",
         duration: "2 jam",
-        rating: 4.8
+        rating: 4.9
     },
     {
         id: "2",
-        name: "Pet Hotel",
+        name: "Pet Boarding Nyaman",
         category: "hotel",
-        description: "Penginapan nyaman dan aman untuk hewan peliharaan Anda dengan perawatan 24 jam",
+        description: "Penginapan mewah dengan fasilitas modern, feeding dan perawatan 24 jam untuk anjing dan kucing",
         price: 250000,
-        image: "/pet-hotel-room.png",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pict%2039-Fl1rbVJHQZA2pc9UV0mk524stvdJxu.jpeg",
         duration: "Per malam",
-        rating: 4.7
+        rating: 4.8
     },
     {
         id: "3",
-        name: "Klinik 24 Jam",
+        name: "Klinik Hewan 24 Jam",
         category: "clinic",
-        description: "Konsultasi, vaksinasi, dan pemeriksaan kesehatan hewan peliharaan Anda sepanjang waktu",
+        description: "Konsultasi, vaksinasi, pemeriksaan kesehatan, dan layanan darurat veteriner kapan saja",
         price: 200000,
-        image: "/pet-clinic-consultation.jpg",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pict%202-IRDC4mtbKDN4xvIRRkff7W1FGyx0tl.jpeg",
         duration: "30 menit - 1 jam",
         rating: 4.9
     },
     {
         id: "4",
-        name: "Pet Pool",
+        name: "Swimming & Water Play",
         category: "pool",
-        description: "Fasilitas kolam renang khusus untuk hewan peliharaan dengan pengawasan profesional",
+        description: "Fasilitas kolam renang khusus untuk hewan peliharaan dengan pengawasan profesional dan aman",
         price: 100000,
-        image: "/pet-swimming-pool.jpg",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pict%2041-P7bBGkB97VQapnxACXn7iLI2pLUZts.jpeg",
         duration: "1 jam",
-        rating: 4.6
+        rating: 4.8
     },
     {
         id: "5",
-        name: "Pet Shop",
+        name: "Pet Shop Premium",
         category: "shop",
-        description: "Lengkapi kebutuhan hewan peliharaan Anda dengan berbagai produk berkualitas premium",
+        description: "Koleksi lengkap makanan premium (Royal Canin, ProPlan) dan aksesori berkualitas tinggi",
         price: 0,
-        image: "/pet-shop-products.jpg",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pict%2030-L9hbbFvPciIGucSHY4yG3kXcKRuAkv.jpeg",
         duration: "Flexible",
-        rating: 4.5
-    },
-    {
-        id: "6",
-        name: "PlayGround",
-        category: "playground",
-        description: "Area bermain aman dan menyenangkan untuk sosialisasi hewan peliharaan Anda",
-        price: 80000,
-        image: "/pet-playground.jpg",
-        duration: "1.5 jam",
         rating: 4.7
     },
     {
+        id: "6",
+        name: "PlayGround Indoor/Outdoor",
+        category: "playground",
+        description: "Area bermain aman dengan artificial grass dan fasilitas modern untuk sosialisasi hewan",
+        price: 80000,
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pict%2043-sCHE0S8vuNQeaW6clSlQMq8RGeZnPi.jpeg",
+        duration: "1.5 jam",
+        rating: 4.8
+    },
+    {
         id: "7",
-        name: "Pakan & Nutrisi",
+        name: "Konsultasi Nutrisi",
         category: "nutrition",
-        description: "Konsultasi gizi dan rekomendasi pakan terbaik untuk kesehatan optimal hewan peliharaan",
+        description: "Konsultasi gizi lengkap dan rekomendasi pakan terbaik sesuai kebutuhan spesifik hewan Anda",
         price: 50000,
-        image: "/pet-nutrition-consultation.jpg",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pict%204-WiXgC9ZETZDHgeNWMlHaS3DXUxqXV8.jpeg",
         duration: "1 jam",
         rating: 4.8
     },
     {
         id: "8",
-        name: "Delivery",
+        name: "Delivery Express",
         category: "delivery",
-        description: "Pengiriman cepat dan aman untuk produk pet shop dan kebutuhan hewan peliharaan ke rumah Anda",
+        description: "Pengiriman cepat dan aman untuk produk pet shop ke seluruh area dengan packaging profesional",
         price: 25000,
-        image: "/pet-delivery-service.jpg",
+        image: "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Pict%2034-m9bHk1mV2t84xS1KeNm9iE056zbrv9.jpeg",
         duration: "1-2 jam",
-        rating: 4.6
+        rating: 4.7
     }
 ];
 const TIME_SLOTS = [
