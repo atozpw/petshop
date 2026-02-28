@@ -109,8 +109,9 @@
           } catch {
             localStorage.removeItem("petshop-cart")
           }
+          setInitialized(true)
         }
-
+        
         setMounted(true)
       }
 
@@ -147,7 +148,11 @@
 
         setViewCart(
           data.items.map((i: any, idx: number) => {
-            const dbItem = cart[idx]
+            const dbItem = cart.find(
+              c =>
+                c.productId === i.product_id &&
+                c.variantId === (i.product_variant_id ?? null)
+            )
 
             return {
               cartItemId: dbItem?.cartItemId, // ← AMBIL DARI DB
@@ -208,7 +213,13 @@
           )
         }
 
-        return [...prev, item]
+        return [
+          ...prev,
+          {
+            ...item,
+            cartItemId: Date.now() // ← ID untuk guest
+          }
+        ]
       })
       
     }

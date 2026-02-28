@@ -23,6 +23,8 @@ export default function PetShopPage() {
   const [page, setPage] = useState(1)
   const [hasNext, setHasNext] = useState(false)
   const [hasPrev, setHasPrev] = useState(false)
+  const [search, setSearch] = useState("")
+
 
   const loadProducts = (params?: URLSearchParams) => {
     setProductLoading(true)
@@ -57,13 +59,17 @@ export default function PetShopPage() {
       params.set("category", selectedCategory)
     }
 
+    if (search.trim()) {
+      params.set("search", search)
+    }
+
     loadProducts(params)
-  }, [selectedCategory, page])
+  }, [selectedCategory, page, search])
 
   
   useEffect(() => {
     setPage(1)
-  }, [selectedCategory])
+  }, [selectedCategory, search])
   
   return (
     <>
@@ -71,7 +77,7 @@ export default function PetShopPage() {
 
       <main className="min-h-screen bg-background md:col-span-3 min-h-[calc(4*16rem)]">
 
-
+        
         {/* ================= MOBILE CATEGORY ================= */}
         <div className="md:hidden sticky top-[86px] z-30 bg-background/95 backdrop-blur border-b">
           <div className="flex gap-2 overflow-x-auto px-4 py-3">
@@ -97,6 +103,7 @@ export default function PetShopPage() {
                 {cat.name}
               </button>
             ))}
+            
           </div>
         </div>
 
@@ -110,12 +117,34 @@ export default function PetShopPage() {
                 className="
                   hidden md:block md:col-span-1
                   sticky top-[200px]
-                  rounded-xl border p-4 bg-card h-fit
+                  rounded-xl border p-4 bg-card h-max
                 "
               >
 
+                
+                <div className="mb-4 flex justify-center">
+                  <div className="w-full relative">
+                    <input
+                      type="text"
+                      placeholder="Cari produk..."
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      className="w-full border rounded-xl px-4 py-3 pr-10
+                                focus:outline-none focus:ring-2 focus:ring-primary"
+                    />
+                    
+                    {search && (
+                      <button
+                        onClick={() => setSearch("")}
+                        className="absolute right-3 top-1/2 -translate-y-1/2
+                                  text-muted-foreground hover:text-foreground"
+                      >
+                        ✕
+                      </button>
+                    )}
+                  </div>
+                </div>
                 <h3 className="font-bold mb-4">Kategori</h3>
-
                 <button
                   onClick={() => setSelectedCategory(null)}
                   className={`w-full text-left px-3 py-2 rounded-lg mb-2 ${
