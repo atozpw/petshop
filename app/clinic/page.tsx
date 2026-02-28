@@ -37,7 +37,7 @@ export default function ClinicPage() {
         {/* Services Grid */}
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-primary mb-12">Layanan Klinik</h2>
+            <h2 className="text-3xl font-bold mb-12">Layanan Klinik</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {services.map((service, idx) => (
                 <div
@@ -56,7 +56,7 @@ export default function ClinicPage() {
         {/* Doctors */}
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-primary mb-12">Tim Dokter Hewan</h2>
+            <h2 className="text-3xl font-bold mb-12">Tim Dokter Hewan</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {doctors.map((doctor, idx) => (
                 <div key={idx} className="bg-white rounded-lg border border-border p-6 text-center">

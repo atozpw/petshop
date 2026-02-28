@@ -314,7 +314,7 @@ function Header() {
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                         type: "text",
                                         placeholder: "Cari produk...",
-                                        className: " w-full rounded-xl bg-white py-2.5 pl-4 pr-10 text-sm outline-none shadow-sm "
+                                        className: "   w-full   rounded-xl   bg-white   py-2.5   pl-4   pr-10   text-sm   outline-none   shadow-sm   "
                                     }, void 0, false, {
                                         fileName: "[project]/components/header.tsx",
                                         lineNumber: 84,
@@ -322,7 +322,7 @@ function Header() {
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__["Search"], {
                                         size: 16,
-                                        className: " absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none "
+                                        className: "   absolute   right-3   top-1/2   -translate-y-1/2   text-muted-foreground   pointer-events-none   "
                                     }, void 0, false, {
                                         fileName: "[project]/components/header.tsx",
                                         lineNumber: 100,
@@ -372,7 +372,7 @@ function Header() {
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
                                             type: "text",
                                             placeholder: "Cari produk...",
-                                            className: " w-full rounded-xl bg-white py-2.5 pl-4 pr-10 text-sm outline-none shadow-sm "
+                                            className: "   w-full   rounded-xl   bg-white   py-2.5   pl-4   pr-10   text-sm   outline-none   shadow-sm   "
                                         }, void 0, false, {
                                             fileName: "[project]/components/header.tsx",
                                             lineNumber: 122,
@@ -380,7 +380,7 @@ function Header() {
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$search$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__Search$3e$__["Search"], {
                                             size: 16,
-                                            className: " absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none "
+                                            className: "   absolute   right-3   top-1/2   -translate-y-1/2   text-muted-foreground   pointer-events-none   "
                                         }, void 0, false, {
                                             fileName: "[project]/components/header.tsx",
                                             lineNumber: 137,
@@ -576,7 +576,7 @@ function Header() {
                             children: navItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                     href: item.href,
                                     onClick: ()=>setMobileOpen(false),
-                                    className: " block px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted/50 hover:text-primary transition-colors ",
+                                    className: "   block px-3 py-2.5 rounded-lg   text-sm font-medium   text-muted-foreground   hover:bg-muted/50 hover:text-primary   transition-colors   ",
                                     children: item.label
                                 }, item.href, false, {
                                     fileName: "[project]/components/header.tsx",
@@ -671,7 +671,7 @@ function UserDropdown({ user, onLogout }) {
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                 onClick: ()=>setOpen(!open),
-                className: "relative p-2 rounded-lg text-white transition-colors hover:bg-white/10",
+                className: "relative p-2 rounded-lg   text-white   transition-colors   hover:bg-white/10",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$user$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__User$3e$__["User"], {
                     className: "h-5 w-5"
                 }, void 0, false, {
@@ -685,7 +685,7 @@ function UserDropdown({ user, onLogout }) {
                 columnNumber: 7
             }, this),
             open && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: " absolute right-0 mt-2 w-56 rounded-xl bg-white text-gray-900 dark:bg-gray-900 dark:text-gray-100 shadow-xl border border-black/5 dark:border-white/10 origin-top-right animate-in fade-in slide-in-from-top-1 ",
+                className: "   absolute right-0 mt-2 w-56   rounded-xl bg-white text-gray-900   dark:bg-gray-900 dark:text-gray-100   shadow-xl   border border-black/5 dark:border-white/10   origin-top-right   animate-in fade-in slide-in-from-top-1   ",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "px-5 py-4 border-b border-black/5 dark:border-white/10",
@@ -717,7 +717,7 @@ function UserDropdown({ user, onLogout }) {
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                                 href: "/dashboard",
-                                className: " block px-5 py-2.5 text-sm hover:bg-black/5 dark:hover:bg-white/10 transition-colors ",
+                                className: "   block px-5 py-2.5 text-sm   hover:bg-black/5 dark:hover:bg-white/10   transition-colors   ",
                                 onClick: ()=>setOpen(false),
                                 children: "Dashboard"
                             }, void 0, false, {
@@ -730,7 +730,7 @@ function UserDropdown({ user, onLogout }) {
                                     onLogout();
                                     setOpen(true);
                                 },
-                                className: " flex w-full items-center gap-2 px-5 py-2.5 text-sm text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/40 transition-colors ",
+                                className: "   flex w-full items-center gap-2   px-5 py-2.5 text-sm   text-red-600 dark:text-red-400   hover:bg-red-50 dark:hover:bg-red-950/40   transition-colors   ",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$log$2d$out$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__LogOut$3e$__["LogOut"], {
                                         className: "h-4 w-4"
@@ -800,7 +800,7 @@ function MobileUserSection({ user, onLogout, onClose }) {
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                         href: "/dashboard",
                         onClick: onClose,
-                        className: " block px-4 py-2.5 rounded-lg text-sm font-medium hover:bg-muted/50 transition-colors ",
+                        className: "   block px-4 py-2.5 rounded-lg text-sm font-medium   hover:bg-muted/50   transition-colors   ",
                         children: "Dashboard"
                     }, void 0, false, {
                         fileName: "[project]/components/header.tsx",
@@ -812,7 +812,7 @@ function MobileUserSection({ user, onLogout, onClose }) {
                             onLogout();
                             onClose();
                         },
-                        className: " flex w-full items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-colors ",
+                        className: "   flex w-full items-center gap-2   px-4 py-2.5 rounded-lg text-sm font-medium   text-red-600   hover:bg-red-50   transition-colors   ",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$lucide$2d$react$2f$dist$2f$esm$2f$icons$2f$log$2d$out$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$export__default__as__LogOut$3e$__["LogOut"], {
                                 className: "h-4 w-4"
@@ -954,14 +954,14 @@ function HeroSection() {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "container mx-auto px-4",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "relative bg-gradient-to-r from-amber-400 via-amber-200 to-gray-200 rounded-3xl overflow-hidden h-60 md:h-80 flex items-center group",
+                    className: "relative bg-gradient-to-r from-amber-400 via-amber-200 to-gray-200   rounded-3xl overflow-hidden h-60 md:h-80 flex items-center group",
                     children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "absolute inset-0",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
                                 src: slide.image,
                                 alt: "Promo banner",
-                                className: "w-full h-full object-cover transition-all duration-700 scale-105 group-hover:scale-110"
+                                className: "w-full h-full object-cover transition-all duration-700   scale-105 group-hover:scale-110"
                             }, void 0, false, {
                                 fileName: "[project]/components/hero-section.tsx",
                                 lineNumber: 85,
@@ -993,16 +993,16 @@ function HeroSection() {
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "container mx-auto px-4 mt-4 md:mt-6",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                    className: "grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8 gap-2 sm:gap-4",
+                    className: "grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8   gap-2 sm:gap-4",
                     children: categories.map((category)=>{
                         const Icon = category.icon;
                         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["default"], {
                             href: category.href,
                             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "group flex flex-col items-center justify-center py-1 cursor-pointer transition",
+                                className: "group flex flex-col items-center justify-center   py-1 cursor-pointer transition",
                                 children: [
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                        className: "w-15 h-12 flex items-center justify-center rounded-xl text-default-400 bg-default-100 group-hover:bg-primary/10 transition-colors duration-300",
+                                        className: "w-15 h-12 flex items-center justify-center   rounded-xl   text-default-400 bg-default-100   group-hover:bg-primary/10   transition-colors duration-300",
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(Icon, {
                                             size: 25
                                         }, void 0, false, {
@@ -1016,7 +1016,7 @@ function HeroSection() {
                                         columnNumber: 21
                                     }, this),
                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
-                                        className: "mt-1.5 text-[10px] sm:text-sm font-medium text-center text-foreground/80 group-hover:text-primary line-clamp-2 min-h-[2.25rem] transition-colors",
+                                        className: "mt-1.5 text-[10px] sm:text-sm font-medium text-center   text-foreground/80   group-hover:text-primary   line-clamp-2 min-h-[2.25rem]   transition-colors",
                                         children: category.name
                                     }, void 0, false, {
                                         fileName: "[project]/components/hero-section.tsx",
@@ -1074,7 +1074,7 @@ function ProductSimpleCard({ product }) {
         href: `/products/${product.slug}`,
         className: "group block",
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-            className: "bg-card rounded-lg border border-border overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl",
+            className: "bg-card rounded-lg border border-border overflow-hidden   transition-all duration-300   hover:-translate-y-1 hover:shadow-xl",
             children: [
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                     className: "relative h-40 bg-muted overflow-hidden",
@@ -1082,7 +1082,7 @@ function ProductSimpleCard({ product }) {
                         src: imageUrl,
                         alt: product.name,
                         fill: true,
-                        className: "object-cover transition-transform duration-300 group-hover:scale-105",
+                        className: "object-cover transition-transform duration-300   group-hover:scale-105",
                         sizes: "(max-width: 768px) 50vw, 20vw"
                     }, void 0, false, {
                         fileName: "[project]/components/products-card.tsx",

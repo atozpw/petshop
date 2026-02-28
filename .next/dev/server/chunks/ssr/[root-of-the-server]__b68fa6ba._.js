@@ -46,7 +46,7 @@ async function apiFetch(endpoint, options = {}, token, withLoading = false) {
             loadingCount++;
             globalLoadingHandler?.(true);
         }
-        const res = await fetch(`${("TURBOPACK compile-time value", "http://petshop-be.test/api")}${endpoint}`, {
+        const res = await fetch(`${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}${endpoint}`, {
             ...options,
             headers: {
                 "Accept": "application/json",
@@ -75,7 +75,7 @@ async function apiFetch(endpoint, options = {}, token, withLoading = false) {
     }
 }
 async function fetchProducts(params) {
-    const url = `${("TURBOPACK compile-time value", "http://petshop-be.test/api")}/products${params ? `?${params}` : ""}`;
+    const url = `${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}/products${params ? `?${params}` : ""}`;
     const res = await fetch(url, {
         cache: "no-store"
     });
@@ -85,7 +85,7 @@ async function fetchProducts(params) {
     return res.json();
 }
 async function fetchProduct(slug) {
-    const res = await fetch(`${("TURBOPACK compile-time value", "http://petshop-be.test/api")}/products/${slug}`, {
+    const res = await fetch(`${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}/products/${slug}`, {
         cache: "no-store"
     });
     if (!res.ok) return null;
@@ -93,7 +93,7 @@ async function fetchProduct(slug) {
     return json.data ?? null;
 }
 async function fetchCategories() {
-    const res = await fetch(`${("TURBOPACK compile-time value", "http://petshop-be.test/api")}/product-categories`, {
+    const res = await fetch(`${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}/product-categories`, {
         cache: "no-store"
     });
     if (!res.ok) throw new Error("Failed to fetch categories");
@@ -231,7 +231,7 @@ function AuthProvider({ children }) {
     /* ================= LOGOUT ================= */ const logout = async ()=>{
         try {
             if (token) {
-                await fetch(`${("TURBOPACK compile-time value", "http://petshop-be.test/api")}/logout`, {
+                await fetch(`${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}/logout`, {
                     method: "POST",
                     headers: {
                         Authorization: `Bearer ${token}`,
@@ -481,6 +481,7 @@ function CartProvider({ children }) {
                 } catch  {
                     localStorage.removeItem("petshop-cart");
                 }
+                setInitialized(true);
             }
             setMounted(true);
         };
@@ -513,7 +514,7 @@ function CartProvider({ children }) {
             const data = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$lib$2f$api$2e$ts__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["validateCartAPI"])(cart);
             // console.log("RAW API ITEMS:", data.items)
             setViewCart(data.items.map((i, idx)=>{
-                const dbItem = cart[idx];
+                const dbItem = cart.find((c)=>c.productId === i.product_id && c.variantId === (i.product_variant_id ?? null));
                 return {
                     cartItemId: dbItem?.cartItemId,
                     productId: i.product_id,
@@ -560,7 +561,10 @@ function CartProvider({ children }) {
             }
             return [
                 ...prev,
-                item
+                {
+                    ...item,
+                    cartItemId: Date.now() // ← ID untuk guest
+                }
             ];
         });
     };
@@ -651,7 +655,7 @@ function CartProvider({ children }) {
         children: children
     }, void 0, false, {
         fileName: "[project]/context/cart-context.tsx",
-        lineNumber: 325,
+        lineNumber: 336,
         columnNumber: 7
     }, this);
 }

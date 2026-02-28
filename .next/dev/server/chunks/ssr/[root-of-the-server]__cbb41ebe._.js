@@ -933,7 +933,7 @@ async function apiFetch(endpoint, options = {}, token, withLoading = false) {
             loadingCount++;
             globalLoadingHandler?.(true);
         }
-        const res = await fetch(`${("TURBOPACK compile-time value", "http://petshop-be.test/api")}${endpoint}`, {
+        const res = await fetch(`${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}${endpoint}`, {
             ...options,
             headers: {
                 "Accept": "application/json",
@@ -962,7 +962,7 @@ async function apiFetch(endpoint, options = {}, token, withLoading = false) {
     }
 }
 async function fetchProducts(params) {
-    const url = `${("TURBOPACK compile-time value", "http://petshop-be.test/api")}/products${params ? `?${params}` : ""}`;
+    const url = `${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}/products${params ? `?${params}` : ""}`;
     const res = await fetch(url, {
         cache: "no-store"
     });
@@ -972,7 +972,7 @@ async function fetchProducts(params) {
     return res.json();
 }
 async function fetchProduct(slug) {
-    const res = await fetch(`${("TURBOPACK compile-time value", "http://petshop-be.test/api")}/products/${slug}`, {
+    const res = await fetch(`${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}/products/${slug}`, {
         cache: "no-store"
     });
     if (!res.ok) return null;
@@ -980,7 +980,7 @@ async function fetchProduct(slug) {
     return json.data ?? null;
 }
 async function fetchCategories() {
-    const res = await fetch(`${("TURBOPACK compile-time value", "http://petshop-be.test/api")}/product-categories`, {
+    const res = await fetch(`${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}/product-categories`, {
         cache: "no-store"
     });
     if (!res.ok) throw new Error("Failed to fetch categories");
@@ -1140,7 +1140,7 @@ async function Home() {
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                    className: "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 md:gap-6",
+                                    className: "grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5   gap-4 md:gap-6",
                                     children: products.slice(0, 20).map((product)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$products$2d$card$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["ProductSimpleCard"], {
                                             product: product
                                         }, product.id, false, {
@@ -1160,7 +1160,7 @@ async function Home() {
                                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$components$2f$ui$2f$button$2e$tsx__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["Button"], {
                                             variant: "outline",
                                             size: "lg",
-                                            className: "px-8 bg-white text-primary hover:bg-primary hover:text-white transition-colors",
+                                            className: "px-8 bg-white text-primary   hover:bg-primary hover:text-white   transition-colors",
                                             children: "Lihat Semua Produk"
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.tsx",
@@ -1197,7 +1197,7 @@ async function Home() {
                                     className: "text-center mb-12",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                            className: "text-3xl md:text-4xl font-bold text-primary mb-3",
+                                            className: "text-3xl md:text-4xl font-bold mb-3",
                                             children: "Layanan Unggulan"
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.tsx",
@@ -1274,7 +1274,7 @@ async function Home() {
                                     className: "text-center mb-12",
                                     children: [
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$rsc$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$rsc$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
-                                            className: "text-3xl md:text-4xl font-bold text-primary mb-3",
+                                            className: "text-3xl md:text-4xl font-bold mb-3",
                                             children: "Testimoni Pelanggan"
                                         }, void 0, false, {
                                             fileName: "[project]/app/page.tsx",

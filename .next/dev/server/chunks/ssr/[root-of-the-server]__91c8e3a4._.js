@@ -86,7 +86,7 @@ async function apiFetch(endpoint, options = {}, token, withLoading = false) {
             loadingCount++;
             globalLoadingHandler?.(true);
         }
-        const res = await fetch(`${("TURBOPACK compile-time value", "http://petshop-be.test/api")}${endpoint}`, {
+        const res = await fetch(`${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}${endpoint}`, {
             ...options,
             headers: {
                 "Accept": "application/json",
@@ -115,7 +115,7 @@ async function apiFetch(endpoint, options = {}, token, withLoading = false) {
     }
 }
 async function fetchProducts(params) {
-    const url = `${("TURBOPACK compile-time value", "http://petshop-be.test/api")}/products${params ? `?${params}` : ""}`;
+    const url = `${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}/products${params ? `?${params}` : ""}`;
     const res = await fetch(url, {
         cache: "no-store"
     });
@@ -125,7 +125,7 @@ async function fetchProducts(params) {
     return res.json();
 }
 async function fetchProduct(slug) {
-    const res = await fetch(`${("TURBOPACK compile-time value", "http://petshop-be.test/api")}/products/${slug}`, {
+    const res = await fetch(`${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}/products/${slug}`, {
         cache: "no-store"
     });
     if (!res.ok) return null;
@@ -133,7 +133,7 @@ async function fetchProduct(slug) {
     return json.data ?? null;
 }
 async function fetchCategories() {
-    const res = await fetch(`${("TURBOPACK compile-time value", "http://petshop-be.test/api")}/product-categories`, {
+    const res = await fetch(`${("TURBOPACK compile-time value", "http://192.168.100.151:8000/api")}/product-categories`, {
         cache: "no-store"
     });
     if (!res.ok) throw new Error("Failed to fetch categories");

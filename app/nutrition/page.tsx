@@ -10,7 +10,7 @@ export default function NutritionPage() {
         {/* Hero */}
         <section className="bg-gradient-to-r from-primary/10 to-accent/10 py-12 border-b border-border">
           <div className="container mx-auto px-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary mb-3">Konsultasi Nutrisi & Diet</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-3">Konsultasi Nutrisi & Diet</h1>
             <p className="text-lg text-muted-foreground max-w-2xl">
               Konsultasi dengan ahli nutrisi untuk pakan terbaik hewan peliharaan Anda
             </p>
@@ -20,7 +20,7 @@ export default function NutritionPage() {
         {/* Services */}
         <section className="py-16">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-primary mb-12">Layanan Kami</h2>
+            <h2 className="text-3xl font-bold mb-12">Layanan Kami</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="bg-white p-8 rounded-lg border border-border">
                 <h3 className="font-semibold text-xl text-foreground mb-4">Konsultasi Nutrisi Dasar</h3>
@@ -54,7 +54,7 @@ export default function NutritionPage() {
         {/* Recommendations */}
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-primary mb-12 text-center">Rekomendasi Pakan Premium</h2>
+            <h2 className="text-3xl font-bold mb-12 text-center">Rekomendasi Pakan Premium</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               {[
                 { name: "Royal Canin", desc: "Makanan premium untuk berbagai usia dan kondisi", type: "Dry Food" },

@@ -27,7 +27,7 @@ export default function PetHotelPage() {
         {/* Hero */}
         <section className="bg-gradient-to-r from-primary/10 to-accent/10 py-12 border-b border-border">
           <div className="container mx-auto px-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary mb-3">Pet Hotel Premium</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-3">Pet Hotel Premium</h1>
             <p className="text-lg text-muted-foreground max-w-2xl">
               Penginapan nyaman dan aman untuk hewan peliharaan Anda seperti di rumah sendiri
             </p>
@@ -70,7 +70,7 @@ export default function PetHotelPage() {
         {/* Amenities */}
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
-            <h2 className="text-3xl font-bold text-primary mb-12 text-center">Fasilitas Pet Hotel</h2>
+            <h2 className="text-3xl font-bold mb-12 text-center">Fasilitas Pet Hotel</h2>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {[
                 "AC 24 Jam",

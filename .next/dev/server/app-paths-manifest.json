@@ -1,5 +1,11 @@
 {
-  "/booking/page": "app/booking/page.js",
-  "/page": "app/page.js",
+  "/cart/page": "app/cart/page.js",
+  "/checkout-product/page": "app/checkout-product/page.js",
+  "/checkout-product/success/page": "app/checkout-product/success/page.js",
+  "/dashboard/orders/[id]/page": "app/dashboard/orders/[id]/page.js",
+  "/dashboard/orders/page": "app/dashboard/orders/page.js",
+  "/dashboard/page": "app/dashboard/page.js",
+  "/login/page": "app/login/page.js",
+  "/pet-shop/page": "app/pet-shop/page.js",
   "/products/[slug]/page": "app/products/[slug]/page.js"
 }

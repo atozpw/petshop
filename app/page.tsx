@@ -112,7 +112,7 @@ export default async function Home() {
         <section className="py-16">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary mb-3">Layanan Unggulan</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-3">Layanan Unggulan</h2>
               <p className="text-lg text-muted-foreground">Pilih layanan terbaik untuk hewan peliharaan Anda</p>
             </div>
 
@@ -136,7 +136,7 @@ export default async function Home() {
         <section className="py-16 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-primary mb-3">Testimoni Pelanggan</h2>
+              <h2 className="text-3xl md:text-4xl font-bold mb-3">Testimoni Pelanggan</h2>
               <p className="text-lg text-muted-foreground">Kepuasan pelanggan adalah prioritas kami</p>
             </div>
 

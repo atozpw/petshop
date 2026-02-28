@@ -12,7 +12,7 @@ export default function ServicesPage() {
         {/* Hero */}
         <section className="bg-gradient-to-r from-primary/10 to-accent/10 py-12 border-b border-border">
           <div className="container mx-auto px-4">
-            <h1 className="text-4xl md:text-5xl font-bold text-primary mb-3">Semua Layanan Kami</h1>
+            <h1 className="text-4xl md:text-5xl font-bold mb-3">Semua Layanan Kami</h1>
             <p className="text-lg text-muted-foreground max-w-2xl">
               Kami menyediakan berbagai layanan lengkap untuk kebutuhan hewan peliharaan Anda
             </p>
