@@ -207,7 +207,7 @@ export function Header() {
       </nav>
 
       {/* DESKTOP MENU */}
-      <div className="hidden lg:flex justify-center text-white text-xs gap-8 pb-2 border-b border-white/10">
+      <div className="hidden lg:flex justify-center text-dark font-bold text-xs gap-8 pb-2 border-b border-white/10">
         <Link href="/"  className="hover:text-white/80 transition-colors">Home</Link>
         <Link href="/pet-shop" className="hover:text-white/80 transition-colors">Pet Shop</Link>
         <Link href="/services" className="hover:text-white/80 transition-colors">Services</Link>
