@@ -15,7 +15,7 @@ export function Header() {
   const { user, isAuthenticated, logout } = useAuth()
   const { cart } = useCart()
 
-  const cartCount = cart.reduce((sum, item) => sum + item.quantity, 0)
+  const cartCount = cart.reduce((sum, item) => sum + Number(item.quantity || 0), 0)
 
   const navItems = [
     { label: "Home", href: "/" },
@@ -30,7 +30,7 @@ export function Header() {
   return (
     <header className="sticky top-0 z-40 bg-accent/100 backdrop-blur shadow-sm">
       {/* Top Bar */}
-      <div className="bg-accent/90 text-white text-xs py-2">
+      <div className="bg-accent/90 text-xs py-2">
         <div className="container mx-auto px-4 flex justify-between items-center">
           <div className="flex gap-4">
             {/* <span>Seller Centre</span>
@@ -67,7 +67,7 @@ export function Header() {
           {/* LOGO */}
           <Link 
             href="/"
-            className="flex items-center gap-2 font-bold text-white flex-shrink-0"
+            className="flex items-center gap-2 font-bold flex-shrink-0"
           >
             <Image
               src="/logo.png"
@@ -113,10 +113,10 @@ export function Header() {
              
           {/* DESKTOP SEARCH */}
           <div className="hidden lg:flex flex-1 mx-8">
-            <div className="hidden lg:flex items-center gap-2 text-white text-sm pr-3">
+            {/* <div className="hidden lg:flex items-center gap-2 text-white text-sm pr-3">
               <Menu size={18} />
               <span className="font-medium">Kategori</span>
-            </div>  
+            </div>   */}
             <div className="relative w-full">
               
               <input

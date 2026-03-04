@@ -31,9 +31,15 @@ export async function apiFetch(
     let data: any = null
     try {
       data = await res.json()
-    } catch { }
+    } catch {}
 
-    if (!res.ok) throw data || { message: "Terjadi kesalahan server" }
+    if (!res.ok) {
+     
+      const error: any = new Error(data?.message || "Terjadi kesalahan server")
+      error.status = res.status      // ← 401, 403, 404, 500, dll
+      error.data = data              // ← tetap bisa akses response body
+      throw error
+    }
 
     return data
   } finally {
@@ -109,6 +115,7 @@ export async function validateCartAPI(
     token
   )
 }
+
 export const addCartAPI = async (
   token: string,
   item: {

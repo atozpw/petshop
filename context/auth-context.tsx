@@ -22,24 +22,58 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   /* ================= LOAD AUTH ================= */
   useEffect(() => {
-    const u = localStorage.getItem("petshop-user")
-    const t = localStorage.getItem("petshop-token")
+    const verifyAuth = async () => {
+      const u = localStorage.getItem("petshop-user")
+      const t = localStorage.getItem("petshop-token")
 
-    if (!u || !t) {
-      setAuthLoading(false)
-      return
+      if (!u || !t) {
+        setAuthLoading(false)
+        return
+      }
+
+      let parsedUser: User | null = null
+      try {
+        parsedUser = JSON.parse(u)
+      } catch {
+        localStorage.removeItem("petshop-user")
+        localStorage.removeItem("petshop-token")
+        setAuthLoading(false)
+        return
+      }
+
+      try {
+        const res = await apiFetch("/profile", {}, t)
+        
+        // ✅ Ambil user dari response, fallback ke localStorage kalau struktur beda
+        const freshUser = res?.data ?? res?.user ?? parsedUser
+        
+        if (!freshUser?.name) {
+          // Response tidak punya data user yang valid → pakai localStorage
+          setUser(parsedUser)
+        } else {
+          setUser(freshUser)
+          // Update localStorage dengan data terbaru
+          localStorage.setItem("petshop-user", JSON.stringify(freshUser))
+        }
+        
+        setToken(t)
+
+      } catch (err: any) {
+        if (err?.status === 401) {
+          localStorage.removeItem("petshop-user")
+          localStorage.removeItem("petshop-token")
+          localStorage.removeItem("petshop-cart")
+        } else {
+          // Network error → pakai localStorage
+          setUser(parsedUser)
+          setToken(t)
+        }
+      } finally {
+        setAuthLoading(false)
+      }
     }
 
-    try {
-      const parsedUser = JSON.parse(u)
-      setUser(parsedUser)
-      setToken(t)
-    } catch {
-      localStorage.removeItem("petshop-user")
-      localStorage.removeItem("petshop-token")
-    }
-
-    setAuthLoading(false)
+    verifyAuth()
   }, [])
 
   /* ================= MERGE GUEST CART ================= */
@@ -83,6 +117,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     } catch (err) {
       console.error("Failed to sync guest cart:", err)
      
+    } finally {
+      // Selalu clear localStorage setelah login, berhasil atau tidak
+      localStorage.removeItem("petshop-cart")
+      localStorage.setItem("petshop-cart-source", "db")
     }
   }
 
@@ -91,13 +129,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const login = async (user: User, token: string) => {
     if (!user || !token) return
 
-    setUser(user)
-    setToken(token)
-
     localStorage.setItem("petshop-user", JSON.stringify(user))
     localStorage.setItem("petshop-token", token)
 
     await syncGuestCartToDB(token)
+    
+    
+    setUser(user)
+    setToken(token)
   }
 
   /* ================= LOGOUT ================= */

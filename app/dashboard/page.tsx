@@ -230,7 +230,7 @@ function OrderCard({ order }: { order: Order }) {
     cancelled: "Dibatalkan",
   }
 
-console.log(order);
+// console.log(order);
 
   return (
     <Link
@@ -356,7 +356,7 @@ function EmptyOrders() {
       <Package className="mx-auto h-12 w-12 text-muted-foreground/60 mb-4" />
       <h3 className="text-lg font-semibold mb-2">Belum ada pesanan</h3>
       <p className="text-muted-foreground mb-6">Mulai belanja sekarang</p>
-      <Link href="/shop"><button className="px-8 py-3 bg-primary text-white rounded-xl hover:bg-primary/90">Belanja Sekarang</button></Link>
+      <Link href="/pet-shop"><button className="px-8 py-3 bg-primary text-white rounded-xl hover:bg-primary/90">Belanja Sekarang</button></Link>
     </div>
   )
 }

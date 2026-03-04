@@ -66,24 +66,28 @@
       
     
     const loadCartFromDB = async () => {
+      const token = localStorage.getItem("petshop-token")
       if (!token) return
 
       setLoading(true)
+      
+      setCart([])
+      localStorage.removeItem("petshop-cart")
+      
       try {
         const res = await apiFetch("/cart", {}, token)
-
         const rawItems = res?.data?.items ?? []
-        const items: CartItem[] = rawItems.map((i: any) => ({
-          cartItemId: i.id,
-          productId: i.product_id,
-          variantId: i.product_variant_id ?? null,
-          quantity: i.quantity,
-        }))
 
-        // console.log("LOADED CART ITEMS FROM DB:", items) 
-        setCart(items)
-        setInitialized(true)  
+        const items: CartItem[] = rawItems.map((i: any) => ({
+          cartItemId: Number(i.id),           // ← pastikan Number
+          productId: Number(i.product_id),
+          variantId: i.product_variant_id ? Number(i.product_variant_id) : null,
+          quantity: Number(i.quantity),
+        }))
         
+        setCart(items)
+        setInitialized(true)
+
       } catch (err) {
         console.error("Gagal load cart dari DB", err)
       } finally {
@@ -141,9 +145,9 @@
       VALIDATE TO BACKEND
     ========================= */
     const validateCart = async () => {
+     const token = localStorage.getItem("petshop-token") 
       try {
-        const data = await validateCartAPI(cart)
-
+        const data = await validateCartAPI(cart, token)
         // console.log("RAW API ITEMS:", data.items)
 
         setViewCart(
@@ -183,28 +187,30 @@
 
     
     const addToCart = async (item: CartItem) => {
-      
       const token = localStorage.getItem("petshop-token")
-      if (isAuthenticated && token){
-        // console.log("ADDING TO CART WITH AUTH")
+      
+      if (isAuthenticated && token) {
         try {
           await addCartAPI(token, item)
           await loadCartFromDB()
-        
           localStorage.removeItem("petshop-cart")
-          localStorage.setItem("petshop-cart-source", "db")
           return
-        } catch (err) {
-          console.error("Failed to sync guest cart:", err)
-        
+        } catch (err: any) {
+          // ✅ Tampilkan error ke user, jangan fallback ke guest
+          toast({
+            title: "Gagal menambah item",
+            description: err?.message || "Coba lagi beberapa saat",
+            variant: "destructive",
+          })
+          return // ← STOP di sini
         }
       }
-      
+
+      // Hanya jalan kalau benar-benar guest (tidak login)
       setCart(prev => {
         const exist = prev.find(
           i => i.productId === item.productId && i.variantId === item.variantId
         )
-
         if (exist) {
           return prev.map(i =>
             i.productId === item.productId && i.variantId === item.variantId
@@ -212,16 +218,8 @@
               : i
           )
         }
-
-        return [
-          ...prev,
-          {
-            ...item,
-            cartItemId: Date.now() // ← ID untuk guest
-          }
-        ]
+        return [...prev, { ...item, cartItemId: Date.now() }]
       })
-      
     }
 
     const updateQuantity = async (item: { productId: number, variantId: number | null , quantity: number }) => {
@@ -268,27 +266,37 @@
 
 
     const removeItem = async (cartItemId: number) => {
-      console.log("REMOVE ITEM CALLED:", cartItemId)
-      if (!cartItemId) return
+      if (!cartItemId || cartItemId <= 0) return
 
       const existing = cart.find(i => i.cartItemId === cartItemId)
+      if (!existing) return
 
-      // optimistic remove
+      const isGuestId = cartItemId > 9999999999
       setCart(prev => prev.filter(i => i.cartItemId !== cartItemId))
 
-      if (!isAuthenticated) return
+      if (!isAuthenticated || isGuestId) return
 
       const token = localStorage.getItem("petshop-token")
       if (!token) return
 
-      try {   
+      try {
         await deleteCartItemAPI(cartItemId, token)
-      } catch (err) {
-        console.log("DELETE ERROR:", JSON.stringify(err))
-
-        // rollback
-        if (existing) {
-          setCart(prev => [...prev, existing])
+      } catch (err: any) {
+        if (err?.status === 403) {
+          // Cart mungkin berubah di server → reload fresh dari DB
+          console.warn("403 on delete, reloading cart from DB...")
+          await loadCartFromDB() // ← reload cart, dapat ID yang benar
+          toast({
+            title: "Sinkronisasi cart",
+            description: "Cart telah diperbarui, coba hapus lagi.",
+          })
+        } else {
+          if (existing) setCart(prev => [...prev, existing]) // rollback
+          toast({
+            title: "Gagal menghapus item",
+            description: err?.message || "Coba lagi",
+            variant: "destructive",
+          })
         }
       }
     }
