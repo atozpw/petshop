@@ -212,6 +212,7 @@ export function Header() {
         <Link href="/pet-shop" className="hover:text-white/80 transition-colors">Pet Shop</Link>
         <Link href="/services" className="hover:text-white/80 transition-colors">Services</Link>
         <Link href="/clinic" className="hover:text-white/80 transition-colors">Clinic</Link>
+        <Link href="/branches" className="hover:text-white/80 transition-colors">Branches</Link>
       </div>
 
       {/* MOBILE MENU */}
