@@ -4,8 +4,8 @@ import type React from "react"
 import { useEffect } from "react"
 import { Suspense, useState } from "react"
 import { useRouter } from "next/navigation"
-import { Header } from "@/components/header"
-import { Footer } from "@/components/footer"
+// import { Header } from "@/components/header"
+// import { Footer } from "@/components/footer"
 import { login } from "@/lib/auth"
 import Link from "next/link"
 import { Mail, Lock } from "lucide-react"
@@ -50,11 +50,11 @@ function LoginContent() {
   }
 
   return (
-    <main className="min-h-screen bg-background py-12">
+    <main className="min-h-screen flex bg-background items-center justify-center">
       <div className="container mx-auto px-4">
+        <img src="/logo.png" alt="Logo" className="mx-auto pb-4" width={150} height={150}/>
         <div className="max-w-md mx-auto">
           <div className="bg-white rounded-lg border border-border p-8 space-y-6">
-
             <div className="text-center space-y-2">
               <h1 className="text-3xl font-bold text-primary">Login</h1>
               <p className="text-muted-foreground">Masuk ke akun Anda</p>
@@ -131,9 +131,9 @@ function LoginContent() {
 export default function LoginPage() {
   return (
     <>
-      <Header />
+      {/* <Header /> */}
         <LoginContent />
-      <Footer />
+      {/* <Footer /> */}
     </>
   )
 }
