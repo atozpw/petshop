@@ -61,7 +61,7 @@ export function ProductSimpleCard({ product }: ProductSimpleCardProps) {
 
           {/* PRICE */}
           <p className="text-base font-bold text-primary">
-            Rp {Number(product.price).toLocaleString("id-ID")}
+            {/* Rp {Number(product.price).toLocaleString("id-ID")} */}
           </p>
         </div>
       </div>

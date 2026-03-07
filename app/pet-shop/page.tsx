@@ -76,39 +76,62 @@ export default function PetShopPage() {
       <Header />
 
       <main className="min-h-screen bg-background md:col-span-3 min-h-[calc(4*16rem)]">
+        {/* ================= HERO ================= */}
+        <div className="relative">
+          <img
+            src="/image/pict 29.jpeg"
+            alt="Hero Image"
+            className="w-full h-40 object-cover"
+          />
+          
+          <div className="absolute inset-0 bg-primary/85 flex items-center justify-center">
+            <div className="text-center text-white px-4">
+              <h1 className="text-3xl font-bold mb-2">Selamat Datang di Pet Shop Kami!</h1>
+              <p className="text-lg mb-4">Temukan berbagai kebutuhan hewan peliharaan Anda dengan mudah</p>
 
+              
+            </div>
+          </div>
+        </div>
         
         {/* ================= MOBILE CATEGORY ================= */}
-        <div className="md:hidden sticky top-[86px] z-30 bg-background/95 backdrop-blur border-b">
-          <div className="flex gap-2 overflow-x-auto px-4 py-3">
-            <button
-              onClick={() => setSelectedCategory(null)}
-               className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap ${
-                !selectedCategory ? "bg-primary text-white" : "bg-muted"
-              }`}
-            >
-              Semua
-            </button>
+        <div className="md:hidden sticky top-26 z-40 bg-background/95 backdrop-blur border-b shadow-sm">
+          <div className="container mx-auto px-4">
+            <div className="flex gap-2 overflow-x-auto py-3">
 
-            {categories.map((cat) => (
               <button
-                key={cat.slug}
-                onClick={() => setSelectedCategory(cat.slug)}
-                className={`px-4 py-2 rounded-full text-sm font-semibold whitespace-nowrap ${
-                  selectedCategory === cat.slug
-                    ? "bg-primary text-white"
-                    : "bg-muted"
+                onClick={() => setSelectedCategory(null)}
+                className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition
+                ${
+                  !selectedCategory
+                    ? "bg-primary text-white shadow"
+                    : "bg-muted hover:bg-muted/80"
                 }`}
               >
-                {cat.name}
+                Semua
               </button>
-            ))}
-            
+
+              {categories.map((cat) => (
+                <button
+                  key={cat.slug}
+                  onClick={() => setSelectedCategory(cat.slug)}
+                  className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition
+                  ${
+                    selectedCategory === cat.slug
+                      ? "bg-primary text-white shadow"
+                      : "bg-muted hover:bg-muted/80"
+                  }`}
+                >
+                  {cat.name}
+                </button>
+              ))}
+
+            </div>
           </div>
         </div>
 
         {/* ================= PRODUCTS ================= */}
-        <section className="py-16">
+        <section className="py-10">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
 
@@ -116,7 +139,7 @@ export default function PetShopPage() {
               <aside
                 className="
                   hidden md:block md:col-span-1
-                  sticky top-[200px]
+                  sticky top-41 self-start
                   rounded-xl border p-4 bg-card h-max
                 "
               >
@@ -190,7 +213,7 @@ export default function PetShopPage() {
                       key={product.id}
                       href={`/products/${product.slug ?? product.id}`}
                       className="group bg-card rounded-xl border
-                                 overflow-hidden hover:shadow-lg transition
+                                 overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-200
                                  flex flex-col"
                     >
                       <div className="relative aspect-square bg-muted">
@@ -212,7 +235,7 @@ export default function PetShopPage() {
                         </h3>
 
                         <p className="text-primary font-bold mb-3">
-                          Rp {Number(product.price).toLocaleString("id-ID")}
+                          {/* Rp {Number(product.price).toLocaleString("id-ID")} */}
                         </p>
 
                         <span className="mt-auto text-xs font-semibold text-primary

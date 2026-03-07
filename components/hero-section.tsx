@@ -13,6 +13,7 @@
     Stethoscope,
     Truck
   } from "lucide-react"
+import { link } from "fs";
 
   const categories = [
     { name: "Pet Shop", icon: ShoppingBag, href: "/pet-shop" },
@@ -26,24 +27,26 @@
   ]
 
   const heroSlides = [
+   
     {
       
-      image: "/slides/slide1.jpg",
+      image: "/slides/slide2-new.png",
+      title: "Promo Spesial!",
+      subtitle: "Dapatkan diskon hingga 50%",
+      description: "Beli 2 dapat 1, berlaku untuk semua produk",
+      btnlabel: "Belanja Sekarang",
+      link: "/pet-shop"
     },
+    
     {
-      
-      image: "/slides/slide2.jpg",
-    },
-    {
-      
-      image: "/slides/slide3.jpg",
-    },
-    {
-      image: "/slides/slide4.jpg",
-    },
-    {
-      image: "/slides/slide5.jpg",
-    },
+      image: "/slides/slide4-new.png",
+      title: "Layanan Grooming",
+      subtitle: "Buat hewan peliharaanmu tampil menawan",
+      description: "Diskon 20% untuk layanan grooming selama bulan ini",
+      btnlabel: "Pesan Sekarang",
+      link: "/grooming"
+    }
+    
   ]
 
   export function HeroSection() {
@@ -85,32 +88,36 @@
                 className="w-full h-full object-cover transition-all duration-700
                           scale-100 group-hover:scale-110"
               />
-              <div className="absolute inset-0 bg-black/5" />
+              <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/30 to-transparent" />
             </div>
 
             {/* CONTENT */}
-            {/* <div className="relative z-10 px-8 md:px-12 max-w-md text-white space-y-2">
-              <h2 className="text-2xl md:text-4xl font-bold leading-tight">
-                {slide.title}
-              </h2>
-              <p className="text-lg font-semibold">
-                {slide.subtitle}
-              </p>
-              <p className="text-sm opacity-90">
-                {slide.description}
-              </p>
+            <div className="relative z-10 flex justify-end w-full px-8 md:px-12">
+              <div className="max-w-md text-white space-y-2 text-right">
+                <h2 className="text-2xl md:text-4xl font-bold leading-tight">
+                  {slide.title}
+                </h2>
 
-              <Link href="/pet-shop">
-                <button
-                  className="mt-4 inline-flex items-center gap-2 bg-white text-primary
-                            px-5 py-2 rounded-full font-semibold
-                            hover:bg-primary hover:text-white transition-colors"
-                >
-                  <Zap size={16} />
-                  Belanja Sekarang
-                </button>
-              </Link>
-            </div> */}
+                <p className="text-lg font-semibold">
+                  {slide.subtitle}
+                </p>
+
+                <p className="text-sm opacity-90">
+                  {slide.description}
+                </p>
+
+                <Link href={slide.link}>
+                  <button
+                    className="mt-4 inline-flex items-center gap-2 bg-white text-primary
+                    px-5 py-2 rounded-full font-semibold
+                    hover:bg-primary hover:text-white transition-colors"
+                  >
+                    <Zap size={16} />
+                    {slide.btnlabel}
+                  </button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
         {/* Service Categories */}

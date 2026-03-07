@@ -21,6 +21,20 @@ export interface Branch {
 
 export const BRANCHES: Branch[] = [
   {
+    id: "jj-pet-house-jakarta",
+    name: "JJ PET HOUSE JAKARTA",
+    city: "jakarta",
+    address: "Jl. Radio Dalam Raya Gandaria Utara, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12140",
+    phone: "0819-1298-2996",
+    whatsapp: "0819-1298-2996",
+    email: "",
+    hours: { weekday: "08:00 - 21:00", weekend: "08:00 - 22:00" },
+    services: ["Grooming", "Pet Hotel", "Pet Shop"],
+    image: "/image/Pict 32.jpeg",
+    coordinates: {},
+    featured: false
+  },
+  {
     id: "denpasar-tukad-batanghari",
     name: "JJ PET HOUSE",
     city: "bali",

@@ -95,7 +95,7 @@ export default function ProductClient({ product }: { product: Product }) {
               </div>
 
               <div className="text-2xl lg:text-3xl font-bold text-primary">
-                Rp {Number(price).toLocaleString("id-ID")}
+                {/* Rp {Number(price).toLocaleString("id-ID")} */}
               </div>
 
               {/* VARIANT */}
@@ -160,7 +160,7 @@ export default function ProductClient({ product }: { product: Product }) {
 
                 <div className="flex justify-between text-sm font-semibold">
                   <span>Subtotal</span>
-                  <span>Rp {subtotal.toLocaleString("id-ID")}</span>
+                  {/* <span>Rp {subtotal.toLocaleString("id-ID")}</span> */}
                 </div>
 
                 <Button

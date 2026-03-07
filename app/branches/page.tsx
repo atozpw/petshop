@@ -4,8 +4,9 @@ import { useState } from 'react'
 import { Header } from '@/components/header'
 import { Footer } from '@/components/footer'
 import { BRANCHES, CITIES, type Branch } from '@/lib/branches-data'
-import { MapPin, Phone, MessageCircle, Clock, Briefcase } from 'lucide-react'
+import { Globe ,MapPin, Phone, MessageCircle, Clock, Briefcase } from 'lucide-react'
 import Link from 'next/link'
+
 
 export default function BranchesPage() {
   const [selectedCity, setSelectedCity] = useState<'all' | 'jakarta' | 'bali' | 'lombok'>('all')
@@ -50,42 +51,47 @@ export default function BranchesPage() {
         
 
         {/* City Selector */}
-        <section className="bg-white border-b border-border sticky top-22 md:top-28 z-40">
-            <div className="container mx-auto px-4 py-4">
+        <section className="sticky top-25 md:top-32 z-40 bg-white/80 backdrop-blur border-b border-border">
+  <div className="container mx-auto px-4 py-4">
 
-                <div className="flex flex-wrap justify-center gap-3 md:gap-3">
+    <div className="flex gap-3 overflow-x-auto whitespace-nowrap justify-center">
 
-                {/* ALL */}
-                <button
-                    onClick={() => setSelectedCity('all')}
-                    className={`px-5 py-2 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${
-                    selectedCity === 'all'
-                        ? 'bg-primary text-white shadow'
-                        : 'bg-muted text-foreground hover:bg-muted/80'
-                    }`}
-                >
-                    🌍 Semua
-                </button>
+      {/* ALL */}
+      <button
+        onClick={() => setSelectedCity("all")}
+        className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all
+        ${
+          selectedCity === "all"
+            ? "bg-primary text-white shadow-md"
+            : "bg-muted text-foreground hover:bg-muted/80 active:scale-95"
+        }`}
+      >
+        <Globe size={16} />
+        Semua
+      </button>
 
-                {CITIES.map((city) => (
-                    <button
-                    key={city.id}
-                    onClick={() => setSelectedCity(city.id as 'jakarta' | 'bali' | 'lombok')}
-                    className={`px-5 py-2.5 rounded-full text-sm font-semibold transition-all flex items-center gap-2 ${
-                        selectedCity === city.id
-                        ? 'bg-primary text-white shadow'
-                        : 'bg-muted text-foreground hover:bg-muted/80'
-                    }`}
-                    >
-                    <span className="text-lg">{city.icon}</span>
-                    {city.name}
-                    </button>
-                ))}
+      {CITIES.map((city) => (
+        <button
+          key={city.id}
+          onClick={() =>
+            setSelectedCity(city.id as "jakarta" | "bali" | "lombok")
+          }
+          className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all
+          ${
+            selectedCity === city.id
+              ? "bg-primary text-white shadow-md"
+              : "bg-muted text-foreground hover:bg-muted/80 active:scale-95"
+          }`}
+        >
+          <MapPin size={16} />
+          {city.name}
+        </button>
+      ))}
 
-                </div>
+    </div>
 
-            </div>
-        </section>
+  </div>
+</section>
 
         {/* Branches Grid */}
         <section className="py-16 bg-muted/30">

@@ -21,9 +21,8 @@ export function Header() {
     { label: "Home", href: "/" },
     { label: "Pet Shop", href: "/pet-shop" },
     { label: "Services", href: "/services" },
-    { label: "Clinic 24 Jam", href: "/clinic" },
-    { label: "Booking", href: "/booking" },
-    { label: "Delivery", href: "/delivery" },
+    { label: "Clinic", href: "/clinic" },
+     { label: "Branches", href: "/branches" },
     { label: "Tentang Kami", href: "/about" },
   ]
 
