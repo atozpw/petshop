@@ -216,7 +216,7 @@ export default function PetShopPage() {
                         </p>
 
                         <span className="mt-auto text-xs font-semibold text-primary
-                          opacity-0 group-hover:opacity-100 transition">
+                          ">
                           Lihat Detail →
                         </span>
                       </div>

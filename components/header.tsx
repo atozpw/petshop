@@ -31,7 +31,7 @@ export function Header() {
     <header className="sticky top-0 z-40 bg-accent/100 backdrop-blur shadow-sm">
       {/* Top Bar */}
       <div className="bg-accent/90 text-xs py-2">
-        <div className="container mx-auto px-4 flex justify-between items-center">
+        <div className="container mx-auto px-4 flex justify-between items-center text-white/80">
           <div className="flex gap-4">
             {/* <span>Seller Centre</span>
             <span>Mulai Berjualan</span>
@@ -62,20 +62,20 @@ export function Header() {
       </div>
       {/* HEADER ROW */}
       <nav>
-        <div className="container mx-auto px-4 py-2 flex items-center gap-3">
+        <div className="container mx-auto px-4 py-2 flex items-center gap-2">
 
           {/* LOGO */}
           <Link 
             href="/"
-            className="flex items-center gap-2 font-bold flex-shrink-0"
+            className="flex items-center gap-1 font-bold flex-shrink-0"
           >
             <Image
               src="/logo.png"
               alt="JJ Pet House Logo"
-              width={52}
-              height={52}
+              width={90}
+              height={90}
             />  
-            <span className="hidden sm:block">JJPETHOUSE</span>
+            <span className="hidden sm:block text-white">JJ PET HOUSE</span>
           </Link>
 
           {/* MOBILE SEARCH (SEJAJAR LOGO) */}
@@ -207,12 +207,12 @@ export function Header() {
       </nav>
 
       {/* DESKTOP MENU */}
-      <div className="hidden lg:flex justify-center text-dark font-bold text-xs gap-8 pb-2 border-b border-white/10">
-        <Link href="/"  className="hover:text-white/80 transition-colors">Home</Link>
-        <Link href="/pet-shop" className="hover:text-white/80 transition-colors">Pet Shop</Link>
-        <Link href="/services" className="hover:text-white/80 transition-colors">Services</Link>
-        <Link href="/clinic" className="hover:text-white/80 transition-colors">Clinic</Link>
-        <Link href="/branches" className="hover:text-white/80 transition-colors">Branches</Link>
+      <div className="hidden lg:flex justify-center text-dark font-bold text-xs gap-8 pb-2 border-b border-white/10 text-white">
+        <Link href="/"  className="hover:text-white/60 transition-colors">Home</Link>
+        <Link href="/pet-shop" className="hover:text-white/60 transition-colors">Pet Shop</Link>
+        <Link href="/services" className="hover:text-white/60 transition-colors">Services</Link>
+        <Link href="/clinic" className="hover:text-white/60 transition-colors">Clinic</Link>
+        <Link href="/branches" className="hover:text-white/60 transition-colors">Branches</Link>
       </div>
 
       {/* MOBILE MENU */}

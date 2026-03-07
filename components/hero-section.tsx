@@ -27,25 +27,22 @@
 
   const heroSlides = [
     {
-      id: 1,
-      title: "Free Rp 30K",
-      subtitle: "eGift card",
-      description: "With your Rp 500K order.",
-      image: "https://image.chewy.com/catalog/general/images/moe/06940960-00da-7d16-8000-4a745e6e6aeb._SY296_.jpeg",
+      
+      image: "/slides/slide1.jpg",
     },
     {
-      id: 2,
-      title: "Free Rp 50K",
-      subtitle: "eGift card",
-      description: "With your Rp 750K order.",
-      image: "https://image.chewy.com/catalog/general/images/moe/06960150-5ca8-7a6b-8000-dce4ead0d1d5._SY296_.jpeg",
+      
+      image: "/slides/slide2.jpg",
     },
     {
-      id: 3,
-      title: "Free Rp 20K",
-      subtitle: "eGift card",
-      description: "With your Rp 300K order.",
-      image: "https://image.chewy.com/catalog/general/images/moe/06945b89-bc92-7519-8000-cd12c47e1696._SY296_.jpeg",
+      
+      image: "/slides/slide3.jpg",
+    },
+    {
+      image: "/slides/slide4.jpg",
+    },
+    {
+      image: "/slides/slide5.jpg",
     },
   ]
 
@@ -78,7 +75,7 @@
         {/* Main Hero Banner Carousel */}
         <div className="container mx-auto px-4">
           <div className="relative bg-gradient-to-r from-amber-400 via-amber-200 to-gray-200
-                rounded-3xl overflow-hidden h-60 md:h-80 flex items-center group">
+                rounded-3xl overflow-hidden h-60 md:h-150 flex items-center group">
 
             {/* BACKGROUND IMAGE */}
             <div className="absolute inset-0">
@@ -86,7 +83,7 @@
                 src={slide.image}
                 alt="Promo banner"
                 className="w-full h-full object-cover transition-all duration-700
-                          scale-105 group-hover:scale-110"
+                          scale-100 group-hover:scale-110"
               />
               <div className="absolute inset-0 bg-black/5" />
             </div>

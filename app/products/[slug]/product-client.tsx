@@ -165,7 +165,8 @@ export default function ProductClient({ product }: { product: Product }) {
 
                 <Button
                   onClick={handleAddToCart}
-                  disabled={!selectedVariant}
+                  // disabled={!selectedVariant}
+                  disabled
                   className="w-full h-12 text-base gap-2"
                 >
                   <ShoppingCart size={16} />

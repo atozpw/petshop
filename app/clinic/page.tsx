@@ -5,13 +5,13 @@ import Link from "next/link"
 
 export default function ClinicPage() {
   const doctors = [
-    { name: "Dr. Sutrisno, drh", specialty: "Bedah & Emergency", experience: "15 tahun", image: "/icondokter.jpg" },
-    { name: "Dr. Siti Rahayu, drh", specialty: "Penyakit Dalam", experience: "12 tahun", image: "/icondokter.jpg" },
-    { name: "Dr. Bambang, drh", specialty: "Gigi & Oral", experience: "10 tahun", image: "/icondokter.jpg" },
-    { name: "Dr. Ira Kusuma, drh", specialty: "Reproduksi", experience: "8 tahun", image: "/icondokter.jpg" },
+    { name: "Drh. Fransisca Olivia Ratna Dilla", specialty: "Special Interest, Feline Internal Medicine", experience: "", image: "/doctor/drh Fransisca.png" },
+    { name: "Drh. Brillian Firmania Puspa Agny", specialty: "General Practicioner", experience: "", image: "/doctor/Drh Brillian.png" },
+    { name: "Drh. Agung Supriyono", specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator", experience: "", image: "/doctor/Drh Agung Supriono.png" },
+    { name: "Drh. Dita Pratiwi Dwi Setyowati", specialty: "General Practitioner", experience: "", image: "/doctor/drh Dita.png" },
   ]
 
-  const services = [
+  const services = [  
     { icon: "🩺", title: "Konsultasi Umum", desc: "Pemeriksaan kesehatan komprehensif dengan dokter berpengalaman" },
     { icon: "💉", title: "Vaksinasi Lengkap", desc: "Program vaksinasi rabies, distemper, dan vaksin lengkap lainnya" },
     { icon: "🔬", title: "Lab Test Canggih", desc: "Tes laboratorium dengan teknologi analyzer modern dan hasil akurat" },
@@ -92,7 +92,7 @@ export default function ClinicPage() {
                   <img
                     src={doctor.image}
                     alt={doctor.name}
-                    className="w-full h-64 object-cover"
+                    className="w-full h-64 object-contain p-2 bg-muted"
                   />
                   <div className="p-4 text-center">
                     <h3 className="font-semibold text-foreground mb-2">{doctor.name}</h3>
