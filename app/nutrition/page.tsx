@@ -32,7 +32,7 @@ export default function NutritionPage() {
                   <li>✓ Rekomendasi pakan</li>
                   <li>✓ Tips pemberian makan</li>
                 </ul>
-                <p className="text-2xl font-bold text-primary">Rp 50K</p>
+                {/* <p className="text-2xl font-bold text-primary">Rp 50K</p> */}
               </div>
 
               <div className="bg-white p-8 rounded-lg border border-primary p-8 ring-2 ring-primary/20">
@@ -45,7 +45,7 @@ export default function NutritionPage() {
                   <li>✓ Meal plan tertulis</li>
                   <li>✓ Follow-up 1 bulan</li>
                 </ul>
-                <p className="text-2xl font-bold text-primary">Rp 150K</p>
+                {/* <p className="text-2xl font-bold text-primary">Rp 150K</p> */}
               </div>
             </div>
           </div>

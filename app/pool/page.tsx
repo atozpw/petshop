@@ -51,7 +51,7 @@ export default function PoolPage() {
                   <p className="text-sm text-muted-foreground">1 kali sesi renang dengan pengawasan</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-2xl font-bold text-primary">Rp 100K</p>
+                  {/* <p className="text-2xl font-bold text-primary">Rp 100K</p> */}
                 </div>
               </div>
 
@@ -61,7 +61,7 @@ export default function PoolPage() {
                   <p className="text-sm text-muted-foreground">5 sesi renang (hemat Rp 50K)</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-2xl font-bold text-primary">Rp 450K</p>
+                  {/* <p className="text-2xl font-bold text-primary">Rp 450K</p> */}
                 </div>
               </div>
 
@@ -71,7 +71,7 @@ export default function PoolPage() {
                   <p className="text-sm text-muted-foreground">Terapi air untuk kesehatan & rehabilitasi</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-2xl font-bold text-primary">Rp 200K</p>
+                  {/* <p className="text-2xl font-bold text-primary">Rp 200K</p> */}
                 </div>
               </div>
             </div>

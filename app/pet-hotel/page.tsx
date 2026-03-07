@@ -48,7 +48,7 @@ export default function PetHotelPage() {
                   </div>
                   <div className="p-6">
                     <h3 className="font-semibold text-xl text-foreground mb-2">{room.name}</h3>
-                    <p className="text-3xl font-bold text-primary mb-4">Rp {room.price.toLocaleString()}/malam</p>
+                    {/* <p className="text-3xl font-bold text-primary mb-4">Rp {room.price.toLocaleString()}/malam</p> */}
                     <ul className="space-y-2 mb-6">
                       {room.features.map((feature, fidx) => (
                         <li key={fidx} className="flex items-start gap-2 text-muted-foreground text-sm">

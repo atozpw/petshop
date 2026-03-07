@@ -69,7 +69,7 @@ export default function GroomingPage() {
                   </div>
                   <div className="p-4 flex flex-col flex-grow">
                     <h3 className="font-semibold text-lg text-foreground mb-2">{pkg.name}</h3>
-                    <p className="text-2xl font-bold text-primary mb-4">Rp {pkg.price.toLocaleString()}</p>
+                    {/* <p className="text-2xl font-bold text-primary mb-4">Rp {pkg.price.toLocaleString()}</p> */}
                     <ul className="text-sm text-muted-foreground space-y-1 mb-4 flex-grow">
                       {pkg.services.map((service, sidx) => (
                         <li key={sidx} className="flex items-start gap-2">
@@ -78,7 +78,7 @@ export default function GroomingPage() {
                         </li>
                       ))}
                     </ul>
-                    <p className="text-xs text-muted-foreground mb-4">⏱️ {pkg.duration}</p>
+                    {/* <p className="text-xs text-muted-foreground mb-4">⏱️ {pkg.duration}</p> */}
                     <a href="/booking?service=1" className="w-full">
                       <Button className="w-full bg-primary hover:bg-primary/90">Pesan Sekarang</Button>
                     </a>

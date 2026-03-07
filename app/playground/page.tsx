@@ -49,7 +49,7 @@ export default function PlaygroundPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               <div className="bg-white rounded-lg border border-border p-6">
                 <h3 className="font-semibold text-lg text-foreground mb-4">1.5 Jam</h3>
-                <p className="text-2xl font-bold text-primary mb-4">Rp 80K</p>
+                {/* <p className="text-2xl font-bold text-primary mb-4">Rp 80K</p> */}
                 <ul className="space-y-2 text-sm text-muted-foreground mb-6">
                   <li>• Area bermain terbuka</li>
                   <li>• Pengawasan staff</li>
@@ -65,7 +65,7 @@ export default function PlaygroundPage() {
                   <span className="bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold">POPULER</span>
                 </div>
                 <h3 className="font-semibold text-lg text-foreground mb-4 text-center">3 Jam</h3>
-                <p className="text-2xl font-bold text-primary mb-4 text-center">Rp 150K</p>
+                {/* <p className="text-2xl font-bold text-primary mb-4 text-center">Rp 150K</p> */}
                 <ul className="space-y-2 text-sm text-muted-foreground mb-6 text-center">
                   <li>✓ Semua fasilitas 1.5 jam</li>
                   <li>✓ Extra playtime</li>
@@ -78,7 +78,7 @@ export default function PlaygroundPage() {
 
               <div className="bg-white rounded-lg border border-border p-6">
                 <h3 className="font-semibold text-lg text-foreground mb-4">Full Day (8 Jam)</h3>
-                <p className="text-2xl font-bold text-primary mb-4">Rp 250K</p>
+                {/* <p className="text-2xl font-bold text-primary mb-4">Rp 250K</p> */}
                 <ul className="space-y-2 text-sm text-muted-foreground mb-6">
                   <li>• Sepanjang hari</li>
                   <li>• Snack & makan siang</li>

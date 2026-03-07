@@ -57,7 +57,7 @@ export default function DeliveryPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
               <div className="bg-white rounded-lg border border-border p-6">
                 <h3 className="font-semibold text-lg text-foreground mb-4">Area 1 (Pusat)</h3>
-                <p className="text-3xl font-bold text-primary mb-4">Rp 25K</p>
+                {/* <p className="text-3xl font-bold text-primary mb-4">Rp 25K</p> */}
                 <p className="text-sm text-muted-foreground mb-6">Senayan, SCBD, Blok M</p>
                 <Button className="w-full bg-primary hover:bg-primary/90">Pesan</Button>
               </div>
@@ -67,14 +67,14 @@ export default function DeliveryPage() {
                   <span className="bg-primary text-white px-3 py-1 rounded-full text-xs font-semibold">POPULER</span>
                 </div>
                 <h3 className="font-semibold text-lg text-foreground mb-4 text-center">Area 2 (Jabodetabek)</h3>
-                <p className="text-3xl font-bold text-primary mb-4 text-center">Rp 35K</p>
+                {/* <p className="text-3xl font-bold text-primary mb-4 text-center">Rp 35K</p> */}
                 <p className="text-sm text-muted-foreground mb-6 text-center">Depok, Tangerang, Bekasi</p>
                 <Button className="w-full bg-primary hover:bg-primary/90">Pesan</Button>
               </div>
 
               <div className="bg-white rounded-lg border border-border p-6">
                 <h3 className="font-semibold text-lg text-foreground mb-4">Area 3 (Luar)</h3>
-                <p className="text-3xl font-bold text-primary mb-4">Hubungi</p>
+                {/* <p className="text-3xl font-bold text-primary mb-4">Hubungi</p> */}
                 <p className="text-sm text-muted-foreground mb-6">Area lainnya (Hubungi untuk penawaran)</p>
                 <Button variant="outline" className="w-full bg-transparent">
                   Hubungi
