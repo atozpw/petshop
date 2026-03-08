@@ -20,6 +20,8 @@ function RegisterContent() {
     phone: "",
     password: "",
     password_confirmation: "",
+    city: "",
+    pets: [] as string[],
   })
 
   const [error, setError] = useState("")
@@ -57,6 +59,19 @@ function RegisterContent() {
     } finally {
       setIsLoading(false)
     }
+  }
+
+  const handlePetChange = (pet: string) => {
+    setFormData((prev) => {
+      const exists = prev.pets.includes(pet)
+
+      return {
+        ...prev,
+        pets: exists
+          ? prev.pets.filter((p) => p !== pet)
+          : [...prev.pets, pet],
+      }
+    })
   }
 
   if (authLoading || isAuthenticated) {
@@ -126,6 +141,66 @@ function RegisterContent() {
                     className="w-full pl-10 pr-4 py-2 border rounded-lg"
                   />
                 </div>
+              </div>
+
+              {/* JENIS HEWAN */}
+              <div>
+                <label className="block text-sm font-semibold mb-2">Jenis Hewan</label>
+
+                <div className="grid grid-cols-2 gap-3">
+
+                  <label
+                    className={`flex items-center justify-center gap-2 border rounded-lg px-4 py-2 cursor-pointer transition
+                    ${
+                      formData.pets.includes("kucing")
+                        ? "bg-primary text-white border-primary"
+                        : "bg-white hover:bg-muted"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      className="hidden"
+                      checked={formData.pets.includes("kucing")}
+                      onChange={() => handlePetChange("kucing")}
+                    />
+                    🐱 Kucing
+                  </label>
+
+                  <label
+                    className={`flex items-center justify-center gap-2 border rounded-lg px-4 py-2 cursor-pointer transition
+                    ${
+                      formData.pets.includes("anjing")
+                        ? "bg-primary text-white border-primary"
+                        : "bg-white hover:bg-muted"
+                    }`}
+                  >
+                    <input
+                      type="checkbox"
+                      className="hidden"
+                      checked={formData.pets.includes("anjing")}
+                      onChange={() => handlePetChange("anjing")}
+                    />
+                    🐶 Anjing
+                  </label>
+
+                </div>
+              </div>
+
+              {/* KOTA */}
+              <div>
+                <label className="block text-sm font-semibold mb-2">Kota</label>
+
+                <select
+                  name="city"
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border rounded-lg bg-white"
+                  required
+                >
+                  <option value="">Pilih Kota</option>
+                  <option value="jakarta">Jakarta</option>
+                  <option value="bali">Bali</option>
+                  <option value="lombok">Lombok</option>
+                </select>
               </div>
 
               <div>
