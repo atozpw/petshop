@@ -20,9 +20,9 @@ export function Header() {
   const navItems = [
     { label: "Home", href: "/" },
     { label: "Pet Shop", href: "/pet-shop" },
-    { label: "Services", href: "/services" },
     { label: "Clinic", href: "/clinic" },
-     { label: "Branches", href: "/branches" },
+    { label: "Services", href: "/services" },
+    { label: "Branches", href: "/branches" },
     { label: "Tentang Kami", href: "/about" },
   ]
 
@@ -41,21 +41,21 @@ export function Header() {
             <span>Notifikasi</span>
             <span>Bantuan</span>
             <span>Bahasa Indonesia</span>
-             {isAuthenticated && user ? (
+            {isAuthenticated && user ? (
               <div>
                 <span>Halo, {user.name}</span>
               </div>
-            
-             ) : 
-             <>
-              <Link href="/login">
-                <span>Masuk</span>
-              </Link>
-              <Link href="/register">
-              <span>Daftar</span>
-              </Link>
-             </>
-             }
+
+            ) :
+              <>
+                <Link href="/login">
+                  <span>Masuk</span>
+                </Link>
+                <Link href="/register">
+                  <span>Daftar</span>
+                </Link>
+              </>
+            }
           </div>
         </div>
       </div>
@@ -64,7 +64,7 @@ export function Header() {
         <div className="container mx-auto px-4 py-2 flex items-center gap-2">
 
           {/* LOGO */}
-          <Link 
+          <Link
             href="/"
             className="flex items-center gap-1 font-bold flex-shrink-0"
           >
@@ -73,7 +73,7 @@ export function Header() {
               alt="JJ Pet House Logo"
               width={90}
               height={90}
-            />  
+            />
             <span className="hidden sm:block text-white">JJ PET HOUSE</span>
           </Link>
 
@@ -109,7 +109,7 @@ export function Header() {
               />
             </div>
           </div>
-             
+
           {/* DESKTOP SEARCH */}
           <div className="hidden lg:flex flex-1 mx-8">
             {/* <div className="hidden lg:flex items-center gap-2 text-white text-sm pr-3">
@@ -117,7 +117,7 @@ export function Header() {
               <span className="font-medium">Kategori</span>
             </div>   */}
             <div className="relative w-full">
-              
+
               <input
                 type="text"
                 placeholder="Cari produk..."
@@ -162,24 +162,24 @@ export function Header() {
             {/* DESKTOP USER */}
             {isAuthenticated && user ? (
               <div className="hidden md:flex items-center gap-3">
-             {isAuthenticated && user ? (
-               <UserDropdown user={user} onLogout={logout} />
-             ) : (
-               <>
-                 <Link href="/login">
-                   <Button variant="ghost" size="sm">
-                     Masuk
-                   </Button>
-                 </Link>
-                 <Link href="/register">
-                   <Button size="sm" className="bg-primary hover:bg-primary/90">
-                     Daftar
-                   </Button>
-                 </Link>
-               </>
-             )}
-           
-          </div>
+                {isAuthenticated && user ? (
+                  <UserDropdown user={user} onLogout={logout} />
+                ) : (
+                  <>
+                    <Link href="/login">
+                      <Button variant="ghost" size="sm">
+                        Masuk
+                      </Button>
+                    </Link>
+                    <Link href="/register">
+                      <Button size="sm" className="bg-primary hover:bg-primary/90">
+                        Daftar
+                      </Button>
+                    </Link>
+                  </>
+                )}
+
+              </div>
             ) : (
               <div className="hidden lg:flex gap-2">
                 {/* <Link href="/login">
@@ -207,11 +207,13 @@ export function Header() {
 
       {/* DESKTOP MENU */}
       <div className="hidden lg:flex justify-center text-dark font-bold text-xs gap-8 pb-2 border-b border-white/10 text-white">
-        <Link href="/"  className="hover:text-white/60 transition-colors">Home</Link>
+        <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
         <Link href="/pet-shop" className="hover:text-white/60 transition-colors">Pet Shop</Link>
-        <Link href="/services" className="hover:text-white/60 transition-colors">Services</Link>
         <Link href="/clinic" className="hover:text-white/60 transition-colors">Clinic</Link>
-        <Link href="/branches" className="hover:text-white/60 transition-colors">Branches</Link>
+        <Link href="/services" className="hover:text-white/60 transition-colors">Services</Link>
+        <Link href="/" className="hover:text-white/60 transition-colors">Pet Room</Link>
+        <Link href="/branches" className="hover:text-white/60 transition-colors">Our Store</Link>
+        <Link href="/" className="hover:text-white/60 transition-colors">Marketplace</Link>
       </div>
 
       {/* MOBILE MENU */}
@@ -275,7 +277,7 @@ export function Header() {
     </header>
   )
 }
-  
+
 // Extracted components (optional - bisa dipisah file kalau mau)
 function UserDropdown({ user, onLogout }: { user: any; onLogout: () => void }) {
   const [open, setOpen] = useState(false)
