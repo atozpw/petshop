@@ -211,7 +211,7 @@ export function Header() {
         <Link href="/pet-shop" className="hover:text-white/60 transition-colors">Pet Shop</Link>
         <Link href="/clinic" className="hover:text-white/60 transition-colors">Clinic</Link>
         <Link href="/services" className="hover:text-white/60 transition-colors">Services</Link>
-        <Link href="/" className="hover:text-white/60 transition-colors">Pet Room</Link>
+        <Link href="/discussion" className="hover:text-white/60 transition-colors">Pet Room</Link>
         <Link href="/branches" className="hover:text-white/60 transition-colors">Our Store</Link>
         <Link href="/" className="hover:text-white/60 transition-colors">Marketplace</Link>
       </div>
