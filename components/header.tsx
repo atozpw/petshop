@@ -206,14 +206,18 @@ export function Header() {
       </nav>
 
       {/* DESKTOP MENU */}
-      <div className="hidden lg:flex justify-center text-dark font-bold text-xs gap-8 pb-2 border-b border-white/10 text-white">
-        <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
-        <Link href="/pet-shop" className="hover:text-white/60 transition-colors">Pet Shop</Link>
-        <Link href="/clinic" className="hover:text-white/60 transition-colors">Clinic</Link>
-        <Link href="/services" className="hover:text-white/60 transition-colors">Services</Link>
-        <Link href="/discussion" className="hover:text-white/60 transition-colors">Pet Room</Link>
-        <Link href="/branches" className="hover:text-white/60 transition-colors">Our Store</Link>
-        <Link href="/" className="hover:text-white/60 transition-colors">Marketplace</Link>
+      <div className="hidden lg:flex border-b border-white/10 text-white pb-2">
+        <div className="container mx-auto px-4">
+          <div className="flex gap-8 font-bold text-xs" style={{ paddingLeft: "calc(240px + 0.5rem)" }}>
+            <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
+            <Link href="/pet-shop" className="hover:text-white/60 transition-colors">Pet Shop</Link>
+            <Link href="/clinic" className="hover:text-white/60 transition-colors">Clinic</Link>
+            <Link href="/services" className="hover:text-white/60 transition-colors">Services</Link>
+            <Link href="/discussion" className="hover:text-white/60 transition-colors">Pet Room</Link>
+            <Link href="/branches" className="hover:text-white/60 transition-colors">Our Store</Link>
+            <Link href="/" className="hover:text-white/60 transition-colors">Marketplace</Link>
+          </div>
+        </div>
       </div>
 
       {/* MOBILE MENU */}

@@ -88,7 +88,10 @@ export default function PetShopPage() {
             <div className="text-center text-white px-4">
               <h1 className="text-3xl font-bold mb-2">Selamat Datang di Pet Shop Kami!</h1>
               <p className="text-lg mb-4">Temukan berbagai kebutuhan hewan peliharaan Anda dengan mudah</p>
-
+                            
+              <h1 className="text-1xl font-bold mb-2 opacity-100 animate-pulse">
+                Still On Progress... Stay Tuned! 🚧
+              </h1>
               
             </div>
           </div>
@@ -216,15 +219,15 @@ export default function PetShopPage() {
                                  overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-200
                                  flex flex-col"
                     >
-                      <div className="relative aspect-square bg-muted">
+                      <div className="relative aspect-square bg-muted overflow-hidden">
                         <img
-                          src={product.images?.[0]?.image_url ?? "/no-image.png"}
+                          src={product.images?.[0]?.image_url ?? "/image/Pict 30.jpeg"}
                           alt={product.name}
                           className="w-full h-full object-cover"
                         />
 
-                        <span className="absolute top-2 left-2
-                          bg-primary text-white text-white text-xs px-2 py-1 rounded-full">
+                        <span className="absolute top-2 left-2 
+                          bg-primary text-white text-xs px-2 py-1 rounded-full">
                           {product.product_category?.name}
                         </span>
                       </div>

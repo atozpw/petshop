@@ -11,7 +11,7 @@ interface ProductSimpleCardProps {
 export function ProductSimpleCard({ product }: ProductSimpleCardProps) {
 // console.log(product); // Debugging line to check product data
   const imageUrl =
-    product.images?.[0]?.image_url ?? "/no-image.png"
+    product.images?.[0]?.image_url ?? "/image/Pict 30.jpeg" // Placeholder image if no images available
 
   return (
     <Link href={`/products/${product.slug}`} className="group block">

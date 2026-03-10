@@ -27,10 +27,9 @@ export default async function Home() {
       <main className="min-h-screen bg-background">
         {/* Hero Section */}
         <HeroSection />
-        <section className="bg-background py-8 md:py-12">
+        {/* <section className="bg-background py-8 md:py-12">
 
           <div className="container mx-auto px-4">
-            {/* SECTION TITLE */}
             <div className="flex items-center justify-between mb-4">
               <div>
                 <h2 className="text-lg font-semibold">Produk Terlaris</h2>
@@ -44,7 +43,6 @@ export default async function Home() {
               </Link>
             </div>  
 
-            {/* PRODUCT GRID */}
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5
                             gap-4 md:gap-6">
               {products.slice(0, 20).map((product) => (
@@ -55,7 +53,6 @@ export default async function Home() {
               ))}
             </div>
 
-            {/* CTA */}
             <div className="mt-8 md:mt-10 flex justify-center">
               <Link href="/pet-shop">
                 <Button
@@ -71,7 +68,7 @@ export default async function Home() {
             </div>
 
           </div>
-        </section>
+        </section> */}
 
         
         {/* Clinic 24 Jam Section */}

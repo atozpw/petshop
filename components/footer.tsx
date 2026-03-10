@@ -1,5 +1,6 @@
 import Link from "next/link"
 import { Phone, MapPin, Mail, Clock, Instagram } from "lucide-react"
+import Image from "next/image"
 
 export function Footer() {
   return (
@@ -8,13 +9,19 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <h3 className="text-lg font-bold mb-4 flex items-center gap-2">
-              <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-foreground text-sm font-bold">
-                JJ
-              </div>
-              PET HOUSE
-            </h3>
-            <p className="text-sm opacity-90">
+            <Link 
+            href="/"
+            className="flex items-center gap-3 font-bold flex-shrink-0"
+          >
+            <Image
+              src="/logo.png"
+              alt="JJ Pet House Logo"
+              width={90}
+              height={90}
+            />  
+            <span className="hidden sm:block text-white">JJ PET HOUSE</span>
+          </Link>
+            <p className="text-sm opacity-90 pt-4">
               One Stop Pet Care Solution untuk semua kebutuhan hewan peliharaan Anda.
             </p>
           </div>

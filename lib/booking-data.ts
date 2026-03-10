@@ -60,9 +60,9 @@ export const SERVICES: Service[] = [
   },
   {
     id: "4",
-    name: "Swimming & Water Play",
-    category: "pool",
-    description: "Fasilitas kolam renang khusus untuk hewan peliharaan dengan pengawasan profesional dan aman",
+    name: "Dog Training Profesional",
+    category: "training",
+    description: "Pelatihan profesional untuk anjing dengan metode terbukti dan pengawasan profesional",
     price: 100000,
     image: "/image/Pict 41.jpeg",
     duration: "1 jam",

@@ -116,7 +116,7 @@ export default function BookingPage() {
                       >
                         <h3 className="font-semibold text-foreground">{svc.name}</h3>
                         <p className="text-sm text-muted-foreground">{svc.description}</p>
-                        <p className="font-bold text-primary mt-2">Rp {svc.price.toLocaleString()}</p>
+                        {/* <p className="font-bold text-primary mt-2">Rp {svc.price.toLocaleString()}</p> */}
                       </button>
                     ))}
                   </div>
@@ -341,7 +341,7 @@ export default function BookingPage() {
                     Lanjut
                   </button>
                 ) : (
-                  <button
+                  <button disabled
                     onClick={handleSubmit}
                     className="ml-auto px-6 py-2 bg-accent text-white rounded-lg font-semibold hover:bg-accent/90"
                   >
