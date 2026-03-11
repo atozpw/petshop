@@ -20,7 +20,7 @@ export default async function Home() {
 
   const products: Product[] = res.data.data
 
-  return (  
+  return (
     <>
       <Header />
 
@@ -70,7 +70,7 @@ export default async function Home() {
           </div>
         </section> */}
 
-        
+
         {/* Clinic 24 Jam Section */}
         {/* <section className="py-16 bg-gradient-to-r from-primary to-primary/80 text-white">
           <div className="container mx-auto px-4">
@@ -198,8 +198,8 @@ export default async function Home() {
                   <MapPin className="text-primary" size={24} />
                 </div>
                 <h3 className="font-semibold text-foreground mb-2">Lokasi</h3>
-                <p className="text-muted-foreground">PT Jeje Jaya Abadi </p>
-                <p className="text-sm text-muted-foreground"> JL Tukad Batanghari No 77, Kota Denpasar - 80225 </p>
+                <p className="text-muted-foreground">JJ Pet House</p>
+                <p className="text-sm text-muted-foreground"> Jl. Tukad Batanghari No 77, Kota Denpasar - 80225 </p>
               </div>
 
               <div className="text-center">

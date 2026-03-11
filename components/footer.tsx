@@ -9,20 +9,20 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div>
-            <Link 
-            href="/"
-            className="flex items-center gap-3 font-bold flex-shrink-0"
-          >
-            <Image
-              src="/logo.png"
-              alt="JJ Pet House Logo"
-              width={90}
-              height={90}
-            />  
-            <span className="hidden sm:block text-white">JJ PET HOUSE</span>
-          </Link>
+            <Link
+              href="/"
+              className="flex items-center gap-3 font-bold flex-shrink-0"
+            >
+              <Image
+                src="/logo.png"
+                alt="JJ Pet House Logo"
+                width={50}
+                height={50}
+              />
+              <span className="hidden sm:block text-white">JJ PET HOUSE</span>
+            </Link>
             <p className="text-sm opacity-90 pt-4">
-              One Stop Pet Care Solution untuk semua kebutuhan hewan peliharaan Anda.
+              Care Like a Mom Love Like Family
             </p>
           </div>
 
@@ -59,17 +59,17 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <a href="#" className="hover:opacity-75">
-                  Grooming
+                  Pet Grooming
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:opacity-75">
-                  Pet Hotel
+                  Pet Boarding
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:opacity-75">
-                  Konsultasi Vet
+                  Pet Playground
                 </a>
               </li>
               <li>
@@ -87,10 +87,10 @@ export function Footer() {
               <li className="flex items-start gap-2">
                 <Phone size={16} className="mt-0.5 flex-shrink-0" />
                 <span>0812-3766-1234 | 0811-8880-3117 </span>
-              </li> 
+              </li>
               <li className="flex items-start gap-2">
                 <MapPin size={16} className="mt-0.5 flex-shrink-0" />
-                <span>PT Jeje Jaya Abadi JL Tukad Batanghari No 77, Kota Denpasar - 80225 </span>
+                <span>JJ Pet House | Jl. Tukad Batanghari No 77, Kota Denpasar - 80225 </span>
               </li>
               <li className="flex items-start gap-2">
                 <Mail size={16} className="mt-0.5 flex-shrink-0" />
@@ -98,13 +98,13 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-2">
                 <Instagram size={16} className="mt-0.5 flex-shrink-0" />
-                <a href="https://www.instagram.com/jjpethouse_jkt/" target="_blank" rel="noopener noreferrer" className="hover:opacity-75">@Jjpethouse_jkt</a>
+                <a href="https://www.instagram.com/jjpethouse/" target="_blank" rel="noopener noreferrer" className="hover:opacity-75">@jjpethouse</a>
               </li>
               <li className="flex items-start gap-2">
                 <Clock size={16} className="mt-0.5 flex-shrink-0" />
                 <span>24 Jam / Buka Setiap Hari</span>
               </li>
-            </ul> 
+            </ul>
           </div>
         </div>
 

@@ -66,11 +66,11 @@ export default function PetShopPage() {
     loadProducts(params)
   }, [selectedCategory, page, search])
 
-  
+
   useEffect(() => {
     setPage(1)
   }, [selectedCategory, search])
-  
+
   return (
     <>
       <Header />
@@ -79,24 +79,24 @@ export default function PetShopPage() {
         {/* ================= HERO ================= */}
         <div className="relative">
           <img
-            src="/image/pict 29.jpeg"
+            src="/image/Pict 29.jpeg"
             alt="Hero Image"
             className="w-full h-40 object-cover"
           />
-          
+
           <div className="absolute inset-0 bg-primary/85 flex items-center justify-center">
             <div className="text-center text-white px-4">
               <h1 className="text-3xl font-bold mb-2">Selamat Datang di Pet Shop Kami!</h1>
               <p className="text-lg mb-4">Temukan berbagai kebutuhan hewan peliharaan Anda dengan mudah</p>
-                            
+
               <h1 className="text-1xl font-bold mb-2 opacity-100 animate-pulse">
                 Still On Progress... Stay Tuned! 🚧
               </h1>
-              
+
             </div>
           </div>
         </div>
-        
+
         {/* ================= MOBILE CATEGORY ================= */}
         <div className="md:hidden sticky top-26 z-40 bg-background/95 backdrop-blur border-b shadow-sm">
           <div className="container mx-auto px-4">
@@ -105,11 +105,10 @@ export default function PetShopPage() {
               <button
                 onClick={() => setSelectedCategory(null)}
                 className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition
-                ${
-                  !selectedCategory
+                ${!selectedCategory
                     ? "bg-primary text-white shadow"
                     : "bg-muted hover:bg-muted/80"
-                }`}
+                  }`}
               >
                 Semua
               </button>
@@ -119,11 +118,10 @@ export default function PetShopPage() {
                   key={cat.slug}
                   onClick={() => setSelectedCategory(cat.slug)}
                   className={`px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition
-                  ${
-                    selectedCategory === cat.slug
+                  ${selectedCategory === cat.slug
                       ? "bg-primary text-white shadow"
                       : "bg-muted hover:bg-muted/80"
-                  }`}
+                    }`}
                 >
                   {cat.name}
                 </button>
@@ -147,7 +145,7 @@ export default function PetShopPage() {
                 "
               >
 
-                
+
                 <div className="mb-4 flex justify-center">
                   <div className="w-full relative">
                     <input
@@ -158,7 +156,7 @@ export default function PetShopPage() {
                       className="w-full border rounded-xl px-4 py-3 pr-10
                                 focus:outline-none focus:ring-2 focus:ring-primary"
                     />
-                    
+
                     {search && (
                       <button
                         onClick={() => setSearch("")}
@@ -173,11 +171,10 @@ export default function PetShopPage() {
                 <h3 className="font-bold mb-4">Kategori</h3>
                 <button
                   onClick={() => setSelectedCategory(null)}
-                  className={`w-full text-left px-3 py-2 rounded-lg mb-2 ${
-                    !selectedCategory
+                  className={`w-full text-left px-3 py-2 rounded-lg mb-2 ${!selectedCategory
                       ? "bg-primary text-white"
                       : "hover:bg-muted"
-                  }`}
+                    }`}
                 >
                   Semua Produk
                 </button>
@@ -186,11 +183,10 @@ export default function PetShopPage() {
                   <button
                     key={cat.slug}
                     onClick={() => setSelectedCategory(cat.slug)}
-                    className={`w-full text-left px-3 py-2 rounded-lg text-sm mb-1 ${
-                      selectedCategory === cat.slug
+                    className={`w-full text-left px-3 py-2 rounded-lg text-sm mb-1 ${selectedCategory === cat.slug
                         ? "bg-primary text-white"
                         : "hover:bg-muted"
-                    }`}
+                      }`}
                   >
                     {cat.name}
                   </button>
@@ -209,53 +205,53 @@ export default function PetShopPage() {
                     ))}
                   </div>
                 ) : (
-                <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-6">
 
-                  {products.map((product) => (
-                    <Link
-                      key={product.id}
-                      href={`/products/${product.slug ?? product.id}`}
-                      className="group bg-card rounded-xl border
+                    {products.map((product) => (
+                      <Link
+                        key={product.id}
+                        href={`/products/${product.slug ?? product.id}`}
+                        className="group bg-card rounded-xl border
                                  overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-200
                                  flex flex-col"
-                    >
-                      <div className="relative aspect-square bg-muted overflow-hidden">
-                        <img
-                          src={product.images?.[0]?.image_url ?? "/image/Pict 30.jpeg"}
-                          alt={product.name}
-                          className="w-full h-full object-cover"
-                        />
+                      >
+                        <div className="relative aspect-square bg-muted overflow-hidden">
+                          <img
+                            src={product.images?.[0]?.image_url ?? "/image/Pict 30.jpeg"}
+                            alt={product.name}
+                            className="w-full h-full object-cover"
+                          />
 
-                        <span className="absolute top-2 left-2 
+                          <span className="absolute top-2 left-2 
                           bg-primary text-white text-xs px-2 py-1 rounded-full">
-                          {product.product_category?.name}
-                        </span>
-                      </div>
+                            {product.product_category?.name}
+                          </span>
+                        </div>
 
-                      <div className="p-3 flex flex-col flex-1">
-                        <h3 className="text-sm font-medium line-clamp-2 mb-2">
-                          {product.name}
-                        </h3>
+                        <div className="p-3 flex flex-col flex-1">
+                          <h3 className="text-sm font-medium line-clamp-2 mb-2">
+                            {product.name}
+                          </h3>
 
-                        <p className="text-primary font-bold mb-3">
-                          {/* Rp {Number(product.price).toLocaleString("id-ID")} */}
-                        </p>
+                          <p className="text-primary font-bold mb-3">
+                            {/* Rp {Number(product.price).toLocaleString("id-ID")} */}
+                          </p>
 
-                        <span className="mt-auto text-xs font-semibold text-primary
+                          <span className="mt-auto text-xs font-semibold text-primary
                           ">
-                          Lihat Detail →
-                        </span>
-                      </div>
-                    </Link>
-                  ))}
+                            Lihat Detail →
+                          </span>
+                        </div>
+                      </Link>
+                    ))}
 
-                  {products.length === 0 && (
-                    <p className="col-span-full text-center text-muted-foreground">
-                      Produk tidak ditemukan
-                    </p>
-                  )}
+                    {products.length === 0 && (
+                      <p className="col-span-full text-center text-muted-foreground">
+                        Produk tidak ditemukan
+                      </p>
+                    )}
 
-                </div>  
+                  </div>
                 )}
                 <div className="flex justify-center items-center gap-4 mt-10">
                   <button
@@ -287,7 +283,7 @@ export default function PetShopPage() {
                   </button>
                 </div>
               </div>
-              
+
             </div>
           </div>
         </section>
