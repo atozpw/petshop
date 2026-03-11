@@ -1,35 +1,95 @@
 'use client';
 
 import Link from "next/link"
-import { Zap, Heart, ChevronLeft, ChevronRight } from "lucide-react"
+import { Zap, Clock, Star, Truck, ArrowRight } from "lucide-react"
 import { useState, useEffect } from "react"
-import {
-  ShoppingBag,
-  Scissors,
-  Home,
-  Gamepad2,
-  Bone,
-  Waves,
-  Stethoscope,
-  Truck
-} from "lucide-react"
-import { link } from "fs";
+import { Home, Scissors, Gamepad2 } from "lucide-react"
 
 const categories = [
-  { name: "Pet Shop", icon: ShoppingBag, href: "/pet-shop" },
-  { name: "Grooming", icon: Scissors, href: "/grooming" },
-  { name: "Pet Hotel", icon: Home, href: "/pet-hotel" },
-  { name: "Playground", icon: Gamepad2, href: "/playground" },
-  { name: "Pakan Hewan", icon: Bone, href: "/nutrition" },
-  { name: "Pool", icon: Waves, href: "/pool" },
-  { name: "Dokter Hewan", icon: Stethoscope, href: "/clinic" },
-  { name: "Delivery", icon: Truck, href: "/delivery" },
+  {
+    name: "Pet Boarding",
+    icon: Home,
+    href: "/pet-hotel",
+    bg: "bg-sky-100",
+    iconBg: "bg-sky-500",
+    text: "text-sky-700",
+    paw: "#bae6fd",
+    tag: "24/7 Care",
+    desc: "Titip hewan kesayanganmu dengan aman & nyaman",
+  },
+  {
+    name: "Pet Grooming",
+    icon: Scissors,
+    href: "/grooming",
+    bg: "bg-sky-100",
+    iconBg: "bg-sky-500",
+    text: "text-sky-700",
+    paw: "#bae6fd",
+    tag: "Promo 20%",
+    desc: "Tampil kinclong & wangi setiap saat",
+  },
+  {
+    name: "Pet Playground",
+    icon: Gamepad2,
+    href: "/playground",
+    bg: "bg-sky-100",
+    iconBg: "bg-sky-500",
+    text: "text-sky-700",
+    paw: "#bae6fd",
+    tag: "Seru & Asyik",
+    desc: "Area bermain khusus untuk si berbulu",
+  },
+  {
+    name: "Delivery Ekspres",
+    icon: Truck,
+    href: "/delivery",
+    bg: "bg-sky-100",
+    iconBg: "bg-sky-500",
+    text: "text-sky-700",
+    paw: "#bae6fd",
+    tag: "Same Day",
+    desc: "Produk sampai di hari yang sama",
+  },
 ]
 
+// SVG paw print component
+function PawPrint({ x, y, size, color, rotate }: { x: number, y: number, size: number, color: string, rotate: number }) {
+  const s = size
+  return (
+    <g transform={`translate(${x},${y}) rotate(${rotate}) scale(${s})`} opacity="0.55">
+      {/* Main pad */}
+      <ellipse cx="0" cy="0" rx="5.5" ry="6.5" fill={color} />
+      {/* Top toes */}
+      <ellipse cx="-5" cy="-6.5" rx="2.8" ry="3.2" fill={color} />
+      <ellipse cx="-1.5" cy="-8.5" rx="2.5" ry="2.9" fill={color} />
+      <ellipse cx="2.5" cy="-8.5" rx="2.5" ry="2.9" fill={color} />
+      <ellipse cx="5.5" cy="-6.5" rx="2.8" ry="3.2" fill={color} />
+    </g>
+  )
+}
+
+function PawBackground({ color }: { color: string }) {
+  return (
+    <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+      <PawPrint x={20}  y={30}  size={0.9} color={color} rotate={-15} />
+      <PawPrint x={60}  y={15}  size={0.6} color={color} rotate={10}  />
+      <PawPrint x={105} y={25}  size={0.75} color={color} rotate={-5} />
+      <PawPrint x={155} y={18}  size={0.55} color={color} rotate={20}  />
+      <PawPrint x={180} y={50}  size={0.85} color={color} rotate={-25} />
+      <PawPrint x={10}  y={90}  size={0.55} color={color} rotate={30}  />
+      <PawPrint x={50}  y={110} size={0.8} color={color} rotate={-10} />
+      <PawPrint x={100} y={100} size={0.5} color={color} rotate={15}  />
+      <PawPrint x={145} y={115} size={0.9} color={color} rotate={-20} />
+      <PawPrint x={185} y={100} size={0.6} color={color} rotate={5}   />
+      <PawPrint x={35}  y={148} size={0.65} color={color} rotate={-8} />
+      <PawPrint x={120} y={150} size={0.7} color={color} rotate={12}  />
+      <PawPrint x={170} y={148} size={0.5} color={color} rotate={-30} />
+    </svg>
+  )
+}
+
 const heroSlides = [
-
   {
-
     image: "/slides/slide2-new.png",
     title: "Promo Spesial!",
     subtitle: "Dapatkan diskon hingga 50%",
@@ -37,7 +97,6 @@ const heroSlides = [
     btnlabel: "Belanja Sekarang",
     link: "/pet-shop"
   },
-
   {
     image: "/slides/slide4-new.png",
     title: "Layanan Grooming",
@@ -46,7 +105,6 @@ const heroSlides = [
     btnlabel: "Pesan Sekarang",
     link: "/grooming"
   }
-
 ]
 
 export function HeroSection() {
@@ -59,108 +117,107 @@ export function HeroSection() {
     return () => clearInterval(timer)
   }, [])
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev - 1 + heroSlides.length) % heroSlides.length)
-  }
-
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index)
-  }
-
   const slide = heroSlides[currentSlide]
 
   return (
-    <section className="bg-background pb-4 md:pb-2 py-8 md:py-10 overflow-hidden space-y-6  " >
-      {/* Main Hero Banner Carousel */}
-      <div className="container mx-auto px-4">
-        <div className="relative bg-gradient-to-r from-amber-400 via-amber-200 to-gray-200
-                rounded-3xl overflow-hidden h-60 md:h-100 flex items-center group">
+    <section className="bg-background pb-4 md:pb-2 py-8 md:py-10 overflow-hidden space-y-6">
 
-          {/* BACKGROUND IMAGE */}
+      {/* Hero Banner */}
+      <div className="container mx-auto px-4">
+        <div className="relative bg-gradient-to-r from-amber-400 via-amber-200 to-gray-200 rounded-3xl overflow-hidden h-60 md:h-100 flex items-center group">
           <div className="absolute inset-0">
-            <img
-              src={slide.image}
-              alt="Promo banner"
-              className="w-full h-full object-cover transition-all duration-700
-                          scale-100 group-hover:scale-110"
-            />
+            <img src={slide.image} alt="Promo banner" className="w-full h-full object-cover transition-all duration-700 scale-100 group-hover:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/30 to-transparent" />
           </div>
-
-          {/* CONTENT */}
           <div className="relative z-10 flex justify-end w-full px-8 md:px-12">
             <div className="max-w-md text-white space-y-2 text-right">
-              <h2 className="text-2xl md:text-4xl font-bold leading-tight">
-                {slide.title}
-              </h2>
-
-              <p className="text-lg font-semibold">
-                {slide.subtitle}
-              </p>
-
-              <p className="text-sm opacity-90">
-                {slide.description}
-              </p>
-
+              <h2 className="text-2xl md:text-4xl font-bold leading-tight">{slide.title}</h2>
+              <p className="text-lg font-semibold">{slide.subtitle}</p>
+              <p className="text-sm opacity-90">{slide.description}</p>
               <Link href={slide.link}>
-                <button
-                  className="mt-4 inline-flex items-center gap-2 bg-white text-primary
-                    px-5 py-2 rounded-full font-semibold
-                    hover:bg-primary hover:text-white transition-colors"
-                >
+                <button className="mt-4 inline-flex items-center gap-2 bg-white text-primary px-5 py-2 rounded-full font-semibold hover:bg-primary hover:text-white transition-colors">
                   <Zap size={16} />
                   {slide.btnlabel}
                 </button>
               </Link>
             </div>
           </div>
+          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+            {heroSlides.map((_, i) => (
+              <button key={i} onClick={() => setCurrentSlide(i)}
+                className={`h-1.5 rounded-full transition-all duration-300 ${i === currentSlide ? "w-6 bg-white" : "w-1.5 bg-white/50"}`} />
+            ))}
+          </div>
         </div>
       </div>
-      {/* Service Categories */}
 
-      <div className="container mx-auto px-4 mt-4 md:mt-6">
-        <div className="grid grid-cols-4 sm:grid-cols-4 md:grid-cols-8
-                          gap-2 sm:gap-4">
-          {categories.map((category) => {
-            const Icon = category.icon
+      {/* Service Categories */}
+      <div className="container mx-auto px-4">
+
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h3 className="text-base font-bold text-foreground">Layanan Kami</h3>
+            <p className="text-xs text-muted-foreground mt-0.5">Semua kebutuhan hewan peliharaanmu</p>
+          </div>
+          <Link href="/services" className="flex items-center gap-1 text-xs font-semibold text-primary hover:underline">
+            Lihat Semua <ArrowRight size={12} />
+          </Link>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+          {categories.map((cat) => {
+            const Icon = cat.icon
             return (
-              <Link key={category.name} href={category.href}>
-                <div
-                  className="group flex flex-col items-center justify-center
-                              py-1 cursor-pointer transition"
-                >
-                  {/* ICON */}
-                  <div
-                    className="w-15 h-12 flex items-center justify-center
-                                rounded-xl
-                                text-default-400 bg-default-100
-                                group-hover:bg-primary/10
-                                transition-colors duration-300"
-                  >
-                    <Icon size={25} />
+              <Link key={cat.name} href={cat.href}>
+                <div className={`group relative rounded-2xl overflow-hidden cursor-pointer h-38 md:h-42 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 ${cat.bg}`}>
+
+                  {/* Paw background */}
+                  <PawBackground color={cat.paw} />
+
+                  {/* Content */}
+                  <div className="relative z-10 h-full flex flex-col justify-between p-4">
+                    {/* Tag badge */}
+                    <div className="flex justify-between items-start">
+                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/70 backdrop-blur-sm ${cat.text}`}>
+                        {cat.tag}
+                      </span>
+                      {/* Icon */}
+                      <div className={`w-9 h-9 flex items-center justify-center rounded-xl ${cat.iconBg} shadow-sm group-hover:scale-110 transition-transform duration-300`}>
+                        <Icon size={18} className="text-white" />
+                      </div>
+                    </div>
+
+                    {/* Name + desc */}
+                    <div>
+                      <p className={`font-bold text-sm leading-tight ${cat.text}`}>{cat.name}</p>
+                      <p className={`text-[10px] mt-1 leading-snug line-clamp-2 opacity-75 ${cat.text}`}>{cat.desc}</p>
+                    </div>
                   </div>
 
-                  {/* LABEL */}
-                  <p
-                    className="mt-1.5 text-[10px] sm:text-sm font-medium text-center
-                                text-foreground/80
-                                group-hover:text-primary
-                                line-clamp-2 min-h-[2.25rem]
-                                transition-colors"
-                  >
-                    {category.name}
-                  </p>
                 </div>
               </Link>
             )
           })}
         </div>
-      </div>
 
+        {/* Info Strip */}
+        {/* <div className="mt-4 rounded-2xl bg-gradient-to-r from-amber-50 to-orange-50 border border-amber-100 px-5 py-3 flex flex-wrap gap-4 items-center justify-between">
+          <div className="flex items-center gap-2 text-xs text-amber-800">
+            <Star size={14} className="fill-amber-400 text-amber-400" />
+            <span className="font-semibold">4.9/5</span>
+            <span className="text-amber-600">dari 2.400+ ulasan pelanggan</span>
+          </div>
+          <div className="flex items-center gap-2 text-xs text-amber-800">
+            <Clock size={14} className="text-amber-500" />
+            <span>Buka setiap hari <span className="font-semibold">08.00 – 21.00</span></span>
+          </div>
+          <div className="hidden sm:flex items-center gap-2 text-xs text-amber-800">
+            <Truck size={14} className="text-amber-500" />
+            <span>Gratis ongkir order <span className="font-semibold">di atas Rp 150rb</span></span>
+          </div>
+        </div> */}
+
+      </div>
     </section>
   )
 }
