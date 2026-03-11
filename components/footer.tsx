@@ -21,7 +21,7 @@ export function Footer() {
               />
               <span className="hidden sm:block text-white">JJ PET HOUSE</span>
             </Link>
-            <p className="text-sm opacity-90 pt-4">
+            <p className="text-sm font-semibold opacity-90 pt-4">
               Care Like a Mom Love Like Family
             </p>
           </div>
@@ -86,11 +86,11 @@ export function Footer() {
             <ul className="space-y-3 text-sm">
               <li className="flex items-start gap-2">
                 <Phone size={16} className="mt-0.5 flex-shrink-0" />
-                <span>0812-3766-1234 | 0811-8880-3117 </span>
+                <span>Jakarta: <a href="https://wa.me/6281912982996">0819-1298-2996</a> <br /> Bali: <a href="https://wa.me/628113999893">0811-3999-893</a></span>
               </li>
               <li className="flex items-start gap-2">
                 <MapPin size={16} className="mt-0.5 flex-shrink-0" />
-                <span>JJ Pet House | Jl. Tukad Batanghari No 77, Kota Denpasar - 80225 </span>
+                <span>Jl. Tukad Batanghari No 77, Kota Denpasar - 80225</span>
               </li>
               <li className="flex items-start gap-2">
                 <Mail size={16} className="mt-0.5 flex-shrink-0" />

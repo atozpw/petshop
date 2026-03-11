@@ -189,8 +189,8 @@ export default async function Home() {
                   <Phone className="text-primary" size={24} />
                 </div>
                 <h3 className="font-semibold text-foreground mb-2">Hubungi Kami</h3>
-                <p className="text-muted-foreground">0812-3766-1234 | 0811-8880-3117</p>
-                <p className="text-sm text-muted-foreground">Senin - Minggu, 08:00 - 21:00</p>
+                <p className="text-sm font-semibold text-muted-foreground">Jakarta: <a href="https://wa.me/6281912982996">0819-1298-2996</a></p>
+                <p className="text-sm font-semibold text-muted-foreground">Bali: <a href="https://wa.me/628113999893">0811-3999-893</a></p>
               </div>
 
               <div className="text-center">
@@ -198,8 +198,8 @@ export default async function Home() {
                   <MapPin className="text-primary" size={24} />
                 </div>
                 <h3 className="font-semibold text-foreground mb-2">Lokasi</h3>
-                <p className="text-muted-foreground">JJ Pet House</p>
-                <p className="text-sm text-muted-foreground"> Jl. Tukad Batanghari No 77, Kota Denpasar - 80225 </p>
+                <p className="font-semibold text-muted-foreground">JJ Pet House</p>
+                <p className="text-sm font-semibold text-muted-foreground"> Jl. Tukad Batanghari No 77, Kota Denpasar - 80225 </p>
               </div>
 
               <div className="text-center">
@@ -207,8 +207,8 @@ export default async function Home() {
                   <span className="text-xl">⏰</span>
                 </div>
                 <h3 className="font-semibold text-foreground mb-2">Jam Operasional</h3>
-                <p className="text-muted-foreground">Buka 24 Jam</p>
-                <p className="text-sm text-muted-foreground">Setiap Hari Tanpa Libur</p>
+                <p className="font-semibold text-muted-foreground">Buka 24 Jam</p>
+                <p className="text-sm font-semibold text-muted-foreground">Setiap Hari Tanpa Libur</p>
               </div>
             </div>
           </div>

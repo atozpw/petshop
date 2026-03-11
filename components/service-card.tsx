@@ -44,7 +44,8 @@ export function ServiceCard({ id, name, description, price, image, duration, rat
           {/* {price > 0 && <span className="font-semibold">Rp {price.toLocaleString()}</span>} */}
         </div>
 
-        <Link href={`/booking?service=${id}`} className="w-full">
+        {/* <Link href={`/booking?service=${id}`} className="w-full"> */}
+        <Link href="#" className="w-full">
           <Button className="w-full bg-primary hover:bg-primary/90">Pesan Sekarang</Button>
         </Link>
       </div>

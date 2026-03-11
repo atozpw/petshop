@@ -1,7 +1,7 @@
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import { Clock, Users, Award, CheckCircle2, PhoneCall, MessageCircle } from "lucide-react"
-import Link from "next/link" 
+import Link from "next/link"
 
 export default function ClinicPage() {
   const doctors = [
@@ -11,7 +11,7 @@ export default function ClinicPage() {
     { name: "Drh. Dita Pratiwi Dwi Setyowati", specialty: "General Practitioner", experience: "", image: "/doctor/drh Dita.png" },
   ]
 
-  const services = [  
+  const services = [
     { icon: "🩺", title: "Konsultasi Umum", desc: "Pemeriksaan kesehatan komprehensif dengan dokter berpengalaman" },
     { icon: "💉", title: "Vaksinasi Lengkap", desc: "Program vaksinasi rabies, distemper, dan vaksin lengkap lainnya" },
     { icon: "🔬", title: "Lab Test Canggih", desc: "Tes laboratorium dengan teknologi analyzer modern dan hasil akurat" },
@@ -148,7 +148,7 @@ export default function ClinicPage() {
                 </div>
                 <h3 className="font-semibold text-lg text-foreground mb-2">Jam Operasional</h3>
                 <p className="text-muted-foreground">Buka 24 Jam</p>
-                <p className="text-sm text-muted-foreground">Setiap Hari Tanpa Libur</p>
+                <p className="text-muted-foreground">Setiap Hari Tanpa Libur</p>
               </div>
 
               <div className="text-center">
@@ -156,8 +156,9 @@ export default function ClinicPage() {
                   <PhoneCall className="text-primary" size={32} />
                 </div>
                 <h3 className="font-semibold text-lg text-foreground mb-2">Telepon</h3>
-                <p className="text-muted-foreground">+62 812-3766-1234</p>
-                <p className="text-sm text-muted-foreground">Untuk keperluan mendesak</p>
+                <p className="text-muted-foreground">Jakarta: <a href="tel:081912982996">0819-1298-2996</a></p>
+                <p className="text-muted-foreground">Bali: <a href="tel:08113999893">0811-3999-893</a></p>
+                <p className="text-muted-foreground">Untuk keperluan mendesak</p>
               </div>
 
               <div className="text-center">
@@ -165,8 +166,9 @@ export default function ClinicPage() {
                   <MessageCircle className="text-primary" size={32} />
                 </div>
                 <h3 className="font-semibold text-lg text-foreground mb-2">WhatsApp</h3>
-                <p className="text-muted-foreground">+62 812-3766-1234</p>
-                <p className="text-sm text-muted-foreground">Chat cepat untuk konsultasi</p>
+                <p className="text-muted-foreground">Jakarta: <a href="https://wa.me/6281912982996">0819-1298-2996</a></p>
+                <p className="text-muted-foreground">Bali: <a href="https://wa.me/628113999893">0811-3999-893</a></p>
+                <p className="text-muted-foreground">Chat cepat untuk konsultasi</p>
               </div>
             </div>
           </div>
@@ -180,16 +182,28 @@ export default function ClinicPage() {
               Hubungi kami sekarang untuk jadwal konsultasi atau untuk kasus darurat. Tim dokter hewan kami siap membantu kapan saja
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <a href="https://wa.me/6281237661234" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/6281912982996" target="_blank" rel="noopener noreferrer">
                 <button className="px-8 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
                   <MessageCircle size={20} />
-                  Chat WhatsApp
+                  Jakarta
                 </button>
               </a>
-              <a href="tel:+6281237661234">
+              <a href="https://wa.me/628113999893" target="_blank" rel="noopener noreferrer">
+                <button className="px-8 py-3 bg-white text-primary font-semibold rounded-lg hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
+                  <MessageCircle size={20} />
+                  Bali
+                </button>
+              </a>
+              <a href="tel:+6281912982996">
                 <button className="px-8 py-3 bg-white/20 text-white font-semibold rounded-lg hover:bg-white/30 border border-white transition-colors flex items-center justify-center gap-2">
                   <PhoneCall size={20} />
-                  Hubungi Telepon
+                  Jakarta
+                </button>
+              </a>
+              <a href="tel:+628113999893">
+                <button className="px-8 py-3 bg-white/20 text-white font-semibold rounded-lg hover:bg-white/30 border border-white transition-colors flex items-center justify-center gap-2">
+                  <PhoneCall size={20} />
+                  Bali
                 </button>
               </a>
             </div>

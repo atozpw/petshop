@@ -71,18 +71,18 @@ function PawPrint({ x, y, size, color, rotate }: { x: number, y: number, size: n
 function PawBackground({ color }: { color: string }) {
   return (
     <svg className="absolute inset-0 w-full h-full" viewBox="0 0 200 160" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
-      <PawPrint x={20}  y={30}  size={0.9} color={color} rotate={-15} />
-      <PawPrint x={60}  y={15}  size={0.6} color={color} rotate={10}  />
-      <PawPrint x={105} y={25}  size={0.75} color={color} rotate={-5} />
-      <PawPrint x={155} y={18}  size={0.55} color={color} rotate={20}  />
-      <PawPrint x={180} y={50}  size={0.85} color={color} rotate={-25} />
-      <PawPrint x={10}  y={90}  size={0.55} color={color} rotate={30}  />
-      <PawPrint x={50}  y={110} size={0.8} color={color} rotate={-10} />
-      <PawPrint x={100} y={100} size={0.5} color={color} rotate={15}  />
+      <PawPrint x={20} y={30} size={0.9} color={color} rotate={-15} />
+      <PawPrint x={60} y={15} size={0.6} color={color} rotate={10} />
+      <PawPrint x={105} y={25} size={0.75} color={color} rotate={-5} />
+      <PawPrint x={155} y={18} size={0.55} color={color} rotate={20} />
+      <PawPrint x={180} y={50} size={0.85} color={color} rotate={-25} />
+      <PawPrint x={10} y={90} size={0.55} color={color} rotate={30} />
+      <PawPrint x={50} y={110} size={0.8} color={color} rotate={-10} />
+      <PawPrint x={100} y={100} size={0.5} color={color} rotate={15} />
       <PawPrint x={145} y={115} size={0.9} color={color} rotate={-20} />
-      <PawPrint x={185} y={100} size={0.6} color={color} rotate={5}   />
-      <PawPrint x={35}  y={148} size={0.65} color={color} rotate={-8} />
-      <PawPrint x={120} y={150} size={0.7} color={color} rotate={12}  />
+      <PawPrint x={185} y={100} size={0.6} color={color} rotate={5} />
+      <PawPrint x={35} y={148} size={0.65} color={color} rotate={-8} />
+      <PawPrint x={120} y={150} size={0.7} color={color} rotate={12} />
       <PawPrint x={170} y={148} size={0.5} color={color} rotate={-30} />
     </svg>
   )
@@ -90,19 +90,19 @@ function PawBackground({ color }: { color: string }) {
 
 const heroSlides = [
   {
-    image: "/slides/slide2-new.png",
-    title: "Promo Spesial!",
-    subtitle: "Dapatkan diskon hingga 50%",
-    description: "Beli 2 gratis 1, berlaku untuk semua produk",
-    btnlabel: "Belanja Sekarang",
+    image: "/image/Pict 46.jpeg",
+    title: "SELAMAT DATANG DI JJ PETHOUSE",
+    subtitle: "LAYANAN KAMI MELIPUTI",
+    description: "* PETSHOP * KLINIK * GROOMING * BOARDING * PET CAFE * PET PALYGROUND * HOME VISIT * DELIVERY SERVICE",
+    btnlabel: "More Info",
     link: "/pet-shop"
   },
   {
-    image: "/slides/slide4-new.png",
-    title: "Layanan Grooming",
-    subtitle: "Buat hewan peliharaanmu tampil menawan",
-    description: "Diskon 20% untuk layanan grooming selama bulan ini",
-    btnlabel: "Pesan Sekarang",
+    image: "/image/Pict 36.jpeg",
+    title: "SELAMAT DATANG DI JJ PETHOUSE",
+    subtitle: "LAYANAN KAMI MELIPUTI",
+    description: "* PETSHOP * KLINIK * GROOMING * BOARDING * PET CAFE * PET PALYGROUND * HOME VISIT * DELIVERY SERVICE",
+    btnlabel: "More Info",
     link: "/grooming"
   }
 ]
@@ -113,7 +113,7 @@ export function HeroSection() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % heroSlides.length)
-    }, 5000)
+    }, 10000)
     return () => clearInterval(timer)
   }, [])
 
@@ -124,7 +124,7 @@ export function HeroSection() {
 
       {/* Hero Banner */}
       <div className="container mx-auto px-4">
-        <div className="relative bg-gradient-to-r from-amber-400 via-amber-200 to-gray-200 rounded-3xl overflow-hidden h-60 md:h-100 flex items-center group">
+        <div className="relative bg-gradient-to-r from-amber-400 via-amber-200 to-gray-200 rounded-3xl overflow-hidden h-60 md:h-150 flex items-center group">
           <div className="absolute inset-0">
             <img src={slide.image} alt="Promo banner" className="w-full h-full object-cover transition-all duration-700 scale-100 group-hover:scale-110" />
             <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/30 to-transparent" />
