@@ -104,7 +104,7 @@ export const SERVICES: Service[] = [
     category: "delivery",
     description: "Pengiriman cepat dan aman untuk produk pet shop ke seluruh area dengan packaging profesional",
     price: 25000,
-    image: "/image/Pict 37.jpeg",
+    image: "/image/Pict 47.jpeg",
     duration: "1-2 jam",
     rating: 4.7,
   },

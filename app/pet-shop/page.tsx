@@ -86,13 +86,11 @@ export default function PetShopPage() {
 
           <div className="absolute inset-0 bg-primary/85 flex items-center justify-center">
             <div className="text-center text-white px-4">
-              <h1 className="text-3xl font-bold mb-2">Selamat Datang di Pet Shop Kami!</h1>
-              <p className="text-lg mb-4">Temukan berbagai kebutuhan hewan peliharaan Anda dengan mudah</p>
-
-              <h1 className="text-1xl font-bold mb-2 opacity-100 animate-pulse">
+              {/* <h1 className="text-3xl font-bold mb-2">Selamat Datang di Pet Shop Kami!</h1> */}
+              <h1 className="text-4xl font-bold mb-2 opacity-100 animate-pulse">
                 Still On Progress... Stay Tuned! 🚧
               </h1>
-
+              <p className="text-lg mb-4">Temukan berbagai kebutuhan hewan peliharaan Anda dengan mudah</p>
             </div>
           </div>
         </div>
@@ -172,8 +170,8 @@ export default function PetShopPage() {
                 <button
                   onClick={() => setSelectedCategory(null)}
                   className={`w-full text-left px-3 py-2 rounded-lg mb-2 ${!selectedCategory
-                      ? "bg-primary text-white"
-                      : "hover:bg-muted"
+                    ? "bg-primary text-white"
+                    : "hover:bg-muted"
                     }`}
                 >
                   Semua Produk
@@ -184,8 +182,8 @@ export default function PetShopPage() {
                     key={cat.slug}
                     onClick={() => setSelectedCategory(cat.slug)}
                     className={`w-full text-left px-3 py-2 rounded-lg text-sm mb-1 ${selectedCategory === cat.slug
-                        ? "bg-primary text-white"
-                        : "hover:bg-muted"
+                      ? "bg-primary text-white"
+                      : "hover:bg-muted"
                       }`}
                   >
                     {cat.name}

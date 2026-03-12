@@ -30,7 +30,7 @@ export const BRANCHES: Branch[] = [
     email: "",
     hours: { weekday: "08:00 - 21:00", weekend: "08:00 - 22:00" },
     services: ["Grooming", "Pet Hotel", "Pet Shop"],
-    image: "/image/Pict 32.jpeg",
+    image: "/image/Pict 48.jpeg",
     coordinates: {},
     featured: false
   },
@@ -44,7 +44,7 @@ export const BRANCHES: Branch[] = [
     email: "",
     hours: { weekday: "08:00 - 21:00", weekend: "08:00 - 22:00" },
     services: ["Grooming", "Pet Hotel", "Pet Shop"],
-    image: "/image/Pict 32.jpeg",
+    image: "/image/Pict 48.jpeg",
     coordinates: {},
     featured: false
   },
