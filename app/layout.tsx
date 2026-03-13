@@ -28,7 +28,15 @@ export default function RootLayout({
   return (
     <html lang="id">
       <body className="font-sans antialiased">
+        
         <ClientProviders>
+          {/* <div
+            className="fixed inset-0 pointer-events-none z-[-01]"
+            style={{
+              backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Ccircle cx='35' cy='42' r='10' fill='%23888' opacity='0.09'/%3E%3Ccircle cx='22' cy='26' r='6' fill='%23888' opacity='0.06'/%3E%3Ccircle cx='36' cy='22' r='6' fill='%23888' opacity='0.06'/%3E%3Ccircle cx='50' cy='26' r='6' fill='%23888' opacity='0.06'/%3E%3Ccircle cx='85' cy='85' r='10' fill='%23888' opacity='0.06'/%3E%3Ccircle cx='72' cy='69' r='6' fill='%23888' opacity='0.06'/%3E%3Ccircle cx='86' cy='65' r='6' fill='%23888' opacity='0.06'/%3E%3Ccircle cx='100' cy='69' r='6' fill='%23888' opacity='0.06'/%3E%3C/svg%3E")`,
+              backgroundSize: "120px 120px",
+            }}
+          /> */}
           {children}
         </ClientProviders>
       </body>

@@ -120,34 +120,78 @@ export function HeroSection() {
   const slide = heroSlides[currentSlide]
 
   return (
-    <section className="bg-background pb-4 md:pb-2 py-8 md:py-10 overflow-hidden space-y-6">
+    <section className="pb-4 md:pb-2 py-8 md:py-10 overflow-hidden space-y-6">
 
       {/* Hero Banner */}
       <div className="container mx-auto px-4">
-        <div className="relative bg-gradient-to-r from-amber-400 via-amber-200 to-gray-200 rounded-3xl overflow-hidden h-60 md:h-150 flex items-center group">
-          <div className="absolute inset-0">
-            <img src={slide.image} alt="Promo banner" className="w-full h-full object-cover transition-all duration-700 scale-100 group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-l from-black/60 via-black/30 to-transparent" />
+        <div className="rounded-3xl overflow-hidden bg-white shadow group flex flex-col">
+          
+          {/* IMAGE — tinggi mengikuti card */}
+          <div className="relative w-full h-60 md:h-150">
+            <img
+              src={slide.image}
+              alt="Promo banner"
+              className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+            />
+
+            {/* Gradient — hanya desktop */}
+            <div className="hidden md:block absolute inset-0 bg-gradient-to-l from-black/80 via-black/40 to-transparent" />
+
+            {/* TEXT OVERLAY — hanya desktop */}
+            <div className="hidden md:flex absolute right-0 top-0 bottom-0 w-2/5 items-center justify-end pr-12">
+              <div className="max-w-md text-white space-y-2 text-right">
+                <h2 className="text-2xl md:text-4xl font-bold leading-tight">{slide.title}</h2>
+                <p className="text-lg font-semibold">{slide.subtitle}</p>
+                <p className="text-sm opacity-90">{slide.description}</p>
+                <Link href={slide.link}>
+                  <button className="mt-4 inline-flex items-center gap-2 bg-white text-primary px-5 py-2 rounded-full font-semibold hover:bg-primary hover:text-white transition-colors">
+                    <Zap size={16} />
+                    {slide.btnlabel}
+                  </button>
+                </Link>
+              </div>
+            </div>
+
+            {/* DOTS */}
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
+              {heroSlides.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrentSlide(i)}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${
+                    i === currentSlide ? "w-6 bg-white" : "w-1.5 bg-white/50"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
-          <div className="relative z-10 flex justify-end w-full px-8 md:px-12">
-            <div className="max-w-md text-white space-y-2 text-right">
-              <h2 className="text-2xl md:text-4xl font-bold leading-tight">{slide.title}</h2>
-              <p className="text-lg font-semibold">{slide.subtitle}</p>
-              <p className="text-sm opacity-90">{slide.description}</p>
+
+          {/* TEXT DI BAWAH — hanya mobile */}
+          <div className="md:hidden px-5 py-5 bg-white h-50">
+            <div className="border-l-4 border-primary pl-4 space-y-1 mb-4">
+             
+              <h2 className="text-xl font-bold text-gray-900 leading-tight line-clamp-2">
+                {slide.title}
+              </h2>
+               <p className="text-xs font-semibold text-primary uppercase tracking-widest truncate">
+                {slide.subtitle}
+              </p>
+              <p className="text-xs text-gray-600">{slide.description}</p>
+
+            </div>
+            <div className="flex items-center justify-between">
               <Link href={slide.link}>
-                <button className="mt-4 inline-flex items-center gap-2 bg-white text-primary px-5 py-2 rounded-full font-semibold hover:bg-primary hover:text-white transition-colors">
-                  <Zap size={16} />
+                <button className="inline-flex items-center gap-2 text-primary px-5 py-2 rounded-full text-sm border border-primary font-semibold hover:bg-primary hover:text-white transition-colors">
+                  <Zap size={14} />
                   {slide.btnlabel}
                 </button>
               </Link>
+              <span className="text-xs text-gray-400">
+                {currentSlide + 1} / {heroSlides.length}
+              </span>
             </div>
           </div>
-          <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-10">
-            {heroSlides.map((_, i) => (
-              <button key={i} onClick={() => setCurrentSlide(i)}
-                className={`h-1.5 rounded-full transition-all duration-300 ${i === currentSlide ? "w-6 bg-white" : "w-1.5 bg-white/50"}`} />
-            ))}
-          </div>
+
         </div>
       </div>
 

@@ -24,7 +24,7 @@ export default async function Home() {
     <>
       <Header />
 
-      <main className="min-h-screen bg-background">
+      <main className="min-h-screen">
         {/* Hero Section */}
         <HeroSection />
         {/* <section className="bg-background py-8 md:py-12">
