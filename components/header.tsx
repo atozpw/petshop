@@ -22,8 +22,9 @@ export function Header() {
     { label: "Pet Shop", href: "/pet-shop" },
     { label: "Clinic", href: "/clinic" },
     { label: "Services", href: "/services" },
-    { label: "Branches", href: "/branches" },
-    { label: "Tentang Kami", href: "/about" },
+    { label: "Pet Room", href: "/discussion" },
+    { label: "Our Store", href: "/branches" },
+    { label: "Marketplace", href: "/adopt" },
   ]
 
   return (
@@ -209,13 +210,11 @@ export function Header() {
       <div className="hidden lg:flex border-b border-white/10 text-white pb-2">
         <div className="container mx-auto px-4">
           <div className="flex gap-8 font-bold text-xs" style={{ paddingLeft: "calc(240px + 0.5rem)" }}>
-            <Link href="/" className="hover:text-white/60 transition-colors">Home</Link>
-            <Link href="/pet-shop" className="hover:text-white/60 transition-colors">Pet Shop</Link>
-            <Link href="/clinic" className="hover:text-white/60 transition-colors">Clinic</Link>
-            <Link href="/services" className="hover:text-white/60 transition-colors">Services</Link>
-            <Link href="/discussion" className="hover:text-white/60 transition-colors">Pet Room</Link>
-            <Link href="/branches" className="hover:text-white/60 transition-colors">Our Store</Link>
-            <Link href="/adopt" className="hover:text-white/60 transition-colors">Marketplace</Link>
+            {navItems.map(item => (
+              <Link key={item.href} href={item.href} className="hover:text-white/60 transition-colors">
+                {item.label}
+              </Link>
+            ))}
           </div>
         </div>
       </div>

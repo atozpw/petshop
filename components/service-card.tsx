@@ -2,7 +2,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { Star } from "lucide-react"
 import { Button } from "@/components/ui/button"
-
+import WhatsappModal from "@/components/whatsappmodal"
 interface ServiceCardProps {
   id: string
   name: string
@@ -45,9 +45,10 @@ export function ServiceCard({ id, name, description, price, image, duration, rat
         </div>
 
         {/* <Link href={`/booking?service=${id}`} className="w-full"> */}
-        <Link href="#" className="w-full">
+        {/* <Link href="#" className="w-full">
           <Button className="w-full bg-primary hover:bg-primary/90">Pesan Sekarang</Button>
-        </Link>
+        </Link> */}
+        <WhatsappModal />
       </div>
     </div>
   )
