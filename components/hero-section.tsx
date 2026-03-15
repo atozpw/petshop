@@ -90,7 +90,7 @@ function PawBackground({ color }: { color: string }) {
 
 const heroSlides = [
   {
-    image: "/image/Pict 46.jpeg",
+    image: "/image/Pict 48.jpeg",
     title: "SELAMAT DATANG DI JJ PETHOUSE",
     subtitle: "LAYANAN KAMI MELIPUTI",
     description: "* PETSHOP * KLINIK * GROOMING * BOARDING * PET CAFE * PET PALYGROUND * HOME VISIT * DELIVERY SERVICE",
@@ -125,7 +125,7 @@ export function HeroSection() {
       {/* Hero Banner */}
       <div className="container mx-auto px-4">
         <div className="rounded-3xl overflow-hidden bg-white shadow group flex flex-col">
-          
+
           {/* IMAGE — tinggi mengikuti card */}
           <div className="relative w-full h-60 md:h-150">
             <img
@@ -158,9 +158,8 @@ export function HeroSection() {
                 <button
                   key={i}
                   onClick={() => setCurrentSlide(i)}
-                  className={`h-1.5 rounded-full transition-all duration-300 ${
-                    i === currentSlide ? "w-6 bg-white" : "w-1.5 bg-white/50"
-                  }`}
+                  className={`h-1.5 rounded-full transition-all duration-300 ${i === currentSlide ? "w-6 bg-white" : "w-1.5 bg-white/50"
+                    }`}
                 />
               ))}
             </div>
@@ -169,11 +168,11 @@ export function HeroSection() {
           {/* TEXT DI BAWAH — hanya mobile */}
           <div className="md:hidden px-5 py-5 bg-white h-50">
             <div className="border-l-4 border-primary pl-4 space-y-1 mb-4">
-             
+
               <h2 className="text-xl font-bold text-gray-900 leading-tight line-clamp-2">
                 {slide.title}
               </h2>
-               <p className="text-xs font-semibold text-primary uppercase tracking-widest truncate">
+              <p className="text-xs font-semibold text-primary uppercase tracking-widest truncate">
                 {slide.subtitle}
               </p>
               <p className="text-xs text-gray-600">{slide.description}</p>
