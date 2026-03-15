@@ -1,6 +1,6 @@
 import Image from "next/image"
 import Link from "next/link"
-import { Star } from "lucide-react"
+import { Star, MessageCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import WhatsappModal from "@/components/whatsappmodal"
 interface ServiceCardProps {
@@ -11,10 +11,11 @@ interface ServiceCardProps {
   image: string
   duration: string
   rating: number
-  category: string
+  category: string,
+  active: boolean
 }
 
-export function ServiceCard({ id, name, description, price, image, duration, rating, category }: ServiceCardProps) {
+export function ServiceCard({ id, name, description, price, image, duration, rating, category, active }: ServiceCardProps) {
   return (
     <div className="bg-white rounded-lg border border-border overflow-hidden hover:shadow-lg transition-shadow">
       {/* Image */}
@@ -48,7 +49,7 @@ export function ServiceCard({ id, name, description, price, image, duration, rat
         {/* <Link href="#" className="w-full">
           <Button className="w-full bg-primary hover:bg-primary/90">Pesan Sekarang</Button>
         </Link> */}
-        <WhatsappModal />
+        <WhatsappModal active={active} />
       </div>
     </div>
   )

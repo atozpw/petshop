@@ -6,7 +6,8 @@ export interface Service {
   price: number
   image: string
   duration: string
-  rating: number
+  rating: number,
+  active: boolean
 }
 
 export interface TimeSlot {
@@ -37,6 +38,7 @@ export const SERVICES: Service[] = [
     image: "/image/Pict 12.jpeg",
     duration: "2 jam",
     rating: 4.9,
+    active: true
   },
   {
     id: "2",
@@ -47,6 +49,7 @@ export const SERVICES: Service[] = [
     image: "/image/Pict 39.jpeg",
     duration: "Per malam",
     rating: 4.8,
+    active: true
   },
   {
     id: "3",
@@ -57,6 +60,7 @@ export const SERVICES: Service[] = [
     image: "/image/Pict 2.jpeg",
     duration: "30 menit - 1 jam",
     rating: 4.9,
+    active: true
   },
   {
     id: "4",
@@ -67,6 +71,7 @@ export const SERVICES: Service[] = [
     image: "/image/Pict 41.jpeg",
     duration: "1 jam",
     rating: 4.8,
+    active: false
   },
   {
     id: "5",
@@ -77,6 +82,7 @@ export const SERVICES: Service[] = [
     image: "/image/Pict 30.jpeg",
     duration: "Flexible",
     rating: 4.7,
+    active: false
   },
   {
     id: "6",
@@ -87,6 +93,7 @@ export const SERVICES: Service[] = [
     image: "/image/Pict 43.jpeg",
     duration: "1.5 jam",
     rating: 4.8,
+    active: false
   },
   {
     id: "7",
@@ -97,6 +104,7 @@ export const SERVICES: Service[] = [
     image: "/image/Pict 3.jpeg",
     duration: "1 jam",
     rating: 4.8,
+    active: false
   },
   {
     id: "8",
@@ -107,6 +115,7 @@ export const SERVICES: Service[] = [
     image: "/image/Pict 47.jpeg",
     duration: "1-2 jam",
     rating: 4.7,
+    active: false
   },
 ]
 

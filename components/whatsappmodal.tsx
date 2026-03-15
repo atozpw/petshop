@@ -3,7 +3,7 @@
 import { useState } from "react"
 import { MapPin, MessageCircle, X } from "lucide-react"
 
-export default function WhatsappModal() {
+export default function WhatsappModal({ active = true }: { active?: boolean }) {
   const [open, setOpen] = useState(false)
 
   const message = encodeURIComponent(
@@ -18,11 +18,12 @@ export default function WhatsappModal() {
     <>
       {/* BUTTON */}
       <button
-        onClick={() => setOpen(true)}
-        className="w-full bg-primary hover:bg-primary/90 text-white py-3 rounded-xl font-semibold flex items-center justify-center gap-2 transition"
+        disabled={!active}
+        onClick={() => active && setOpen(true)}
+        className="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-xl font-semibold flex items-center justify-center gap-2 transition"
       >
         <MessageCircle size={18} />
-        Pesan Sekarang
+        {active ? "Pesan Sekarang" : "Tidak Tersedia"}
       </button>
 
       {/* MODAL */}
