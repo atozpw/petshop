@@ -196,7 +196,7 @@ export function Header() {
 
             {/* HAMBURGER */}
             <button
-              className="md:hidden p-2 rounded-lg hover:bg-white/10 "
+              className="lg:hidden p-2 rounded-lg hover:bg-white/10 "
               onClick={() => setMobileOpen(!mobileOpen)}
               aria-label="Toggle menu"
             >
@@ -222,7 +222,7 @@ export function Header() {
       {/* MOBILE MENU */}
       <div
         className={cn(
-          "md:hidden overflow-hidden transition-all duration-300 ease-out",
+          "lg:hidden overflow-hidden transition-all duration-300 ease-out",
           mobileOpen
             ? "max-h-[80vh] border-t bg-white shadow-lg"
             : "max-h-0"

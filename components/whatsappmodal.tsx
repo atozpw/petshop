@@ -23,7 +23,7 @@ export default function WhatsappModal({ active = true }: { active?: boolean }) {
         className="w-full bg-primary hover:bg-primary/90 text-white py-2 rounded-xl font-semibold flex items-center justify-center gap-2 transition"
       >
         <MessageCircle size={18} />
-        {active ? "Pesan Sekarang" : "Tidak Tersedia"}
+        Pesan Sekarang
       </button>
 
       {/* MODAL */}

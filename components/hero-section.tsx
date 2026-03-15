@@ -93,17 +93,17 @@ const heroSlides = [
     image: "/image/Pict 48.jpeg",
     title: "SELAMAT DATANG DI JJ PETHOUSE",
     subtitle: "LAYANAN KAMI MELIPUTI",
-    description: "* PETSHOP * KLINIK * GROOMING * BOARDING * PET CAFE * PET PALYGROUND * HOME VISIT * DELIVERY SERVICE",
+    description: "* PETSHOP * KLINIK * GROOMING * BOARDING * PET CAFE * PET PLAYGROUND * HOME VISIT * DELIVERY SERVICE",
     btnlabel: "More Info",
-    link: "/pet-shop"
+    link: "/services"
   },
   {
     image: "/image/Pict 36 - miror.jpeg",
     title: "SELAMAT DATANG DI JJ PETHOUSE",
     subtitle: "LAYANAN KAMI MELIPUTI",
-    description: "* PETSHOP * KLINIK * GROOMING * BOARDING * PET CAFE * PET PALYGROUND * HOME VISIT * DELIVERY SERVICE",
+    description: "* PETSHOP * KLINIK * GROOMING * BOARDING * PET CAFE * PET PLAYGROUND * HOME VISIT * DELIVERY SERVICE",
     btnlabel: "More Info",
-    link: "/grooming"
+    link: "/services"
   }
 ]
 

@@ -31,7 +31,7 @@ export interface Booking {
 export const SERVICES: Service[] = [
   {
     id: "1",
-    name: "Grooming Professional",
+    name: "Pet Grooming",
     category: "grooming",
     description: "Perawatan lengkap: mandi, potong rambut, dan grooming profesional dengan peralatan modern",
     price: 150000,
@@ -42,7 +42,7 @@ export const SERVICES: Service[] = [
   },
   {
     id: "2",
-    name: "Pet Boarding Nyaman",
+    name: "Pet Boarding",
     category: "hotel",
     description: "Penginapan mewah dengan fasilitas modern, feeding dan perawatan 24 jam untuk anjing dan kucing",
     price: 250000,
@@ -50,6 +50,28 @@ export const SERVICES: Service[] = [
     duration: "Per malam",
     rating: 4.8,
     active: true
+  },
+  {
+    id: "6",
+    name: "Pet Playground",
+    category: "playground",
+    description: "Area bermain aman dengan artificial grass dan fasilitas modern untuk sosialisasi hewan",
+    price: 80000,
+    image: "/image/Pict 43.jpeg",
+    duration: "1.5 jam",
+    rating: 4.8,
+    active: false
+  },
+  {
+    id: "8",
+    name: "Delivery Service",
+    category: "delivery",
+    description: "Pengiriman cepat dan aman untuk produk pet shop ke seluruh area dengan packaging profesional",
+    price: 25000,
+    image: "/image/Pict 47.jpeg",
+    duration: "1-2 jam",
+    rating: 4.7,
+    active: false
   },
   {
     id: "3",
@@ -85,17 +107,6 @@ export const SERVICES: Service[] = [
     active: false
   },
   {
-    id: "6",
-    name: "PlayGround Indoor/Outdoor",
-    category: "playground",
-    description: "Area bermain aman dengan artificial grass dan fasilitas modern untuk sosialisasi hewan",
-    price: 80000,
-    image: "/image/Pict 43.jpeg",
-    duration: "1.5 jam",
-    rating: 4.8,
-    active: false
-  },
-  {
     id: "7",
     name: "Konsultasi Nutrisi",
     category: "nutrition",
@@ -104,17 +115,6 @@ export const SERVICES: Service[] = [
     image: "/image/Pict 3.jpeg",
     duration: "1 jam",
     rating: 4.8,
-    active: false
-  },
-  {
-    id: "8",
-    name: "Delivery Express",
-    category: "delivery",
-    description: "Pengiriman cepat dan aman untuk produk pet shop ke seluruh area dengan packaging profesional",
-    price: 25000,
-    image: "/image/Pict 47.jpeg",
-    duration: "1-2 jam",
-    rating: 4.7,
     active: false
   },
 ]
