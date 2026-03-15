@@ -98,7 +98,7 @@ const heroSlides = [
     link: "/pet-shop"
   },
   {
-    image: "/image/Pict 36.jpeg",
+    image: "/image/Pict 36 - miror.jpeg",
     title: "SELAMAT DATANG DI JJ PETHOUSE",
     subtitle: "LAYANAN KAMI MELIPUTI",
     description: "* PETSHOP * KLINIK * GROOMING * BOARDING * PET CAFE * PET PALYGROUND * HOME VISIT * DELIVERY SERVICE",
