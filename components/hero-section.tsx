@@ -1,21 +1,21 @@
 'use client';
 
 import Link from "next/link"
-import { Zap, Clock, Star, Truck, ArrowRight } from "lucide-react"
+import { Zap, Clock, Star, Truck, ArrowRight,ShoppingBag, Stethoscope } from "lucide-react"
 import { useState, useEffect } from "react"
 import { Home, Scissors, Gamepad2 } from "lucide-react"
 
 const categories = [
   {
-    name: "Pet Boarding",
-    icon: Home,
-    href: "/pet-hotel",
+    name: "Pet Shop",
+    icon: ShoppingBag,
+    href: "/pet-shop",
     bg: "bg-sky-100",
     iconBg: "bg-sky-500",
     text: "text-sky-700",
     paw: "#bae6fd",
-    tag: "24/7 Care",
-    desc: "Titip hewan kesayanganmu dengan aman & nyaman",
+    tag: "Produk Lengkap",
+    desc: "Semua kebutuhan hewan dalam satu tempat",
   },
   {
     name: "Pet Grooming",
@@ -26,7 +26,29 @@ const categories = [
     text: "text-sky-700",
     paw: "#bae6fd",
     tag: "Promo 20%",
-    desc: "Tampil kinclong & wangi setiap saat",
+    desc: "Perawatan bulu agar tetap bersih & sehat",
+  },
+  {
+    name: "Pet Boarding",
+    icon: Home,
+    href: "/pet-hotel",
+    bg: "bg-sky-100",
+    iconBg: "bg-sky-500",
+    text: "text-sky-700",
+    paw: "#bae6fd",
+    tag: "24/7 Care",
+    desc: "Penitipan aman dengan pengawasan penuh",
+  },
+  {
+    name: "Pet Clinic",
+    icon: Stethoscope,
+    href: "/clinic",
+    bg: "bg-sky-100",
+    iconBg: "bg-sky-500",
+    text: "text-sky-700",
+    paw: "#bae6fd",
+    tag: "Dokter Hewan",
+    desc: "Periksa kesehatan & konsultasi profesional",
   },
   {
     name: "Pet Playground",
@@ -37,18 +59,18 @@ const categories = [
     text: "text-sky-700",
     paw: "#bae6fd",
     tag: "Seru & Asyik",
-    desc: "Area bermain khusus untuk si berbulu",
+    desc: "Tempat bermain untuk hewan aktif & ceria",
   },
   {
-    name: "Delivery Ekspres",
+    name: "Home Visit & Delivery",
     icon: Truck,
     href: "/delivery",
     bg: "bg-sky-100",
     iconBg: "bg-sky-500",
     text: "text-sky-700",
     paw: "#bae6fd",
-    tag: "Same Day",
-    desc: "Produk sampai di hari yang sama",
+    tag: "Ke Rumah",
+    desc: "Layanan antar & kunjungan langsung ke rumah",
   },
 ]
 
@@ -207,33 +229,33 @@ export function HeroSection() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3">
           {categories.map((cat) => {
             const Icon = cat.icon
             return (
               <Link key={cat.name} href={cat.href}>
                 <div className={`group relative rounded-2xl overflow-hidden cursor-pointer h-38 md:h-42 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 ${cat.bg}`}>
 
-                  {/* Paw background */}
                   <PawBackground color={cat.paw} />
 
-                  {/* Content */}
                   <div className="relative z-10 h-full flex flex-col justify-between p-4">
-                    {/* Tag badge */}
                     <div className="flex justify-between items-start">
                       <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full bg-white/70 backdrop-blur-sm ${cat.text}`}>
                         {cat.tag}
                       </span>
-                      {/* Icon */}
+
                       <div className={`w-9 h-9 flex items-center justify-center rounded-xl ${cat.iconBg} shadow-sm group-hover:scale-110 transition-transform duration-300`}>
                         <Icon size={18} className="text-white" />
                       </div>
                     </div>
 
-                    {/* Name + desc */}
                     <div>
-                      <p className={`font-bold text-sm leading-tight ${cat.text}`}>{cat.name}</p>
-                      <p className={`text-[10px] mt-1 leading-snug line-clamp-2 opacity-75 ${cat.text}`}>{cat.desc}</p>
+                      <p className={`font-bold text-sm leading-tight ${cat.text}`}>
+                        {cat.name}
+                      </p>
+                      <p className={`text-[10px] mt-1 leading-snug line-clamp-2 opacity-75 ${cat.text}`}>
+                        {cat.desc}
+                      </p>
                     </div>
                   </div>
 

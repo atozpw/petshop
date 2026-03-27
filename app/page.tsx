@@ -4,12 +4,13 @@ import { HeroSection } from "@/components/hero-section"
 import { ProductSimpleCard } from "@/components/products-card"
 import { ServiceCard } from "@/components/service-card"
 import { SERVICES } from "@/lib/booking-data"
-import { Star, MapPin, Phone } from "lucide-react"
+import { Star, MapPin, Phone, ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { fetchProducts } from "@/lib/api"
 import type { Product } from "@/lib/product-data"
-
+import { PRODUCT_CATEGORIES } from "@/lib/product-categories-data"
+import { ProductCategoriesShowcase } from "@/components/product-categories-showcase"
 
 
 export default async function Home() {
@@ -27,6 +28,10 @@ export default async function Home() {
       <main className="min-h-screen">
         {/* Hero Section */}
         <HeroSection />
+
+        {/* Product Categories */}
+         
+        <ProductCategoriesShowcase />
         {/* <section className="bg-background py-8 md:py-12">
 
           <div className="container mx-auto px-4">
