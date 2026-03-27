@@ -21,9 +21,9 @@ export default function ClinicPage() {
   ]
 
   const facilities = [
-    { title: "Ruang Konsultasi", image: "/image/Pict 7.jpeg", desc: "Ruang konsultasi yang nyaman dan steril" },
-    { title: "Peralatan Medis", image: "/image/Pict 8.jpeg", desc: "Analyzer dan peralatan medis modern" },
-    { title: "Ruang Pemulihan", image: "/image/Pict 10.jpeg", desc: "Fasilitas pemulihan pasien post operasi" },
+    { title: "Ruang Konsultasi", image: "/image/Pict 4.jpeg", desc: "Ruang konsultasi yang nyaman dan steril" },
+    { title: "Peralatan Medis", image: "/image/Pict 7.jpeg", desc: "Analyzer dan peralatan medis modern" },
+    { title: "Ruang Pemulihan", image: "/image/Pict 44.jpeg", desc: "Fasilitas pemulihan pasien post operasi" },
   ]
 
   return (
