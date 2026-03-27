@@ -25,6 +25,7 @@ export function Header() {
     { label: "Pet Room", href: "/discussion" },
     { label: "Our Store", href: "/branches" },
     { label: "Marketplace", href: "/adopt" },
+    { label: "Event", href: "#" },
   ]
 
   return (
