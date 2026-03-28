@@ -21,6 +21,13 @@ export default function BookingPage() {
   const [userName, setUserName] = useState("")
   const [userPhone, setUserPhone] = useState("")
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [selectedBranch, setSelectedBranch] = useState("")
+  const [serviceMode, setServiceMode] = useState("")
+  const [address, setAddress] = useState("")
+  const BRANCHES = [
+    { id: "Jakarta", name: "Jakarta", phone: "6281912982996" },
+    { id: "Bali", name: "Bali", phone: "628113999893" },
+  ]
 
   useEffect(() => {
     // Check if user is logged in (from localStorage or session)
@@ -35,36 +42,79 @@ export default function BookingPage() {
   }, [])
 
   const service = SERVICES.find((s) => s.id === selectedService)
+  const branch = BRANCHES.find((b) => b.id === selectedBranch)
 
+  // const handleSubmit = () => {
+  //   if (!userEmail || !userName || !userPhone || !petName || !petType || !selectedDate || !selectedTime) {
+  //     alert("Mohon isi semua field yang diperlukan")
+  //     return
+  //   }
+
+  //   const booking = {
+  //     id: Date.now().toString(),
+  //     service: service?.name,
+  //     petName,
+  //     petType,
+  //     date: selectedDate,
+  //     time: selectedTime,
+  //     notes,
+  //     email: userEmail,
+  //     name: userName,
+  //     phone: userPhone,
+  //     totalPrice: service?.price || 0,
+  //     status: "pending",
+  //   }
+
+  //   // Store booking
+  //   const bookings = JSON.parse(localStorage.getItem("bookings") || "[]")
+  //   bookings.push(booking)
+  //   localStorage.setItem("bookings", JSON.stringify(bookings))
+
+  //   // Redirect to confirmation
+  //   router.push(`/booking/confirmation?id=${booking.id}`)
+  // }
   const handleSubmit = () => {
-    if (!userEmail || !userName || !userPhone || !petName || !petType || !selectedDate || !selectedTime) {
-      alert("Mohon isi semua field yang diperlukan")
+    if (!userEmail || !userName || !userPhone || !petName || !petType) {
+      alert("Mohon isi semua field")
       return
     }
 
-    const booking = {
-      id: Date.now().toString(),
-      service: service?.name,
-      petName,
-      petType,
-      date: selectedDate,
-      time: selectedTime,
-      notes,
-      email: userEmail,
-      name: userName,
-      phone: userPhone,
-      totalPrice: service?.price || 0,
-      status: "pending",
-    }
+    const branch = BRANCHES.find((b) => b.id === selectedBranch)
 
-    // Store booking
-    const bookings = JSON.parse(localStorage.getItem("bookings") || "[]")
-    bookings.push(booking)
-    localStorage.setItem("bookings", JSON.stringify(bookings))
+    const message = `
+    Halo, saya ingin booking 🐾
 
-    // Redirect to confirmation
-    router.push(`/booking/confirmation?id=${booking.id}`)
+    Layanan: ${service?.name}
+    Cabang: ${branch?.name || "-"}
+    Nama Hewan: ${petName}
+    Jenis: ${petType}
+
+    Tanggal: ${selectedDate}
+    Waktu: ${selectedTime}
+
+    Tipe: ${serviceMode || "-"}
+    Alamat: ${address || "-"}
+
+    Catatan:
+    ${notes || "-"}
+
+    Nama: ${userName}
+    HP: ${userPhone}
+  `
+
+    const phone = branch?.phone || "628xxxx"
+
+    window.open(
+      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
+    )
   }
+
+  const TERMS = [
+    "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
+    "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
+    "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
+    "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
+  ]
 
   return (
     <>
@@ -127,7 +177,48 @@ export default function BookingPage() {
               {step === 2 && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-foreground">Pilih Tanggal & Waktu</h2>
+                  
+                    {service?.branchRequired && (
+                    <div>
+                      <label className="block text-sm font-semibold mb-2">Pilih Cabang</label>
+                      <div className="grid grid-cols-2 gap-2">
+                        {BRANCHES.map((b) => (
+                          <button
+                            key={b.id}
+                            onClick={() => setSelectedBranch(b.id)}
+                            className={`p-3 border rounded ${
+                              selectedBranch === b.id ? "bg-primary text-white" : ""
+                            }`}
+                          >
+                            {b.name}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
 
+                  {service?.availableModes && (
+                    <div>
+                      <label className="block text-sm font-semibold mb-2">Tipe Layanan</label>
+                      <div className="flex gap-2">
+                        {service.availableModes.map((mode) => (
+                          <button
+                            key={mode}
+                            onClick={() => setServiceMode(mode)}
+                            className={`px-4 py-2 border rounded ${
+                              serviceMode === mode ? "bg-primary text-white" : ""
+                            }`}
+                          >
+                            {mode === "home_visit"
+                              ? "Home Visit"
+                              : mode === "pickup"
+                              ? "Jemput Hewan"
+                              : mode}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <div>
                     <label className="block text-sm font-semibold text-foreground mb-3">Tanggal</label>
                     <input
@@ -138,6 +229,7 @@ export default function BookingPage() {
                       className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
+                  
 
                   {selectedDate && (
                     <div>
@@ -162,6 +254,8 @@ export default function BookingPage() {
                       </div>
                     </div>
                   )}
+
+                  
                 </div>
               )}
 
@@ -207,6 +301,17 @@ export default function BookingPage() {
                       className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
+                  {(service?.requiresAddress || serviceMode === "home_visit" || serviceMode === "pickup") && (
+                    <div>
+                      <label className="block text-sm font-semibold mb-2">Alamat</label>
+                      <textarea
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder="Masukkan alamat lengkap..."
+                        className="w-full border rounded p-2"
+                      />
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -277,38 +382,107 @@ export default function BookingPage() {
                   {/* Booking Summary */}
                   <div className="bg-muted/30 rounded-lg p-6 space-y-4">
                     <h3 className="font-semibold text-foreground">Ringkasan Booking</h3>
+
                     <div className="space-y-2 text-sm">
+
+                      {/* Service */}
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Layanan:</span>
-                        <span className="font-semibold text-foreground">{service?.name}</span>
+                        <span className="font-semibold">{service?.name}</span>
                       </div>
+
+                      {/* Branch */}
+                      {service?.branchRequired && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Cabang:</span>
+                          <span className="font-semibold">{branch?.name}</span>
+                        </div>
+                      )}
+
+                      {/* Mode */}
+                      {service?.availableModes && (
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">Tipe Layanan:</span>
+                          <span className="font-semibold">
+                            {serviceMode === "home_visit"
+                              ? "Home Visit"
+                              : serviceMode === "pickup"
+                              ? "Jemput Hewan"
+                              : "-"}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Address */}
+                      {(service?.requiresAddress ||
+                        serviceMode === "home_visit" ||
+                        serviceMode === "pickup") && (
+                        <div className="flex justify-between items-start">
+                          <span className="text-muted-foreground">Alamat:</span>
+                          <span className="font-semibold text-right max-w-[60%]">
+                            {address || "-"}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Pet */}
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Nama Hewan:</span>
-                        <span className="font-semibold text-foreground">{petName}</span>
+                        <span className="font-semibold">{petName}</span>
                       </div>
+
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Jenis:</span>
-                        <span className="font-semibold text-foreground">{petType}</span>
+                        <span className="font-semibold">{petType}</span>
                       </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Tanggal:</span>
-                        <span className="font-semibold text-foreground">{selectedDate}</span>
-                      </div>
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Waktu:</span>
-                        <span className="font-semibold text-foreground">{selectedTime}</span>
-                      </div>
-                      <div className="border-t border-border pt-2 mt-2 flex justify-between">
+
+                      {/* Schedule */}
+                      {service?.requiresSchedule && (
+                        <>
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Tanggal:</span>
+                            <span className="font-semibold">{selectedDate}</span>
+                          </div>
+
+                          <div className="flex justify-between">
+                            <span className="text-muted-foreground">Waktu:</span>
+                            <span className="font-semibold">{selectedTime}</span>
+                          </div>
+                        </>
+                      )}
+
+                      {/* Notes */}
+                      {notes && (
+                        <div className="flex justify-between items-start">
+                          <span className="text-muted-foreground">Catatan:</span>
+                          <span className="font-semibold text-right max-w-[60%]">
+                            {notes}
+                          </span>
+                        </div>
+                      )}
+
+                      {/* Price */}
+                      {/* <div className="border-t pt-2 mt-2 flex justify-between">
                         <span className="text-muted-foreground">Total Harga:</span>
                         <span className="text-lg font-bold text-primary">
                           Rp {(service?.price || 0).toLocaleString()}
                         </span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                 </div>
               )}
+              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 space-y-2 mt-6">
+                <h4 className="font-semibold text-sm text-foreground">
+                  Syarat & Ketentuan
+                </h4>
 
+                <ul className="text-sm text-muted-foreground list-disc pl-5 space-y-1">
+                  {TERMS.map((term, i) => (
+                    <li key={i}>{term}</li>
+                  ))}
+                </ul>
+              </div>
               {/* Navigation Buttons */}
               <div className="flex gap-3 mt-8 pt-6 border-t border-border">
                 <button
@@ -334,6 +508,15 @@ export default function BookingPage() {
                         alert("Isi data hewan peliharaan terlebih dahulu")
                         return
                       }
+                      if (step === 2 && service?.branchRequired && !selectedBranch) {
+                        alert("Pilih cabang terlebih dahulu")
+                        return
+                      }
+
+                      if (step === 2 && service?.availableModes && !serviceMode) {
+                        alert("Pilih tipe layanan terlebih dahulu")
+                        return
+                      }
                       setStep(step + 1)
                     }}
                     className="ml-auto px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90"
@@ -341,7 +524,7 @@ export default function BookingPage() {
                     Lanjut
                   </button>
                 ) : (
-                  <button disabled
+                  <button 
                     onClick={handleSubmit}
                     className="ml-auto px-6 py-2 bg-accent text-white rounded-lg font-semibold hover:bg-accent/90"
                   >

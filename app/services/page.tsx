@@ -92,8 +92,8 @@ export default function ServicesPage() {
             <p className="text-lg text-muted-foreground mb-8 max-w-2xl mx-auto">
               Hubungi kami sekarang untuk mendapatkan konsultasi gratis dan penawaran khusus untuk member baru
             </p>
-            {/* <Link href="/booking"> */}
-            <Link href="#">
+            <Link href="/booking">
+            {/* <Link href="#"> */}
               <button className="px-8 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary/90 transition-colors">
                 Pesan Sekarang
               </button>

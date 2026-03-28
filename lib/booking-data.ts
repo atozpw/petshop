@@ -1,3 +1,5 @@
+import { tr } from "date-fns/locale"
+
 export interface Service {
   id: string
   name: string
@@ -6,8 +8,13 @@ export interface Service {
   price: number
   image: string
   duration: string
-  rating: number,
+  rating: number
   active: boolean
+  requiresAddress?: boolean
+  requiresPickup?: boolean
+  requiresSchedule?: boolean
+  availableModes?: ("home_visit" | "pickup" )[]
+  branchRequired?: boolean
 }
 
 export interface TimeSlot {
@@ -25,7 +32,8 @@ export interface Booking {
   petType: string
   status: "pending" | "confirmed" | "completed" | "cancelled"
   totalPrice: number
-  createdAt: string
+  
+
 }
 
 export const SERVICES: Service[] = [
@@ -33,102 +41,195 @@ export const SERVICES: Service[] = [
     id: "1",
     name: "Pet Grooming",
     category: "grooming",
-    description: "Perawatan lengkap: mandi, potong rambut, dan grooming profesional dengan peralatan modern",
+    description: "Perawatan lengkap mulai dari mandi, potong kuku & rambut, hingga styling profesional menggunakan produk premium.",
     price: 150000,
     image: "/image/Pict 12.jpeg",
-    duration: "2 jam",
+    duration: "1.5 - 2 jam",
     rating: 4.9,
-    active: true
+    active: true,
+
+    requiresSchedule: true,
+    availableModes: ["home_visit", "pickup"],
+    requiresAddress: false, // hanya jika pilih mode tertentu
+    branchRequired: true,
   },
+
   {
     id: "2",
     name: "Pet Boarding",
-    category: "hotel",
-    description: "Penginapan mewah dengan fasilitas modern, feeding dan perawatan 24 jam untuk anjing dan kucing",
+    category: "boarding",
+    description: "Layanan penitipan hewan dengan fasilitas nyaman, pemberian makan terjadwal, dan pengawasan 24 jam.",
     price: 250000,
     image: "/image/Pict 39.jpeg",
     duration: "Per malam",
     rating: 4.8,
-    active: true
+    active: true,
+
+    requiresSchedule: true,
+    branchRequired: true,
   },
-  {
-    id: "6",
-    name: "Pet Playground",
-    category: "playground",
-    description: "Area bermain aman dengan artificial grass dan fasilitas modern untuk sosialisasi hewan",
-    price: 80000,
-    image: "/image/Pict 43.jpeg",
-    duration: "1.5 jam",
-    rating: 4.8,
-    active: false
-  },
-  {
-    id: "8",
-    name: "Delivery Service",
-    category: "delivery",
-    description: "Pengiriman cepat dan aman untuk produk pet shop ke seluruh area dengan packaging profesional",
-    price: 25000,
-    image: "/image/Pict 47.jpeg",
-    duration: "1-2 jam",
-    rating: 4.7,
-    active: false
-  },
+
   {
     id: "3",
-    name: "Klinik Hewan 24 Jam",
+    name: "Pet Clinic",
     category: "clinic",
-    description: "Konsultasi, vaksinasi, pemeriksaan kesehatan, dan layanan darurat veteriner kapan saja",
+    description: "Layanan kesehatan hewan meliputi konsultasi dokter, vaksinasi, pemeriksaan rutin, hingga penanganan darurat.",
     price: 200000,
     image: "/image/Pict 2.jpeg",
-    duration: "30 menit - 1 jam",
+    duration: "30 - 60 menit",
     rating: 4.9,
-    active: true
+    active: true,
+
+    requiresSchedule: true,
+    branchRequired: true,
   },
+
   {
     id: "4",
-    name: "Dog Training Profesional",
-    category: "training",
-    description: "Pelatihan profesional untuk anjing dengan metode terbukti dan pengawasan profesional",
-    price: 100000,
-    image: "/image/Pict 41.jpeg",
-    duration: "1 jam",
-    rating: 4.8,
-    active: false
-  },
-  {
-    id: "5",
-    name: "Pet Shop Premium",
+    name: "Pet Shop",
     category: "shop",
-    description: "Koleksi lengkap makanan premium (Royal Canin, ProPlan) dan aksesori berkualitas tinggi",
+    description: "Tersedia berbagai kebutuhan hewan seperti makanan premium, vitamin, aksesoris, dan perlengkapan berkualitas.",
     price: 0,
     image: "/image/Pict 30.jpeg",
     duration: "Flexible",
     rating: 4.7,
-    active: false
+    active: false,
+
+    branchRequired: true,
   },
+
+  {
+    id: "5",
+    name: "Pet Playground",
+    category: "playground",
+    description: "Area bermain aman dengan rumput sintetis dan fasilitas interaktif untuk melatih sosial dan aktivitas hewan.",
+    price: 80000,
+    image: "/image/Pict 43.jpeg",
+    duration: "1 - 2 jam",
+    rating: 4.8,
+    active: false,
+
+    requiresSchedule: true,
+    branchRequired: true,
+  },
+
+  {
+    id: "6",
+    name: "Home Visit & Delivery",
+    category: "delivery",
+    description: "Layanan kunjungan ke rumah untuk grooming ringan, perawatan, serta pengantaran kebutuhan hewan peliharaan.",
+    price: 50000,
+    image: "/image/Pict 47.jpeg",
+    duration: "1 - 2 jam",
+    rating: 4.7,
+    active: false,
+
+    requiresAddress: true,
+    requiresSchedule: true,
+    availableModes: ["home_visit"],
+    branchRequired: false,
+  },
+
   {
     id: "7",
-    name: "Konsultasi Nutrisi",
-    category: "nutrition",
-    description: "Konsultasi gizi lengkap dan rekomendasi pakan terbaik sesuai kebutuhan spesifik hewan Anda",
-    price: 50000,
+    name: "Pet Love Care",
+    category: "petlove",
+    description: "Perawatan penuh kasih untuk hewan peliharaan Anda, memastikan kenyamanan, kebersihan, dan kesehatan optimal.",
+    price: 75000,
     image: "/image/Pict 3.jpeg",
     duration: "1 jam",
     rating: 4.8,
-    active: false
+    active: false,
+
+    requiresSchedule: true,
+    availableModes: ["home_visit"],
+    requiresAddress: true,
+    branchRequired: false,
+  },
+
+  {
+    id: "8",
+    name: "Pet Sitter",
+    category: "petsitter",
+    description: "Layanan penjagaan hewan di rumah atau lokasi tertentu dengan perhatian penuh dan perawatan profesional.",
+    price: 100000,
+    image: "/image/Pict 3.jpeg",
+    duration: "Per hari",
+    rating: 4.8,
+    active: false,
+
+    requiresSchedule: true,
+    requiresAddress: true,
+    availableModes: ["home_visit"],
+    branchRequired: false,
+  },
+
+  {
+    id: "9",
+    name: "Dog Trainer",
+    category: "training",
+    description: "Pelatihan anjing profesional untuk kepatuhan, perilaku, dan keterampilan khusus dengan metode efektif.",
+    price: 150000,
+    image: "/image/Pict 41.jpeg",
+    duration: "1 jam",
+    rating: 4.8,
+    active: false,
+
+    requiresSchedule: true,
+    requiresAddress: true,
+    availableModes: ["home_visit"],
+    branchRequired: false,
+  },
+
+  {
+    id: "10",
+    name: "Pet Cremation",
+    category: "cremation",
+    description: "Layanan kremasi hewan peliharaan dengan proses yang penuh penghormatan dan kenangan yang layak.",
+    price: 300000,
+    image: "/image/Pict 3.jpeg",
+    duration: "2 - 4 jam",
+    rating: 4.8,
+    active: false,
+
+    requiresAddress: true,
+    availableModes: ["pickup"],
+    branchRequired: false,
+  },
+
+  {
+    id: "11",
+    name: "Pet Taxi",
+    category: "pettaxi",
+    description: "Layanan antar-jemput hewan peliharaan yang aman dan nyaman untuk ke klinik, grooming, atau kebutuhan lainnya.",
+    price: 50000,
+    image: "/image/Pict 3.jpeg",
+    duration: "Per trip",
+    rating: 4.8,
+    active: false,
+
+    requiresAddress: true,
+    availableModes: ["pickup"],
+    branchRequired: false,
   },
 ]
 
 export const TIME_SLOTS: TimeSlot[] = [
   { time: "08:00", available: true },
   { time: "09:00", available: true },
-  { time: "10:00", available: false },
+  { time: "10:00", available: true },
   { time: "11:00", available: true },
   { time: "13:00", available: true },
   { time: "14:00", available: true },
-  { time: "15:00", available: false },
+  { time: "15:00", available: true },
   { time: "16:00", available: true },
   { time: "17:00", available: true },
+  { time: "18:00", available: true },
+  { time: "19:00", available: true },
+  { time: "20:00", available: true },
+  { time: "21:00", available: true },
+  { time: "22:00", available: true },
+  { time: "23:00", available: true },
 ]
 
-export const PET_TYPES = ["Anjing", "Kucing", "Kelinci", "Burung", "Hamster", "Iguana", "Ular"]
+export const PET_TYPES = ["Anjing", "Kucing"]
