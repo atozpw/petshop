@@ -30,7 +30,7 @@ export default async function Home() {
         <HeroSection />
 
         {/* Product Categories */}
-         
+
         <ProductCategoriesShowcase />
         {/* <section className="bg-background py-8 md:py-12">
 
@@ -202,9 +202,9 @@ export default async function Home() {
                 <div className="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary/10 mb-4">
                   <MapPin className="text-primary" size={24} />
                 </div>
-                <h3 className="font-semibold text-foreground mb-2">Lokasi</h3>
-                <p className="font-semibold text-muted-foreground">JJ Pet House</p>
-                <p className="text-sm font-semibold text-muted-foreground"> Jl. Tukad Batanghari No 77, Kota Denpasar - 80225 </p>
+                <h3 className="font-semibold text-foreground mb-2">Lokasi JJ Pet House</h3>
+                <p className="text-sm font-semibold text-muted-foreground">Jakarta: Jl. Radio Dalam Raya Gandaria Utara, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12140</p>
+                <p className="text-sm font-semibold text-muted-foreground">Bali: Jl. Tukad Batanghari No 77, Kota Denpasar - 80225</p>
               </div>
 
               <div className="text-center">
