@@ -90,7 +90,7 @@ export function Footer() {
               </li>
               <li className="flex items-start gap-2">
                 <MapPin size={16} className="mt-0.5 flex-shrink-0" />
-                <span>Jl. Tukad Batanghari No 77, Kota Denpasar - 80225</span>
+                <span>Jakarta: Jl. Radio Dalam Raya Gandaria Utara, Kec. Kby. Baru, Kota Jakarta Selatan, Daerah Khusus Ibukota Jakarta 12140 <br /> Bali: Jl. Tukad Batanghari No 77, Kota Denpasar - 80225</span>
               </li>
               <li className="flex items-start gap-2">
                 <Mail size={16} className="mt-0.5 flex-shrink-0" />
