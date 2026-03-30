@@ -1,4 +1,5 @@
-import { tr } from "date-fns/locale"
+import { id, tr } from "date-fns/locale"
+import { url } from "inspector/promises"
 
 export interface Service {
   id: string
@@ -10,11 +11,18 @@ export interface Service {
   duration: string
   rating: number
   active: boolean
+  url?: string
   requiresAddress?: boolean
   requiresPickup?: boolean
   requiresSchedule?: boolean
-  availableModes?: ("home_visit" | "pickup" )[]
+  availableModes?: ("Home Visit" | "Walk In" | "Delivery" )[]
   branchRequired?: boolean
+  item?: {
+    id: string
+    name: string
+    price: number
+  }[]
+  scheduleType?: "range" | "single"
 }
 
 export interface TimeSlot {
@@ -47,11 +55,17 @@ export const SERVICES: Service[] = [
     duration: "1.5 - 2 jam",
     rating: 4.9,
     active: true,
-
+    url: "/services/grooming",
     requiresSchedule: true,
-    availableModes: ["home_visit", "pickup"],
-    requiresAddress: false, // hanya jika pilih mode tertentu
+    availableModes: ["Home Visit", "Walk In", "Delivery"],
+    requiresAddress: true,
     branchRequired: true,
+    item: [
+      { id: "adult", name: "Adult", price: 150000 },
+      { id: "kitten", name: "Kitten", price: 100000 },
+      { id: "puppy", name: "Puppy", price: 120000 }
+    ],
+    scheduleType: "single"
   },
 
   {
@@ -64,9 +78,16 @@ export const SERVICES: Service[] = [
     duration: "Per malam",
     rating: 4.8,
     active: true,
-
     requiresSchedule: true,
+    availableModes: ["Home Visit", "Delivery"],
+    requiresAddress: false,
     branchRequired: true,
+    item: [
+      { id: "standard", name: "Standard Boarding", price: 250000 },
+      { id: "premium", name: "Premium Boarding", price: 350000 }
+    ],
+    scheduleType: "range"
+
   },
 
   {
@@ -79,9 +100,12 @@ export const SERVICES: Service[] = [
     duration: "30 - 60 menit",
     rating: 4.9,
     active: true,
-
     requiresSchedule: true,
+    availableModes: ["Home Visit", "Walk In", "Delivery"],
+    requiresAddress: false, 
     branchRequired: true,
+    item: [],
+    scheduleType: "single"
   },
 
   {
@@ -94,8 +118,13 @@ export const SERVICES: Service[] = [
     duration: "Flexible",
     rating: 4.7,
     active: false,
+    requiresSchedule: false,
+    availableModes: ["Home Visit", "Walk In", "Delivery"],
+    requiresAddress: false,
+    branchRequired: false,
+    item: [],
+    scheduleType: "single"
 
-    branchRequired: true,
   },
 
   {
@@ -108,9 +137,12 @@ export const SERVICES: Service[] = [
     duration: "1 - 2 jam",
     rating: 4.8,
     active: false,
-
     requiresSchedule: true,
+    availableModes: ["Home Visit", "Walk In", "Delivery"],
+    requiresAddress: false,
     branchRequired: true,
+    item: [],
+    scheduleType: "single"
   },
 
   {
@@ -123,11 +155,12 @@ export const SERVICES: Service[] = [
     duration: "1 - 2 jam",
     rating: 4.7,
     active: false,
-
-    requiresAddress: true,
     requiresSchedule: true,
-    availableModes: ["home_visit"],
-    branchRequired: false,
+    availableModes: ["Home Visit", "Walk In", "Delivery"],
+    requiresAddress: false,
+    branchRequired: true,
+    item: [],
+    scheduleType: "single"
   },
 
   {
@@ -140,11 +173,12 @@ export const SERVICES: Service[] = [
     duration: "1 jam",
     rating: 4.8,
     active: false,
-
     requiresSchedule: true,
-    availableModes: ["home_visit"],
+    availableModes: ["Home Visit"],
     requiresAddress: true,
     branchRequired: false,
+    item: [],
+    scheduleType: "single"
   },
 
   {
@@ -157,11 +191,12 @@ export const SERVICES: Service[] = [
     duration: "Per hari",
     rating: 4.8,
     active: false,
-
     requiresSchedule: true,
     requiresAddress: true,
-    availableModes: ["home_visit"],
+    availableModes: ["Home Visit"],
     branchRequired: false,
+    item: [],
+    scheduleType: "single"
   },
 
   {
@@ -174,11 +209,12 @@ export const SERVICES: Service[] = [
     duration: "1 jam",
     rating: 4.8,
     active: false,
-
     requiresSchedule: true,
     requiresAddress: true,
-    availableModes: ["home_visit"],
+    availableModes: ["Home Visit"],
     branchRequired: false,
+    item: [],
+    scheduleType: "single"
   },
 
   {
@@ -191,10 +227,12 @@ export const SERVICES: Service[] = [
     duration: "2 - 4 jam",
     rating: 4.8,
     active: false,
-
-    requiresAddress: true,
-    availableModes: ["pickup"],
-    branchRequired: false,
+    requiresSchedule: true,
+    availableModes: ["Home Visit", "Delivery"],
+    requiresAddress: false,
+    branchRequired: true,
+    item: [],
+    scheduleType: "single"
   },
 
   {
@@ -207,10 +245,12 @@ export const SERVICES: Service[] = [
     duration: "Per trip",
     rating: 4.8,
     active: false,
-
-    requiresAddress: true,
-    availableModes: ["pickup"],
-    branchRequired: false,
+    requiresSchedule: true,
+    availableModes: ["Home Visit", "Delivery"],
+    requiresAddress: false,
+    branchRequired: true,
+    item: [],
+    scheduleType: "single"
   },
 ]
 

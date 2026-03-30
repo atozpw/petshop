@@ -24,10 +24,15 @@ export default function BookingPage() {
   const [selectedBranch, setSelectedBranch] = useState("")
   const [serviceMode, setServiceMode] = useState("")
   const [address, setAddress] = useState("")
+  
   const BRANCHES = [
     { id: "Jakarta", name: "Jakarta", phone: "6281912982996" },
     { id: "Bali", name: "Bali", phone: "628113999893" },
   ]
+  const [selectedItems, setSelectedItems] = useState([])
+  const [checkIn, setCheckIn] = useState("")
+  const [checkOut, setCheckOut] = useState("")
+ 
 
   useEffect(() => {
     // Check if user is logged in (from localStorage or session)
@@ -39,7 +44,20 @@ export default function BookingPage() {
       setUserPhone(user.phone)
       setIsLoggedIn(true)
     }
-  }, [])
+
+    if (!selectedService) return
+
+    const selected = SERVICES.find(s => s.id === selectedService)
+
+    // kalau service valid & aktif → skip ke step 2
+    if (selected && selected.active) {
+      setStep(2)
+    } else {
+      // kalau tidak valid → reset
+      setSelectedService("")
+      setStep(1)
+    }
+  }, [selectedService])
 
   const service = SERVICES.find((s) => s.id === selectedService)
   const branch = BRANCHES.find((b) => b.id === selectedBranch)
@@ -115,6 +133,20 @@ export default function BookingPage() {
     "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
     "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
   ]
+  
+  const toggleItem = (itemId) => {
+    setSelectedItems((prev) =>
+      prev.includes(itemId)
+        ? prev.filter((i) => i !== itemId)
+        : [...prev, itemId]
+    )
+  }
+
+  useEffect(() => {
+    if (step === 4 && (!service?.item || service.item.length === 0)) {
+      setStep(5)
+    }
+  }, [step, service])
 
   return (
     <>
@@ -127,20 +159,22 @@ export default function BookingPage() {
             <div className="mb-12">
               <h1 className="text-4xl font-bold text-primary mb-2">Pesan Layanan Kami</h1>
               <p className="text-muted-foreground">
-                Langkah {step} dari 4 -{" "}
+                Langkah {step} dari 5 -{" "}
                 {step === 1
                   ? "Pilih Layanan"
                   : step === 2
                     ? "Pilih Tanggal & Waktu"
                     : step === 3
                       ? "Data Hewan Peliharaan"
-                      : "Konfirmasi & Data Pemesan"}
+                       : step === 4
+                        ? "Item Selection"
+                        : "Konfirmasi & Data Pemesan"}
               </p>
             </div>
 
             {/* Progress Bar */}
             <div className="mb-12 flex gap-2">
-              {[1, 2, 3, 4].map((s) => (
+              {[1, 2, 3, 4,5].map((s) => (
                 <div
                   key={s}
                   className={`flex-1 h-2 rounded-full transition-colors ${s <= step ? "bg-primary" : "bg-muted"}`}
@@ -154,10 +188,11 @@ export default function BookingPage() {
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-foreground">Pilih Layanan</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {SERVICES.map((svc) => (
+                    {SERVICES.filter(svc => svc.active).map((svc) => (
                       <button
                         key={svc.id}
-                        onClick={() => setSelectedService(svc.id)}
+                        onClick={() => svc.active && setSelectedService(svc.id)}
+                        disabled={!svc.active}
                         className={`p-4 rounded-lg border-2 transition-all text-left ${
                           selectedService === svc.id
                             ? "border-primary bg-primary/5"
@@ -180,6 +215,13 @@ export default function BookingPage() {
                   
                     {service?.branchRequired && (
                     <div>
+                      {service && (
+                        <div className="mb-4 p-3 bg-primary/10 rounded">
+                          <p className="text-sm">
+                            Layanan dipilih: <b>{service.name}</b>
+                          </p>
+                        </div>
+                      )}
                       <label className="block text-sm font-semibold mb-2">Pilih Cabang</label>
                       <div className="grid grid-cols-2 gap-2">
                         {BRANCHES.map((b) => (
@@ -209,29 +251,51 @@ export default function BookingPage() {
                               serviceMode === mode ? "bg-primary text-white" : ""
                             }`}
                           >
-                            {mode === "home_visit"
-                              ? "Home Visit"
-                              : mode === "pickup"
-                              ? "Jemput Hewan"
-                              : mode}
+                            {mode}
                           </button>
                         ))}
                       </div>
                     </div>
                   )}
-                  <div>
-                    <label className="block text-sm font-semibold text-foreground mb-3">Tanggal</label>
-                    <input
-                      type="date"
-                      value={selectedDate}
-                      onChange={(e) => setSelectedDate(e.target.value)}
-                      min={new Date().toISOString().split("T")[0]}
-                      className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
+                  {service?.scheduleType === "single" && (
+                    <div>
+                      <label className="block text-sm font-semibold mb-3">Tanggal</label>
+                      <input
+                        type="date"
+                        value={selectedDate}
+                        onChange={(e) => setSelectedDate(e.target.value)}
+                        className="w-full px-4 py-2 border rounded-lg"
+                      />
+                    </div>
+                  )}
+
+                  {service?.scheduleType === "range" && (
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">Check-in</label>
+                        <input
+                          type="date"
+                          value={checkIn}
+                          onChange={(e) => setCheckIn(e.target.value)}
+                          className="w-full px-4 py-2 border rounded-lg"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-sm font-semibold mb-2">Check-out</label>
+                        <input
+                          type="date"
+                          value={checkOut}
+                          onChange={(e) => setCheckOut(e.target.value)}
+                          min={checkIn} // 🔥 penting
+                          className="w-full px-4 py-2 border rounded-lg"
+                        />
+                      </div>
+                    </div>
+                  )}
                   
 
-                  {selectedDate && (
+                   {service?.scheduleType === "single" && (
                     <div>
                       <label className="block text-sm font-semibold text-foreground mb-3">Waktu</label>
                       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
@@ -301,7 +365,7 @@ export default function BookingPage() {
                       className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
-                  {(service?.requiresAddress || serviceMode === "home_visit" || serviceMode === "pickup") && (
+                  {(service?.requiresAddress || serviceMode === "Home Visit" || serviceMode === "Delivery") && (
                     <div>
                       <label className="block text-sm font-semibold mb-2">Alamat</label>
                       <textarea
@@ -315,8 +379,59 @@ export default function BookingPage() {
                 </div>
               )}
 
-              {/* Step 4: Confirmation & User Data */}
-              {step === 4 && (
+              
+              {/* Step 4: Item Selection (if applicable) */}
+              {step === 4 && service?.item?.length > 0 && (
+                <div className="space-y-5">
+                  <div>
+                    <h2 className="text-xl font-semibold tracking-tight">Pilih Item</h2>
+                    <p className="text-sm text-muted-foreground mt-0.5">
+                      {selectedItems.length} item dipilih
+                    </p>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2">
+                    {service.item.map((item) => {
+                      const isSelected = selectedItems.includes(item.id);
+                      return (
+                        <button
+                          key={item.id}
+                          type="button"
+                          onClick={() => toggleItem(item.id)}
+                          className={`relative flex flex-col items-start p-3 rounded-lg border text-left transition-colors ${
+                            isSelected
+                              ? "border-primary bg-primary/5"
+                              : "border-border bg-background hover:bg-muted/50"
+                          }`}
+                        >
+                          {/* Dot indikator pojok kanan atas */}
+                          <div
+                            className={`absolute top-2.5 right-2.5 w-3 h-3 rounded-full border-2 transition-colors ${
+                              isSelected
+                                ? "border-primary bg-primary"
+                                : "border-muted-foreground/40"
+                            }`}
+                          />
+
+                          <p className={`text-sm font-medium leading-snug pr-5 ${
+                            isSelected ? "text-primary" : "text-foreground"
+                          }`}>
+                            {item.name}
+                          </p>
+                          <p className={`text-xs mt-1 ${
+                            isSelected ? "text-primary/70" : "text-muted-foreground"
+                          }`}>
+                            Rp {item.price.toLocaleString()}
+                          </p>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Step 5: Confirmation & User Data */}
+              {step === 5 && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-foreground">Konfirmasi Booking</h2>
 
@@ -404,19 +519,16 @@ export default function BookingPage() {
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Tipe Layanan:</span>
                           <span className="font-semibold">
-                            {serviceMode === "home_visit"
-                              ? "Home Visit"
-                              : serviceMode === "pickup"
-                              ? "Jemput Hewan"
-                              : "-"}
+                            {serviceMode || "-"}
                           </span>
                         </div>
                       )}
 
                       {/* Address */}
                       {(service?.requiresAddress ||
-                        serviceMode === "home_visit" ||
-                        serviceMode === "pickup") && (
+                        serviceMode === "Home Visit" ||
+                        serviceMode === "Walk In" ||
+                        serviceMode === "Delivery") && (
                         <div className="flex justify-between items-start">
                           <span className="text-muted-foreground">Alamat:</span>
                           <span className="font-semibold text-right max-w-[60%]">
@@ -437,16 +549,27 @@ export default function BookingPage() {
                       </div>
 
                       {/* Schedule */}
-                      {service?.requiresSchedule && (
+                     {service?.scheduleType === "single" && (
                         <>
                           <div className="flex justify-between">
-                            <span className="text-muted-foreground">Tanggal:</span>
-                            <span className="font-semibold">{selectedDate}</span>
+                            <span>Tanggal:</span>
+                            <span>{selectedDate}</span>
                           </div>
-
                           <div className="flex justify-between">
-                            <span className="text-muted-foreground">Waktu:</span>
-                            <span className="font-semibold">{selectedTime}</span>
+                            <span>Waktu:</span>
+                            <span>{selectedTime}</span>
+                          </div>
+                        </>
+                      )}
+                      {service?.scheduleType === "range" && (
+                        <>
+                          <div className="flex justify-between">
+                            <span>Check-in:</span>
+                            <span>{checkIn}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Check-out:</span>
+                            <span>{checkOut}</span>
                           </div>
                         </>
                       )}
@@ -457,6 +580,17 @@ export default function BookingPage() {
                           <span className="text-muted-foreground">Catatan:</span>
                           <span className="font-semibold text-right max-w-[60%]">
                             {notes}
+                          </span>
+                        </div>
+                      )}
+
+                      {selectedItems.length > 0 && (
+                        <div className="flex justify-between">
+                          <span>Item:</span>
+                          <span className="text-right">
+                            {selectedItems
+                              .map(id => service.item.find(i => i.id === id)?.name)
+                              .join(", ")}
                           </span>
                         </div>
                       )}
@@ -486,41 +620,78 @@ export default function BookingPage() {
               {/* Navigation Buttons */}
               <div className="flex gap-3 mt-8 pt-6 border-t border-border">
                 <button
-                  onClick={() => setStep(Math.max(1, step - 1))}
+                  onClick={() => {
+                    if (step === 5 && (!service?.item || service.item.length === 0)) {
+                      setStep(3)
+                      return
+                    }
+                    setStep(Math.max(1, step - 1))
+                  }}
                   disabled={step === 1}
                   className="px-6 py-2 border border-border rounded-lg font-semibold text-foreground hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Kembali
                 </button>
 
-                {step < 4 ? (
+                {step < 5 ? (
                   <button
                     onClick={() => {
                       if (step === 1 && !selectedService) {
                         alert("Pilih layanan terlebih dahulu")
                         return
                       }
-                      if (step === 2 && (!selectedDate || !selectedTime)) {
-                        alert("Pilih tanggal dan waktu terlebih dahulu")
+                      if (step === 1) {
+                        const selected = SERVICES.find(s => s.id === selectedService)
+
+                        if (!selected || !selected.active) {
+                          alert("Layanan tidak tersedia")
+                          return  
+                        }
+                      }
+                      if (step === 2) {
+                        if (service?.scheduleType === "single") {
+                          if (!selectedDate || !selectedTime) {
+                            alert("Pilih tanggal dan waktu terlebih dahulu")
+                            return
+                          }
+                        }
+
+                        if (service?.scheduleType === "range") {
+                          if (!checkIn || !checkOut) {
+                            alert("Pilih tanggal check-in dan check-out")
+                            return
+                          }
+                        }
+                      }
+                      if (step === 2 && service?.branchRequired && !selectedBranch) {
+                        alert("Pilih cabang terlebih dahulu")
+                        return
+                      }
+                      
+                      if (step === 2 && service?.availableModes && !serviceMode) {
+                        alert("Pilih tipe layanan terlebih dahulu")
                         return
                       }
                       if (step === 3 && (!petName || !petType)) {
                         alert("Isi data hewan peliharaan terlebih dahulu")
                         return
                       }
-                      if (step === 2 && service?.branchRequired && !selectedBranch) {
-                        alert("Pilih cabang terlebih dahulu")
-                        return
-                      }
+                      if (step === 3) {
+                        const hasItems = service?.item && service.item.length > 0
 
-                      if (step === 2 && service?.availableModes && !serviceMode) {
-                        alert("Pilih tipe layanan terlebih dahulu")
+                        if (!hasItems) {
+                          setStep(5) // skip step item
+                          return
+                        }
+                      }
+                      if (step === 4 && service?.item?.length > 0 && selectedItems.length === 0) {
+                        alert("Pilih minimal 1 item")
                         return
                       }
                       setStep(step + 1)
                     }}
                     className="ml-auto px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90"
-                  >
+                    >
                     Lanjut
                   </button>
                 ) : (
