@@ -97,28 +97,56 @@ export default function BookingPage() {
       return
     }
 
+    
+
     const branch = BRANCHES.find((b) => b.id === selectedBranch)
+
+    const selectedItemNames = selectedItems
+      .map(id => service?.item?.find(i => i.id === id)?.name)
+      .filter(Boolean)
 
     const message = `
     Halo, saya ingin booking 🐾
 
-    Layanan: ${service?.name}
-    Cabang: ${branch?.name || "-"}
-    Nama Hewan: ${petName}
+    📌 *Layanan*
+    ${service?.name}
+
+    📍 *Cabang*
+    ${branch?.name || "-"}
+
+    🐶 *Hewan*
+    Nama: ${petName}
     Jenis: ${petType}
 
-    Tanggal: ${selectedDate}
-    Waktu: ${selectedTime}
+    📅 *Jadwal*
+    ${
+      service?.scheduleType === "single"
+        ? `Tanggal: ${selectedDate}
+    Waktu: ${selectedTime}`
+        : `Check-in: ${checkIn}
+    Check-out: ${checkOut}`
+    }
 
-    Tipe: ${serviceMode || "-"}
-    Alamat: ${address || "-"}
+    🛠 *Tipe Layanan*
+    ${serviceMode || "-"}
 
-    Catatan:
+    🏠 *Alamat*
+    ${address || "-"}
+
+    🧾 *Item*
+    ${
+      selectedItemNames.length > 0
+        ? selectedItemNames.map(i => `- ${i}`).join("\n")
+        : "-"
+    }
+
+    📝 *Catatan*
     ${notes || "-"}
 
+    👤 *Customer*
     Nama: ${userName}
     HP: ${userPhone}
-  `
+    `
 
     const phone = branch?.phone || "628xxxx"
 
@@ -147,6 +175,11 @@ export default function BookingPage() {
       setStep(5)
     }
   }, [step, service])
+
+  const filteredItems = service?.item?.filter((item) => {
+    if (!item.petType) return true;
+    return item.petType.includes(petType);
+  }) || [];
 
   return (
     <>
@@ -381,7 +414,7 @@ export default function BookingPage() {
 
               
               {/* Step 4: Item Selection (if applicable) */}
-              {step === 4 && service?.item?.length > 0 && (
+              {step === 4 && filteredItems.length > 0 && (
                 <div className="space-y-5">
                   <div>
                     <h2 className="text-xl font-semibold tracking-tight">Pilih Item</h2>
@@ -390,8 +423,8 @@ export default function BookingPage() {
                     </p>
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2">
-                    {service.item.map((item) => {
+                  <div className="grid grid-cols-3 gap-2">
+                    {filteredItems.map((item) => {
                       const isSelected = selectedItems.includes(item.id);
                       return (
                         <button
@@ -587,10 +620,11 @@ export default function BookingPage() {
                       {selectedItems.length > 0 && (
                         <div className="flex justify-between">
                           <span>Item:</span>
-                          <span className="text-right">
-                            {selectedItems
-                              .map(id => service.item.find(i => i.id === id)?.name)
-                              .join(", ")}
+                          <span className="text-right whitespace-pre-line">
+                            {selectedItems.map(id => {
+                              const item = filteredItems.find(i => i.id === id)
+                              return `• ${item?.name}`
+                            }).join("\n")}
                           </span>
                         </div>
                       )}
