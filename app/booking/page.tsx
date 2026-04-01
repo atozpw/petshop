@@ -36,7 +36,7 @@ export default function BookingPage() {
 
   useEffect(() => {
     // Check if user is logged in (from localStorage or session)
-    const userSession = localStorage.getItem("user")
+    const userSession = localStorage.getItem("petshop-user")
     if (userSession) {
       const user = JSON.parse(userSession)
       setUserEmail(user.email)
@@ -544,122 +544,147 @@ export default function BookingPage() {
                   )}
 
                   {/* Booking Summary */}
-                  <div className="bg-muted/30 rounded-lg p-6 space-y-4">
-                    <h3 className="font-semibold text-foreground">Ringkasan Booking</h3>
-
-                    <div className="space-y-2 text-sm">
-
-                      {/* Service */}
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Layanan:</span>
-                        <span className="font-semibold">{service?.name}</span>
+                  <div className="rounded-xl border border-border overflow-hidden">
+                    
+                    {/* Header */}
+                    <div className="bg-blue-50 dark:bg-blue-950 px-5 py-4 flex justify-between items-start">
+                      <div>
+                        <p className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1">
+                          Ringkasan Booking
+                        </p>
+                        <p className="text-lg font-semibold text-foreground">{service?.name}</p>
                       </div>
-
-                      {/* Branch */}
-                      {service?.branchRequired && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Cabang:</span>
-                          <span className="font-semibold">{branch?.name}</span>
-                        </div>
-                      )}
-
-                      {/* Mode */}
-                      {service?.availableModes && (
-                        <div className="flex justify-between">
-                          <span className="text-muted-foreground">Tipe Layanan:</span>
-                          <span className="font-semibold">
-                            {serviceMode || "-"}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Address */}
-                      {(service?.requiresAddress ||
-                        serviceMode === "Home Visit" ||
-                        serviceMode === "Walk In" ||
-                        serviceMode === "Delivery") && (
-                        <div className="flex justify-between items-start">
-                          <span className="text-muted-foreground">Alamat:</span>
-                          <span className="font-semibold text-right max-w-[60%]">
-                            {address || "-"}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Pet */}
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Nama Hewan:</span>
-                        <span className="font-semibold">{petName}</span>
-                      </div>
-
-                      <div className="flex justify-between">
-                        <span className="text-muted-foreground">Jenis:</span>
-                        <span className="font-semibold">{petType}</span>
-                      </div>
-
-                      {/* Schedule */}
-                     {service?.scheduleType === "single" && (
-                        <>
-                          <div className="flex justify-between">
-                            <span>Tanggal:</span>
-                            <span>{selectedDate}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Waktu:</span>
-                            <span>{selectedTime}</span>
-                          </div>
-                        </>
-                      )}
-                      {service?.scheduleType === "range" && (
-                        <>
-                          <div className="flex justify-between">
-                            <span>Check-in:</span>
-                            <span>{checkIn}</span>
-                          </div>
-                          <div className="flex justify-between">
-                            <span>Check-out:</span>
-                            <span>{checkOut}</span>
-                          </div>
-                        </>
-                      )}
-
-                      {/* Notes */}
-                      {notes && (
-                        <div className="flex justify-between items-start">
-                          <span className="text-muted-foreground">Catatan:</span>
-                          <span className="font-semibold text-right max-w-[60%]">
-                            {notes}
-                          </span>
-                        </div>
-                      )}
-
-                      {selectedItems.length > 0 && (
-                        <div className="flex justify-between">
-                          <span>Item:</span>
-                          <span className="text-right whitespace-pre-line">
-                            {selectedItems.map(id => {
-                              const item = filteredItems.find(i => i.id === id)
-                              return `• ${item?.name}`
-                            }).join("\n")}
-                          </span>
-                        </div>
-                      )}
-
-                      {/* Price */}
-                      {/* <div className="border-t pt-2 mt-2 flex justify-between">
-                        <span className="text-muted-foreground">Total Harga:</span>
-                        <span className="text-lg font-bold text-primary">
-                          Rp {(service?.price || 0).toLocaleString()}
-                        </span>
-                      </div> */}
-
-                        <div className="border-t pt-2 mt-2 flex justify-between">
-                          <span className="text-muted-foreground">Total Harga:</span>
-                          <span className="text-lg font-bold text-primary">
-                            Rp {totalPrice.toLocaleString()}
-                          </span>
-                        </div>
+                      {/* <span className="inline-flex items-center gap-1.5 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium px-3 py-1 rounded-full">
+                        <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
+                        Terkonfirmasi
+                      </span> */}
                     </div>
+
+                    {/* Body */}
+                    <div className="px-5 py-4 space-y-4 text-sm">
+
+                      {/* Layanan */}
+                      <div>
+                        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Layanan</p>
+                        <div className="space-y-2">
+                          {service?.branchRequired && (
+                            <div className="flex justify-between items-center">
+                              <span className="text-muted-foreground">Cabang</span>
+                              <span className="font-medium">{branch?.name}</span>
+                            </div>
+                          )}
+                          {service?.availableModes && (
+                            <div className="flex justify-between items-center">
+                              <span className="text-muted-foreground">Tipe layanan</span>
+                              <span className="font-medium">{serviceMode || "-"}</span>
+                            </div>
+                          )}
+                          {(service?.requiresAddress ||
+                            serviceMode === "Home Visit" ||
+                            serviceMode === "Walk In" ||
+                            serviceMode === "Delivery") && (
+                            <div className="flex justify-between items-start gap-3">
+                              <span className="text-muted-foreground shrink-0">Alamat</span>
+                              <span className="font-medium text-right">{address || "-"}</span>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="border-t border-border" />
+
+                      {/* Hewan Peliharaan */}
+                      <div>
+                        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Hewan Peliharaan</p>
+                        <div className="space-y-2">
+                          <div className="flex justify-between items-center">
+                            <span className="text-muted-foreground">Nama</span>
+                            <span className="font-medium">🐾 {petName || "-"}</span>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <span className="text-muted-foreground">Jenis</span>
+                            <span className="font-medium">{petType || "-"}</span>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="border-t border-border" />
+
+                      {/* Jadwal */}
+                      <div>
+                        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Jadwal</p>
+                        <div className="space-y-2">
+                          {service?.scheduleType === "single" && (
+                            <>
+                              <div className="flex justify-between items-center">
+                                <span className="text-muted-foreground">Tanggal</span>
+                                <span className="font-medium">{selectedDate || "-"}</span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="text-muted-foreground">Waktu</span>
+                                <span className="font-medium">{selectedTime || "-"}</span>
+                              </div>
+                            </>
+                          )}
+                          {service?.scheduleType === "range" && (
+                            <>
+                              <div className="flex justify-between items-center">
+                                <span className="text-muted-foreground">Check-in</span>
+                                <span className="font-medium">{checkIn || "-"}</span>
+                              </div>
+                              <div className="flex justify-between items-center">
+                                <span className="text-muted-foreground">Check-out</span>
+                                <span className="font-medium">{checkOut || "-"}</span>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+
+                      {/* Item Tambahan */}
+                      {selectedItems.length > 0 && (
+                        <>
+                          <div className="border-t border-border" />
+                          <div>
+                            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Item </p>
+                            <div className="flex flex-wrap gap-1.5">
+                              {selectedItems.map(id => {
+                                const item = filteredItems.find(i => i.id === id)
+                                return (
+                                  <span
+                                    key={id}
+                                    className="inline-block bg-muted text-foreground text-xs font-medium px-3 py-1 rounded-full border border-border"
+                                  >
+                                    {item?.name}
+                                  </span>
+                                )
+                              })}
+                            </div>
+                          </div>
+                        </>
+                      )}
+
+                      {/* Catatan */}
+                      {notes && (
+                        <>
+                          <div className="border-t border-border" />
+                          <div>
+                            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Catatan</p>
+                            <p className="text-foreground leading-relaxed">{notes}</p>
+                          </div>
+                        </>
+                      )}
+
+                    </div>
+
+                    {/* Total Harga */}
+                    <div className="flex justify-between items-center px-5 py-4 bg-muted/40 border-t border-border">
+                      <span className="text-sm text-muted-foreground">Total harga</span>
+                      <span className="text-xl font-semibold text-foreground">
+                        Rp {totalPrice.toLocaleString("id-ID")}
+                      </span>
+                    </div>
+
                   </div>
                 </div>
               )}
