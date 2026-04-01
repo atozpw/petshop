@@ -146,6 +146,8 @@ export default function BookingPage() {
     👤 *Customer*
     Nama: ${userName}
     HP: ${userPhone}
+
+    Total Harga: Rp ${totalPrice.toLocaleString()}
     `
 
     const phone = branch?.phone || "628xxxx"
@@ -174,6 +176,10 @@ export default function BookingPage() {
     if (step === 4 && (!service?.item || service.item.length === 0)) {
       setStep(5)
     }
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
   }, [step, service])
 
   const filteredItems = service?.item?.filter((item) => {
@@ -181,6 +187,13 @@ export default function BookingPage() {
     return item.petType.includes(petType);
   }) || [];
 
+
+  const selectedItemTotal = selectedItems.reduce((total, id) => {
+    const item = service?.item?.find(i => i.id === id)
+    return total + (item?.price || 0)
+  }, 0)
+
+  const totalPrice = selectedItemTotal
   return (
     <>
       <Header />
@@ -290,6 +303,19 @@ export default function BookingPage() {
                       </div>
                     </div>
                   )}
+
+                  {(service?.requiresAddress || serviceMode === "Home Visit" || serviceMode === "Delivery") && (
+                    <div>
+                      <label className="block text-sm font-semibold mb-2">Alamat</label>
+                      <textarea
+                        value={address}
+                        onChange={(e) => setAddress(e.target.value)}
+                        placeholder="Masukkan alamat lengkap..."
+                        className="w-full border rounded p-2"
+                      />
+                    </div>
+                  )}
+
                   {service?.scheduleType === "single" && (
                     <div>
                       <label className="block text-sm font-semibold mb-3">Tanggal</label>
@@ -398,17 +424,7 @@ export default function BookingPage() {
                       className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
-                  {(service?.requiresAddress || serviceMode === "Home Visit" || serviceMode === "Delivery") && (
-                    <div>
-                      <label className="block text-sm font-semibold mb-2">Alamat</label>
-                      <textarea
-                        value={address}
-                        onChange={(e) => setAddress(e.target.value)}
-                        placeholder="Masukkan alamat lengkap..."
-                        className="w-full border rounded p-2"
-                      />
-                    </div>
-                  )}
+                  
                 </div>
               )}
 
@@ -636,6 +652,13 @@ export default function BookingPage() {
                           Rp {(service?.price || 0).toLocaleString()}
                         </span>
                       </div> */}
+
+                        <div className="border-t pt-2 mt-2 flex justify-between">
+                          <span className="text-muted-foreground">Total Harga:</span>
+                          <span className="text-lg font-bold text-primary">
+                            Rp {totalPrice.toLocaleString()}
+                          </span>
+                        </div>
                     </div>
                   </div>
                 </div>

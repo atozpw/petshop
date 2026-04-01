@@ -59,7 +59,7 @@ export const SERVICES: Service[] = [
     url: "/services/grooming",
     requiresSchedule: true,
     availableModes: ["Home Visit", "Walk In", "Delivery"],
-    requiresAddress: true,
+    requiresAddress: false,
     branchRequired: true,
     item: [
       { id: "dog_dry_puppy", name: "Dry Grooming Dog - Puppy", price: 195000, petType: ["Anjing"] },
