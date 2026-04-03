@@ -17,6 +17,7 @@ export interface Service {
   requiresSchedule?: boolean
   availableModes?: ("Home Visit" | "Walk In" | "Delivery" )[]
   branchRequired?: boolean
+  requiresDoctor?: boolean
   item?: {
     id: string
     name: string
@@ -132,7 +133,8 @@ export const SERVICES: Service[] = [
     requiresAddress: false, 
     branchRequired: true,
     item: [],
-    scheduleType: "single"
+    scheduleType: "single",
+    requiresDoctor: true
   },
 
   {

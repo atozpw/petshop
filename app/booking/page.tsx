@@ -24,6 +24,7 @@ export default function BookingPage() {
   const [selectedBranch, setSelectedBranch] = useState("")
   const [serviceMode, setServiceMode] = useState("")
   const [address, setAddress] = useState("")
+  const [selectedDoctor, setSelectedDoctor] = useState("")
   
   const BRANCHES = [
     { id: "Jakarta", name: "Jakarta", phone: "6281912982996" },
@@ -32,6 +33,53 @@ export default function BookingPage() {
   const [selectedItems, setSelectedItems] = useState([])
   const [checkIn, setCheckIn] = useState("")
   const [checkOut, setCheckOut] = useState("")
+
+  const doctors = [
+    { name: "Drh. Fransisca Olivia Ratna Dilla", specialty: "Special Interest, Feline Internal Medicine", experience: "", image: "/doctor/drh Fransisca.png", lokasi: "Jakarta" },
+    { name: "Drh. Brillian Firmania Puspa Agny", specialty: "General Practitioner", experience: "", image: "/doctor/Drh Brillian.png", lokasi: "Jakarta" },
+    { name: "Drh. Agung Supriyono", specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator", experience: "", image: "/doctor/Drh Agung Supriono.png", lokasi: "Jakarta" },
+    { name: "Drh. Dita Pratiwi Dwi Setyowati", specialty: "General Practitioner", experience: "", image: "/doctor/drh Dita.png", lokasi: "Jakarta" },
+
+    { name: "Drh. Frida Ayu Salsana Billa", specialty: "General Practitioner", experience: "", image: "/doctor/Frida Ayu Salsana Billa.png", lokasi: "Bali" },
+    { name: "Drh. Yunita Atok", specialty: "General Practitioner", experience: "", image: "/doctor/Yunita Atok.png", lokasi: "Bali" },
+    { name: "Drh. Chendini Maharani", specialty: "General Practitioner", experience: "", image: "/doctor/Chendini Maharani.png", lokasi: "Bali" },
+
+    { 
+      name: "Drh. Adinda, S.KH", 
+      specialty: "General Veterinary Practitioner, Internal Medicine, Veterinary Dermatology, Emergency and Critical Care, Basic Surgery", 
+      experience: "", 
+      image: "/doctor/adinda 55.png",
+      lokasi: "Bali"
+    },
+
+    { name: "Drh. Christiyanti Rambu Gedi", specialty: "Universitas Wijaya Kusuma Surabaya", experience: "", image: "/doctor/Christiyanti Rambu Gedi.png", lokasi: "Bali" },
+
+    { 
+      name: "Drh. Putu Aditya Pratama Artha Putra, S.KH", 
+      specialty: "Surgery, Internal Medicine, Vaccine, Dentistry, Urgent Care", 
+      experience: "", 
+      image: "/doctor/Aditya Pratama.png",
+      lokasi: "Bali"
+    },
+
+    { 
+      name: "Drh. Jessy Filomena Fernanda Bento, S.KH", 
+      specialty: "General Practitioner, Special Interest Dermatology", 
+      experience: "", 
+      image: "/doctor/Jessy Filomena.png", lokasi: "Bali"
+    },
+
+    { 
+      name: "Drh. Dewi Ratnasari", 
+      specialty: "General Practitioner, Special Interest Hematology and Radiography", 
+      experience: "", 
+      image: "/doctor/Dewi Ratnasari.png", lokasi: "Bali"
+    },
+
+    { name: "Drh. Owen Fernando", specialty: "-", experience: "", image: "/doctor/Owen Fernando.png", lokasi: "Bali" },
+
+    { name: "Drh. I Made Agus Wirawan", specialty: "General Practitioner", experience: "", image: "/doctor/I Made Agus Wirawan.png", lokasi: "Bali" },
+  ];
  
 
   useEffect(() => {
@@ -57,10 +105,13 @@ export default function BookingPage() {
       setSelectedService("")
       setStep(1)
     }
+    
   }, [selectedService])
 
   const service = SERVICES.find((s) => s.id === selectedService)
   const branch = BRANCHES.find((b) => b.id === selectedBranch)
+
+  
 
   // const handleSubmit = () => {
   //   if (!userEmail || !userName || !userPhone || !petName || !petType || !selectedDate || !selectedTime) {
@@ -140,6 +191,8 @@ export default function BookingPage() {
         : "-"
     }
 
+    👨‍⚕️ *Dokter*
+    ${selectedDoctor || "-"}
     📝 *Catatan*
     ${notes || "-"}
 
@@ -194,6 +247,38 @@ export default function BookingPage() {
   }, 0)
 
   const totalPrice = selectedItemTotal
+
+  //batas waktu untuk slot yang sudah lewat (hanya untuk jadwal hari ini)
+  const isPastTime = (slotTime: string) => {
+    if (!selectedDate) return false
+
+    const now = new Date()
+    const selected = new Date(selectedDate)
+
+    if (
+      selected.getFullYear() !== now.getFullYear() ||
+      selected.getMonth() !== now.getMonth() ||
+      selected.getDate() !== now.getDate()
+    ) {
+      return false
+    }
+
+    // parsing jam dari slot (contoh: "14:00")
+    const [hour, minute] = slotTime.split(":").map(Number)
+
+    const slotDate = new Date()
+    slotDate.setHours(hour, minute, 0, 0)
+
+    return slotDate <= now
+  }
+
+  const filteredDoctors = doctors.filter(
+    (doc) => doc.lokasi === selectedBranch
+  )
+  useEffect(() => {
+    setSelectedDoctor("")
+  }, [selectedBranch])
+  
   return (
     <>
       <Header />
@@ -322,6 +407,7 @@ export default function BookingPage() {
                       <input
                         type="date"
                         value={selectedDate}
+                         min={new Date().toISOString().split("T")[0]}
                         onChange={(e) => setSelectedDate(e.target.value)}
                         className="w-full px-4 py-2 border rounded-lg"
                       />
@@ -335,6 +421,7 @@ export default function BookingPage() {
                         <input
                           type="date"
                           value={checkIn}
+                           min={new Date().toISOString().split("T")[0]}
                           onChange={(e) => setCheckIn(e.target.value)}
                           className="w-full px-4 py-2 border rounded-lg"
                         />
@@ -354,26 +441,75 @@ export default function BookingPage() {
                   )}
                   
 
-                   {service?.scheduleType === "single" && (
+                  {service?.scheduleType === "single" && (
                     <div>
                       <label className="block text-sm font-semibold text-foreground mb-3">Waktu</label>
                       <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
-                        {TIME_SLOTS.map((slot) => (
-                          <button
-                            key={slot.time}
-                            onClick={() => slot.available && setSelectedTime(slot.time)}
-                            disabled={!slot.available}
-                            className={`p-3 rounded-lg border transition-all font-semibold ${
-                              selectedTime === slot.time
-                                ? "border-primary bg-primary text-white"
-                                : slot.available
-                                  ? "border-border hover:border-primary bg-white"
-                                  : "border-border bg-muted text-muted-foreground cursor-not-allowed"
-                            }`}
-                          >
-                            {slot.time}
-                          </button>
-                        ))}
+                        {TIME_SLOTS.map((slot) => {
+                          const isDisabled = !selectedDate || !slot.available || isPastTime(slot.time)
+
+                          return (
+                            <button
+                              key={slot.time}
+                              onClick={() => !isDisabled && setSelectedTime(slot.time)}
+                              disabled={isDisabled}
+                              className={`p-3 rounded-lg border transition-all font-semibold ${
+                                selectedTime === slot.time
+                                  ? "border-primary bg-primary text-white"
+                                  : !isDisabled
+                                    ? "border-border hover:border-primary bg-white"
+                                    : "border-border bg-muted text-muted-foreground cursor-not-allowed opacity-60"
+                              }`}
+                            >
+                              {slot.time}
+                            </button>
+                          )
+                        })}
+                      </div>
+                    </div>
+                  )}
+
+                  {service?.requiresDoctor && (
+                    <div>
+                      <label className="block text-sm font-semibold mb-3">Pilih Dokter</label>
+
+                      {!selectedBranch && (
+                        <p className="text-sm text-muted-foreground mb-2">
+                          Pilih cabang terlebih dahulu
+                        </p>
+                      )}
+
+                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                        {filteredDoctors.map((doc) => {
+                          const isSelected = selectedDoctor === doc.name
+
+                          return (
+                            <button
+                              key={doc.name}
+                              onClick={() => setSelectedDoctor(doc.name)}
+                              disabled={!selectedBranch}
+                              className={`border rounded-lg p-3 text-left transition ${
+                                isSelected
+                                  ? "border-primary bg-primary/5"
+                                  : "border-border hover:border-primary"
+                              } ${!selectedBranch ? "opacity-50 cursor-not-allowed" : ""}`}
+                            >
+                              <img
+                                src={doc.image}
+                                alt={doc.name}
+                                className="w-full h-28 object-contain rounded mb-2 bg-white"
+                              />
+
+                              <p className="text-sm font-semibold leading-tight">
+                                {doc.name}
+                              </p>
+
+                              <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
+                                {doc.specialty}
+                              </p>
+                            </button>
+                          )
+                        })}
                       </div>
                     </div>
                   )}
@@ -640,7 +776,12 @@ export default function BookingPage() {
                           )}
                         </div>
                       </div>
-
+                      {service?.requiresDoctor && (
+                        <div className="flex justify-between items-center">
+                          <span className="text-muted-foreground">Dokter</span>
+                          <span className="font-medium">{selectedDoctor || "-"}</span>
+                        </div>
+                      )}
                       {/* Item Tambahan */}
                       {selectedItems.length > 0 && (
                         <>
@@ -743,6 +884,10 @@ export default function BookingPage() {
                             alert("Pilih tanggal check-in dan check-out")
                             return
                           }
+                        }
+                        if (step === 2 && service?.requiresDoctor && !selectedDoctor) {
+                          alert("Pilih dokter terlebih dahulu")
+                          return
                         }
                       }
                       if (step === 2 && service?.branchRequired && !selectedBranch) {
