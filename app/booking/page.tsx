@@ -246,7 +246,27 @@ export default function BookingPage() {
     return total + (item?.price || 0)
   }, 0)
 
-  const totalPrice = selectedItemTotal
+ 
+  //jumlah hari untuk layanan dengan scheduleType "range"
+  const getTotalDays = () => {
+    if (!checkIn || !checkOut) return 0
+
+    const start = new Date(checkIn)
+    const end = new Date(checkOut)
+
+    const diffTime = end.getTime() - start.getTime()
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+    return diffDays || 0
+  }
+
+  const totalDays = getTotalDays()
+  console.log("Total days:", totalDays)
+  console.log("Selected item total:", selectedItemTotal)
+  const totalPrice =
+    service?.scheduleType === "range"
+      ? (selectedItemTotal * totalDays)
+      : selectedItemTotal
 
   //batas waktu untuk slot yang sudah lewat (hanya untuk jadwal hari ini)
   const isPastTime = (slotTime: string) => {
@@ -279,6 +299,7 @@ export default function BookingPage() {
     setSelectedDoctor("")
   }, [selectedBranch])
   
+ 
   return (
     <>
       <Header />
@@ -761,6 +782,12 @@ export default function BookingPage() {
                                 <span className="font-medium">{selectedTime || "-"}</span>
                               </div>
                             </>
+                          )}
+                          {service?.scheduleType === "range" && (
+                            <div className="flex justify-between">
+                              <span>Lama inap</span>
+                              <span>{totalDays} hari</span>
+                            </div>
                           )}
                           {service?.scheduleType === "range" && (
                             <>
