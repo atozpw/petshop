@@ -24,15 +24,19 @@ export default function BookingPage() {
   const [selectedBranch, setSelectedBranch] = useState("")
   const [serviceMode, setServiceMode] = useState("")
   const [address, setAddress] = useState("")
-  const [selectedDoctor, setSelectedDoctor] = useState("")
-  
+  const [selectedPeople, setSelectedPeople] = useState("")
+ 
+  const [selectedMainItem, setSelectedMainItem] = useState<string | null>(null)
+  const [selectedAdditionalItem, setSelectedAdditionalItem] = useState<string | null>(null)
+  const [searchQuery, setSearchQuery] = useState("")
+ 
+  const [checkIn, setCheckIn] = useState("")
+  const [checkOut, setCheckOut] = useState("")
+ 
   const BRANCHES = [
     { id: "Jakarta", name: "Jakarta", phone: "6281912982996" },
     { id: "Bali", name: "Bali", phone: "628113999893" },
   ]
-  const [selectedItems, setSelectedItems] = useState([])
-  const [checkIn, setCheckIn] = useState("")
-  const [checkOut, setCheckOut] = useState("")
 
   const doctors = [
     { name: "Drh. Fransisca Olivia Ratna Dilla", specialty: "Special Interest, Feline Internal Medicine", experience: "", image: "/doctor/drh Fransisca.png", lokasi: "Jakarta" },
@@ -81,225 +85,205 @@ export default function BookingPage() {
     { name: "Drh. I Made Agus Wirawan", specialty: "General Practitioner", experience: "", image: "/doctor/I Made Agus Wirawan.png", lokasi: "Bali" },
   ];
  
+  const groomers = [
+    { name: "Rama", lokasi: "Jakarta", image: "/groomer/rama.png" },
+    { name: "Fallen", lokasi: "Jakarta", image: "/groomer/fallen.png" }
 
-  useEffect(() => {
-    // Check if user is logged in (from localStorage or session)
-    const userSession = localStorage.getItem("petshop-user")
-    if (userSession) {
-      const user = JSON.parse(userSession)
-      setUserEmail(user.email)
-      setUserName(user.name)
-      setUserPhone(user.phone)
-      setIsLoggedIn(true)
-    }
-
-    if (!selectedService) return
-
-    const selected = SERVICES.find(s => s.id === selectedService)
-
-    // kalau service valid & aktif → skip ke step 2
-    if (selected && selected.active) {
-      setStep(2)
-    } else {
-      // kalau tidak valid → reset
-      setSelectedService("")
-      setStep(1)
-    }
-    
-  }, [selectedService])
-
-  const service = SERVICES.find((s) => s.id === selectedService)
-  const branch = BRANCHES.find((b) => b.id === selectedBranch)
-
-  
-
-  // const handleSubmit = () => {
-  //   if (!userEmail || !userName || !userPhone || !petName || !petType || !selectedDate || !selectedTime) {
-  //     alert("Mohon isi semua field yang diperlukan")
-  //     return
-  //   }
-
-  //   const booking = {
-  //     id: Date.now().toString(),
-  //     service: service?.name,
-  //     petName,
-  //     petType,
-  //     date: selectedDate,
-  //     time: selectedTime,
-  //     notes,
-  //     email: userEmail,
-  //     name: userName,
-  //     phone: userPhone,
-  //     totalPrice: service?.price || 0,
-  //     status: "pending",
-  //   }
-
-  //   // Store booking
-  //   const bookings = JSON.parse(localStorage.getItem("bookings") || "[]")
-  //   bookings.push(booking)
-  //   localStorage.setItem("bookings", JSON.stringify(bookings))
-
-  //   // Redirect to confirmation
-  //   router.push(`/booking/confirmation?id=${booking.id}`)
-  // }
-  const handleSubmit = () => {
-    if (!userEmail || !userName || !userPhone || !petName || !petType) {
-      alert("Mohon isi semua field")
-      return
-    }
-
-    
-
-    const branch = BRANCHES.find((b) => b.id === selectedBranch)
-
-    const selectedItemNames = selectedItems
-      .map(id => service?.item?.find(i => i.id === id)?.name)
-      .filter(Boolean)
-
-    const message = `
-    Halo, saya ingin booking 🐾
-
-    📌 *Layanan*
-    ${service?.name}
-
-    📍 *Cabang*
-    ${branch?.name || "-"}
-
-    🐶 *Hewan*
-    Nama: ${petName}
-    Jenis: ${petType}
-
-    📅 *Jadwal*
-    ${
-      service?.scheduleType === "single"
-        ? `Tanggal: ${selectedDate}
-    Waktu: ${selectedTime}`
-        : `Check-in: ${checkIn}
-    Check-out: ${checkOut}`
-    }
-
-    🛠 *Tipe Layanan*
-    ${serviceMode || "-"}
-
-    🏠 *Alamat*
-    ${address || "-"}
-
-    🧾 *Item*
-    ${
-      selectedItemNames.length > 0
-        ? selectedItemNames.map(i => `- ${i}`).join("\n")
-        : "-"
-    }
-
-    👨‍⚕️ *Dokter*
-    ${selectedDoctor || "-"}
-    📝 *Catatan*
-    ${notes || "-"}
-
-    👤 *Customer*
-    Nama: ${userName}
-    HP: ${userPhone}
-
-    Total Harga: Rp ${totalPrice.toLocaleString()}
-    `
-
-    const phone = branch?.phone || "628xxxx"
-
-    window.open(
-      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`
-    )
-  }
-
-  const TERMS = [
-    "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
-    "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
-    "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
-    "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
   ]
+  const TERMS = [
+      "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
+      "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
+      "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
+      "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
+    ]
   
-  const toggleItem = (itemId) => {
-    setSelectedItems((prev) =>
-      prev.includes(itemId)
-        ? prev.filter((i) => i !== itemId)
-        : [...prev, itemId]
-    )
-  }
-
-  useEffect(() => {
-    if (step === 4 && (!service?.item || service.item.length === 0)) {
-      setStep(5)
-    }
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    })
-  }, [step, service])
-
-  const filteredItems = service?.item?.filter((item) => {
-    if (!item.petType) return true;
-    return item.petType.includes(petType);
-  }) || [];
-
-
-  const selectedItemTotal = selectedItems.reduce((total, id) => {
-    const item = service?.item?.find(i => i.id === id)
-    return total + (item?.price || 0)
-  }, 0)
-
- 
-  //jumlah hari untuk layanan dengan scheduleType "range"
-  const getTotalDays = () => {
-    if (!checkIn || !checkOut) return 0
-
-    const start = new Date(checkIn)
-    const end = new Date(checkOut)
-
-    const diffTime = end.getTime() - start.getTime()
-    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
-
-    return diffDays || 0
-  }
-
-  const totalDays = getTotalDays()
-  console.log("Total days:", totalDays)
-  console.log("Selected item total:", selectedItemTotal)
-  const totalPrice =
-    service?.scheduleType === "range"
-      ? (selectedItemTotal * totalDays)
-      : selectedItemTotal
-
-  //batas waktu untuk slot yang sudah lewat (hanya untuk jadwal hari ini)
-  const isPastTime = (slotTime: string) => {
-    if (!selectedDate) return false
-
-    const now = new Date()
-    const selected = new Date(selectedDate)
-
-    if (
-      selected.getFullYear() !== now.getFullYear() ||
-      selected.getMonth() !== now.getMonth() ||
-      selected.getDate() !== now.getDate()
-    ) {
-      return false
-    }
-
-    // parsing jam dari slot (contoh: "14:00")
-    const [hour, minute] = slotTime.split(":").map(Number)
-
-    const slotDate = new Date()
-    slotDate.setHours(hour, minute, 0, 0)
-
-    return slotDate <= now
-  }
-
-  const filteredDoctors = doctors.filter(
-    (doc) => doc.lokasi === selectedBranch
-  )
-  useEffect(() => {
-    setSelectedDoctor("")
-  }, [selectedBranch])
+    // ─── Effects ──────────────────────────────────────────────────────────────
   
- 
+    useEffect(() => {
+      const userSession = localStorage.getItem("petshop-user")
+      if (userSession) {
+        const user = JSON.parse(userSession)
+        setUserEmail(user.email)
+        setUserName(user.name)
+        setUserPhone(user.phone)
+        setIsLoggedIn(true)
+      }
+  
+      if (!selectedService) return
+  
+      const selected = SERVICES.find((s) => s.id === selectedService)
+      if (selected && selected.active) {
+        setStep(2)
+      } else {
+        setSelectedService("")
+        setStep(1)
+      }
+    }, [selectedService])
+  
+    useEffect(() => {
+      if (step === 4 && (!service?.item || service.item.length === 0)) {
+        setStep(5)
+      }
+      window.scrollTo({ top: 0, behavior: "smooth" })
+    }, [step])
+  
+    useEffect(() => {
+      setSelectedPeople("")
+    }, [selectedBranch])
+  
+    // ─── Derived values ────────────────────────────────────────────────────────
+  
+    const service = SERVICES.find((s) => s.id === selectedService)
+    const branch = BRANCHES.find((b) => b.id === selectedBranch)
+  
+    // Filtered items by petType + search query (single declaration — no duplicate)
+    const filteredItems =
+      service?.item?.filter((item) => {
+        const matchPet = !item.petType || item.petType.includes(petType)
+        const matchSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase())
+        return matchPet && matchSearch
+      }) || []
+  
+    const mainItems = filteredItems.filter((item) => item.type === "main")
+    const additionalItems = filteredItems.filter((item) => item.type === "additional")
+  
+    // People list (doctors or groomers filtered by branch)
+    const filteredPeople =
+      service?.name === "Pet Grooming"
+        ? groomers.filter((g) => g.lokasi === selectedBranch)
+        : doctors.filter((d) => d.lokasi === selectedBranch)
+  
+    // Pricing
+    const mainItemPrice =
+      service?.item?.find(i => i.id === selectedMainItem)?.price || 0
+
+    const additionalItemPrice =
+      service?.item?.find(i => i.id === selectedAdditionalItem)?.price || 0
+
+    const selectedItemTotal = mainItemPrice + additionalItemPrice
+    
+  
+    const getTotalDays = () => {
+      if (!checkIn || !checkOut) return 0
+      const start = new Date(checkIn)
+      const end = new Date(checkOut)
+      const diffTime = end.getTime() - start.getTime()
+      return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 0
+    }
+    const totalDays = getTotalDays()
+  
+    const totalPrice =
+      service?.scheduleType === "range" ? selectedItemTotal * (totalDays + 1) : selectedItemTotal
+  
+    // Time slot helper
+    const isPastTime = (slotTime: string) => {
+      if (!selectedDate) return false
+      const now = new Date()
+      const selected = new Date(selectedDate)
+      if (
+        selected.getFullYear() !== now.getFullYear() ||
+        selected.getMonth() !== now.getMonth() ||
+        selected.getDate() !== now.getDate()
+      ) {
+        return false
+      }
+      const [hour, minute] = slotTime.split(":").map(Number)
+      const slotDate = new Date()
+      slotDate.setHours(hour, minute, 0, 0)
+      return slotDate <= now
+    }
+  
+    // ─── Handlers ─────────────────────────────────────────────────────────────
+  
+    const handleSelectMainItem = (itemId: string) => {
+      setSelectedMainItem((prev) => (prev === itemId ? null : itemId))
+    }
+
+    const handleSelectAdditionalItem = (itemId: string) => {
+      setSelectedAdditionalItem((prev) => (prev === itemId ? null : itemId))
+    }
+  
+    const handleSubmit = () => {
+      if (!userEmail || !userName || !userPhone || !petName || !petType) {
+        alert("Mohon isi semua field")
+        return
+      }
+
+      const mainItemName =
+        service?.item?.find(i => i.id === selectedMainItem)?.name || "-"
+
+      const additionalItemName =
+        service?.item?.find(i => i.id === selectedAdditionalItem)?.name || "-"
+
+      const peopleLabel =
+        service?.name === "Pet Grooming" ? "Groomer" : "Dokter"
+
+      const scheduleText =
+        service?.scheduleType === "single"
+          ? `Jadwal
+    - Tanggal: ${selectedDate || "-"}
+    - Waktu: ${selectedTime || "-"}`
+          : `Jadwal
+    - Check-in: ${checkIn || "-"}
+    - Check-out: ${checkOut || "-"}`
+
+      const addressText =
+        (service?.requiresAddress ||
+          serviceMode === "Home Visit" ||
+          serviceMode === "Delivery")
+          ? `- Alamat: ${address || "-"}`
+          : ""
+
+      const peopleText =
+        service?.requiresPeople
+          ? `${peopleLabel}
+    - ${selectedPeople || "-"}`
+          : ""
+
+      const notesText = notes
+        ? `Catatan
+    - ${notes}`
+        : ""
+
+      const message = `
+    Halo, saya ingin melakukan booking layanan.
+
+    Layanan
+    - Nama Layanan: ${service?.name || "-"}
+    - Cabang: ${branch?.name || "-"}
+    - Tipe Layanan: ${serviceMode || "-"}
+    ${addressText}
+
+    ${scheduleText}
+
+    ${peopleText}
+
+    Hewan Peliharaan
+    - Nama: ${petName || "-"}
+    - Jenis: ${petType || "-"}
+
+    ${notesText}
+
+    Item
+    - Item Utama: ${mainItemName}
+    - Additional: ${additionalItemName}
+
+    Customer
+    - Nama: ${userName || "-"}
+    - No. HP: ${userPhone || "-"}
+
+    Total Harga
+    Rp ${totalPrice.toLocaleString("id-ID")}
+      `.trim()
+
+      const phone = branch?.phone || "628xxxx"
+
+      window.open(
+        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+        "_blank"
+      )
+    }
+  
   return (
     <>
       <Header />
@@ -490,9 +474,17 @@ export default function BookingPage() {
                     </div>
                   )}
 
-                  {service?.requiresDoctor && (
+                  {service?.requiresPeople && (
                     <div>
-                      <label className="block text-sm font-semibold mb-3">Pilih Dokter</label>
+                     <p className="text-sm text-muted-foreground mb-2">
+                        {service.name === "Pet Grooming"
+                          ? "Pilih groomer untuk layanan ini"
+                          : "Pilih dokter untuk layanan ini"}
+                      </p>
+
+                      <label className="block text-sm font-semibold mb-3">
+                        {service.name === "Pet Grooming" ? "Pilih Groomer" : "Pilih Dokter"}
+                      </label>
 
                       {!selectedBranch && (
                         <p className="text-sm text-muted-foreground mb-2">
@@ -501,13 +493,13 @@ export default function BookingPage() {
                       )}
 
                       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                        {filteredDoctors.map((doc) => {
-                          const isSelected = selectedDoctor === doc.name
+                        {filteredPeople.map((doc) => {
+                          const isSelected = selectedPeople === doc.name
 
                           return (
                             <button
                               key={doc.name}
-                              onClick={() => setSelectedDoctor(doc.name)}
+                              onClick={() => setSelectedPeople(doc.name)}
                               disabled={!selectedBranch}
                               className={`border rounded-lg p-3 text-left transition ${
                                 isSelected
@@ -587,51 +579,103 @@ export default function BookingPage() {
 
               
               {/* Step 4: Item Selection (if applicable) */}
-              {step === 4 && filteredItems.length > 0 && (
-                <div className="space-y-5">
+              {step === 4 && (
+                <div className="space-y-6">
                   <div>
-                    <h2 className="text-xl font-semibold tracking-tight">Pilih Item</h2>
-                    <p className="text-sm text-muted-foreground mt-0.5">
-                      {selectedItems.length} item dipilih
-                    </p>
+                    <h2 className="text-2xl font-bold text-foreground">Pilih Item</h2>
+                    
                   </div>
-
-                  <div className="grid grid-cols-3 gap-2">
-                    {filteredItems.map((item) => {
-                      const isSelected = selectedItems.includes(item.id);
-                      return (
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => toggleItem(item.id)}
-                          className={`relative flex flex-col items-start p-3 rounded-lg border text-left transition-colors ${
-                            isSelected
-                              ? "border-primary bg-primary/5"
-                              : "border-border bg-background hover:bg-muted/50"
-                          }`}
-                        >
-                          {/* Dot indikator pojok kanan atas */}
-                          <div
-                            className={`absolute top-2.5 right-2.5 w-3 h-3 rounded-full border-2 transition-colors ${
+ 
+                  {/* Search bar */}
+                  <div className="relative">
+                    <svg
+                      className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth={1.5}
+                      viewBox="0 0 16 16"
+                    >
+                      <circle cx="6.5" cy="6.5" r="4.5" />
+                      <line x1="10" y1="10" x2="14" y2="14" />
+                    </svg>
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Cari nama layanan..."
+                      className="w-full pl-9 pr-4 py-2 border border-input rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-background"
+                    />
+                  </div>
+ 
+                  {/* Main items */}
+                  <div>
+                    <p className="text-sm font-semibold mb-1">
+                      Item Utama{" "}
+                     
+                    </p>
+                    
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                      {mainItems.map((item) => {
+                        const isSelected = selectedMainItem === item.id
+                        return (
+                          <button
+                            key={item.id}
+                            type="button"
+                            onClick={() => handleSelectMainItem(item.id)}
+                            className={`p-3 rounded-lg border text-left ${
                               isSelected
-                                ? "border-primary bg-primary"
-                                : "border-muted-foreground/40"
+                                ? "border-primary bg-primary/5"
+                                : "border-border hover:border-primary"
                             }`}
-                          />
-
-                          <p className={`text-sm font-medium leading-snug pr-5 ${
-                            isSelected ? "text-primary" : "text-foreground"
-                          }`}>
-                            {item.name}
-                          </p>
-                          <p className={`text-xs mt-1 ${
-                            isSelected ? "text-primary/70" : "text-muted-foreground"
-                          }`}>
-                            Rp {item.price.toLocaleString()}
-                          </p>
-                        </button>
-                      );
-                    })}
+                          >
+                            <p className="text-sm font-medium">{item.name}</p>
+                            <p className="text-xs text-muted-foreground">
+                              Rp {item.price.toLocaleString("id-ID")}
+                            </p>
+                          </button>
+                        )
+                      })}
+                      {mainItems.length === 0 && (
+                        <p className="col-span-3 text-sm text-muted-foreground py-3">
+                          Tidak ditemukan
+                        </p>
+                      )}
+                    </div>
+                  </div>
+ 
+                  {/* Additional items */}
+                  <div>
+                    <p className="text-sm font-semibold mb-1">
+                      Item Tambahan{" "}
+                      <span className="font-normal text-muted-foreground">(opsional, pilih 1)</span>
+                    </p>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                      {additionalItems.map((item) => {
+                        const isSelected = selectedAdditionalItem === item.id
+                        return (
+                          <button
+                            key={item.id}
+                            type="button"
+                            onClick={() => handleSelectAdditionalItem(item.id)}
+                            className={`p-3 rounded-lg border text-left ${
+                              isSelected
+                                ? "border-emerald-500 bg-emerald-50"
+                                : "border-border hover:border-primary"
+                            }`}
+                          >
+                            <p className="text-sm font-medium">{item.name}</p>
+                            <p className="text-xs text-muted-foreground">
+                              Rp {item.price.toLocaleString("id-ID")}
+                            </p>
+                          </button>
+                        )
+                      })}
+                      {additionalItems.length === 0 && (
+                        <p className="col-span-3 text-sm text-muted-foreground py-3">
+                          Tidak ditemukan
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
               )}
@@ -738,7 +782,7 @@ export default function BookingPage() {
                           )}
                           {(service?.requiresAddress ||
                             serviceMode === "Home Visit" ||
-                            serviceMode === "Walk In" ||
+                           
                             serviceMode === "Delivery") && (
                             <div className="flex justify-between items-start gap-3">
                               <span className="text-muted-foreground shrink-0">Alamat</span>
@@ -749,24 +793,7 @@ export default function BookingPage() {
                       </div>
 
                       <div className="border-t border-border" />
-
-                      {/* Hewan Peliharaan */}
-                      <div>
-                        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Hewan Peliharaan</p>
-                        <div className="space-y-2">
-                          <div className="flex justify-between items-center">
-                            <span className="text-muted-foreground">Nama</span>
-                            <span className="font-medium">🐾 {petName || "-"}</span>
-                          </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-muted-foreground">Jenis</span>
-                            <span className="font-medium">{petType || "-"}</span>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="border-t border-border" />
-
+                      
                       {/* Jadwal */}
                       <div>
                         <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Jadwal</p>
@@ -783,12 +810,12 @@ export default function BookingPage() {
                               </div>
                             </>
                           )}
-                          {service?.scheduleType === "range" && (
+                          {/* {service?.scheduleType === "range" && (
                             <div className="flex justify-between">
                               <span>Lama inap</span>
                               <span>{totalDays} hari</span>
                             </div>
-                          )}
+                          )} */}
                           {service?.scheduleType === "range" && (
                             <>
                               <div className="flex justify-between items-center">
@@ -803,45 +830,75 @@ export default function BookingPage() {
                           )}
                         </div>
                       </div>
-                      {service?.requiresDoctor && (
+                      {service?.requiresPeople && (
                         <div className="flex justify-between items-center">
-                          <span className="text-muted-foreground">Dokter</span>
-                          <span className="font-medium">{selectedDoctor || "-"}</span>
+                          {service.name === "Pet Grooming" ? (
+                            <span className="text-muted-foreground">Groomer</span>
+                          ) : (
+                            <span className="text-muted-foreground">Dokter</span>
+                          )}
+                          <span className="font-medium">{selectedPeople || "-"}</span>
                         </div>
                       )}
-                      {/* Item Tambahan */}
-                      {selectedItems.length > 0 && (
-                        <>
-                          <div className="border-t border-border" />
-                          <div>
-                            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Item </p>
-                            <div className="flex flex-wrap gap-1.5">
-                              {selectedItems.map(id => {
-                                const item = filteredItems.find(i => i.id === id)
-                                return (
-                                  <span
-                                    key={id}
-                                    className="inline-block bg-muted text-foreground text-xs font-medium px-3 py-1 rounded-full border border-border"
-                                  >
-                                    {item?.name}
-                                  </span>
-                                )
-                              })}
-                            </div>
+                      
+                      
+                      <div className="border-t border-border" />
+                      {/* Hewan Peliharaan */}
+                      <div>
+                        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Hewan Peliharaan</p>
+                        <div className="space-y-2">
+                          <div className="flex justify-between items-center">
+                            <span className="text-muted-foreground">Nama</span>
+                            <span className="font-medium">🐾 {petName || "-"}</span>
                           </div>
-                        </>
-                      )}
-
+                          <div className="flex justify-between items-center">
+                            <span className="text-muted-foreground">Jenis</span>
+                            <span className="font-medium">{petType || "-"}</span>
+                          </div>
+                        </div>
+                      </div>
                       {/* Catatan */}
                       {notes && (
                         <>
-                          <div className="border-t border-border" />
+                          
                           <div>
                             <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Catatan</p>
                             <p className="text-foreground leading-relaxed">{notes}</p>
                           </div>
                         </>
                       )}
+                      <div className="border-t border-border" />
+                      
+                      {/* Item Tambahan */}
+                      {(selectedMainItem || selectedAdditionalItem) && (
+                        <>
+                          
+                          <div>
+                            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">
+                              Item
+                            </p>
+                            <div className="flex flex-wrap gap-1.5">
+                              {selectedMainItem && (
+                                <span className="inline-block bg-muted text-foreground text-xs font-medium px-3 py-1 rounded-full border border-border">
+                                  {
+                                    service?.item?.find(i => i.id === selectedMainItem)?.name
+                                  } (Utama)
+                                </span>
+                              )}
+                              {selectedAdditionalItem && (
+                                <span className="inline-block bg-muted text-foreground text-xs font-medium px-3 py-1 rounded-full border border-border">
+                                  {
+                                    service?.item?.find(i => i.id === selectedAdditionalItem)?.name
+                                  } (Additional)
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </>
+                      )}
+                      
+
+
 
                     </div>
 
@@ -912,8 +969,8 @@ export default function BookingPage() {
                             return
                           }
                         }
-                        if (step === 2 && service?.requiresDoctor && !selectedDoctor) {
-                          alert("Pilih dokter terlebih dahulu")
+                        if (step === 2 && service?.requiresPeople && !selectedPeople) {
+                          alert("Pilih dokter/Groomer terlebih dahulu")
                           return
                         }
                       }
@@ -938,9 +995,11 @@ export default function BookingPage() {
                           return
                         }
                       }
-                      if (step === 4 && service?.item?.length > 0 && selectedItems.length === 0) {
-                        alert("Pilih minimal 1 item")
-                        return
+                      if (step === 4) {
+                        // if (service?.item && service.item.length > 0) {
+                        //   alert("Pilih item terlebih dahulu")
+                        //   return
+                        // }
                       }
                       setStep(step + 1)
                     }}
