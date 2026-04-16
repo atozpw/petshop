@@ -23,7 +23,8 @@ export interface Service {
     name: string
     price: number
     type: "main" | "additional"
-    petType?: ("Anjing" | "Kucing")[]
+    petType?: ("Anjing" | "Kucing")[],
+    specialties?: string[]
   }[]
   scheduleType?: "range" | "single"
 }
@@ -134,7 +135,64 @@ export const SERVICES: Service[] = [
     availableModes: ["Home Visit", "Walk In", "Delivery"],
     requiresAddress: false, 
     branchRequired: true,
-    item: [],
+    item: [
+      {
+        id: "consultation_general",
+        name: "Konsultasi Umum",
+        price: 200000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "vaccination",
+        name: "Vaksinasi",
+        price: 250000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "dermatology",
+        name: "Pemeriksaan Dermatologi",
+        price: 300000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["Dermatology"]
+      },
+      {
+        id: "surgery",
+        name: "Konsultasi Bedah",
+        price: 350000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["Surgery"]
+      },
+      {
+        id: "radiography",
+        name: "Radiografi",
+        price: 400000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["Radiography"]
+      },
+      {
+        id: "hematology",
+        name: "Pemeriksaan Hematologi",
+        price: 300000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["Hematology"]
+      },
+      {
+        id: "exotic_pet",
+        name: "Konsultasi Hewan Eksotik",
+        price: 350000,
+        petType: ["Hewan Eksotik"],
+        type: "main",
+        specialties: ["Exotic Pet"]
+      }
+    ],
     scheduleType: "single",
     requiresPeople: true
   },

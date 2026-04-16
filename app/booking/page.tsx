@@ -39,50 +39,130 @@ export default function BookingPage() {
   ]
 
   const doctors = [
-    { name: "Drh. Fransisca Olivia Ratna Dilla", specialty: "Special Interest, Feline Internal Medicine", experience: "", image: "/doctor/drh Fransisca.png", lokasi: "Jakarta" },
-    { name: "Drh. Brillian Firmania Puspa Agny", specialty: "General Practitioner", experience: "", image: "/doctor/Drh Brillian.png", lokasi: "Jakarta" },
-    { name: "Drh. Agung Supriyono", specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator", experience: "", image: "/doctor/Drh Agung Supriono.png", lokasi: "Jakarta" },
-    { name: "Drh. Dita Pratiwi Dwi Setyowati", specialty: "General Practitioner", experience: "", image: "/doctor/drh Dita.png", lokasi: "Jakarta" },
-
-    { name: "Drh. Frida Ayu Salsana Billa", specialty: "General Practitioner", experience: "", image: "/doctor/Frida Ayu Salsana Billa.png", lokasi: "Bali" },
-    { name: "Drh. Yunita Atok", specialty: "General Practitioner", experience: "", image: "/doctor/Yunita Atok.png", lokasi: "Bali" },
-    { name: "Drh. Chendini Maharani", specialty: "General Practitioner", experience: "", image: "/doctor/Chendini Maharani.png", lokasi: "Bali" },
-
-    { 
-      name: "Drh. Adinda, S.KH", 
-      specialty: "General Veterinary Practitioner, Internal Medicine, Veterinary Dermatology, Emergency and Critical Care, Basic Surgery", 
-      experience: "", 
+    {
+      name: "Drh. Fransisca Olivia Ratna Dilla",
+      specialty: "Special Interest, Feline Internal Medicine",
+      specialties: ["Feline Internal Medicine"],
+      experience: "",
+      image: "/doctor/drh Fransisca.png",
+      lokasi: "Jakarta"
+    },
+    {
+      name: "Drh. Brillian Firmania Puspa Agny",
+      specialty: "General Practitioner",
+      specialties: ["General Practitioner"],
+      experience: "",
+      image: "/doctor/Drh Brillian.png",
+      lokasi: "Jakarta"
+    },
+    {
+      name: "Drh. Agung Supriyono",
+      specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator",
+      specialties: ["Exotic Pet", "Dermatology", "Surgery", "Stemcell Therapy"],
+      experience: "",
+      image: "/doctor/Drh Agung Supriono.png",
+      lokasi: "Jakarta"
+    },
+    {
+      name: "Drh. Dita Pratiwi Dwi Setyowati",
+      specialty: "General Practitioner",
+      specialties: ["General Practitioner"],
+      experience: "",
+      image: "/doctor/drh Dita.png",
+      lokasi: "Jakarta"
+    },
+    {
+      name: "Drh. Frida Ayu Salsana Billa",
+      specialty: "General Practitioner",
+      specialties: ["General Practitioner"],
+      experience: "",
+      image: "/doctor/Frida Ayu Salsana Billa.png",
+      lokasi: "Bali"
+    },
+    {
+      name: "Drh. Yunita Atok",
+      specialty: "General Practitioner",
+      specialties: ["General Practitioner"],
+      experience: "",
+      image: "/doctor/Yunita Atok.png",
+      lokasi: "Bali"
+    },
+    {
+      name: "Drh. Chendini Maharani",
+      specialty: "General Practitioner",
+      specialties: ["General Practitioner"],
+      experience: "",
+      image: "/doctor/Chendini Maharani.png",
+      lokasi: "Bali"
+    },
+    {
+      name: "Drh. Adinda, S.KH",
+      specialty: "General Veterinary Practitioner, Internal Medicine, Veterinary Dermatology, Emergency and Critical Care, Basic Surgery",
+      specialties: [
+        "General Practitioner",
+        "Internal Medicine",
+        "Dermatology",
+        "Emergency and Critical Care",
+        "Surgery"
+      ],
+      experience: "",
       image: "/doctor/adinda 55.png",
       lokasi: "Bali"
     },
-
-    { name: "Drh. Christiyanti Rambu Gedi", specialty: "Universitas Wijaya Kusuma Surabaya", experience: "", image: "/doctor/Christiyanti Rambu Gedi.png", lokasi: "Bali" },
-
-    { 
-      name: "Drh. Putu Aditya Pratama Artha Putra, S.KH", 
-      specialty: "Surgery, Internal Medicine, Vaccine, Dentistry, Urgent Care", 
-      experience: "", 
+    {
+      name: "Drh. Christiyanti Rambu Gedi",
+      specialty: "Universitas Wijaya Kusuma Surabaya",
+      specialties: ["General Practitioner"],
+      experience: "",
+      image: "/doctor/Christiyanti Rambu Gedi.png",
+      lokasi: "Bali"
+    },
+    {
+      name: "Drh. Putu Aditya Pratama Artha Putra, S.KH",
+      specialty: "Surgery, Internal Medicine, Vaccine, Dentistry, Urgent Care",
+      specialties: [
+        "Surgery",
+        "Internal Medicine",
+        "Vaccination",
+        "Dentistry",
+        "Urgent Care"
+      ],
+      experience: "",
       image: "/doctor/Aditya Pratama.png",
       lokasi: "Bali"
     },
-
-    { 
-      name: "Drh. Jessy Filomena Fernanda Bento, S.KH", 
-      specialty: "General Practitioner, Special Interest Dermatology", 
-      experience: "", 
-      image: "/doctor/Jessy Filomena.png", lokasi: "Bali"
+    {
+      name: "Drh. Jessy Filomena Fernanda Bento, S.KH",
+      specialty: "General Practitioner, Special Interest Dermatology",
+      specialties: ["General Practitioner", "Dermatology"],
+      experience: "",
+      image: "/doctor/Jessy Filomena.png",
+      lokasi: "Bali"
     },
-
-    { 
-      name: "Drh. Dewi Ratnasari", 
-      specialty: "General Practitioner, Special Interest Hematology and Radiography", 
-      experience: "", 
-      image: "/doctor/Dewi Ratnasari.png", lokasi: "Bali"
+    {
+      name: "Drh. Dewi Ratnasari",
+      specialty: "General Practitioner, Special Interest Hematology and Radiography",
+      specialties: ["General Practitioner", "Hematology", "Radiography"],
+      experience: "",
+      image: "/doctor/Dewi Ratnasari.png",
+      lokasi: "Bali"
     },
-
-    { name: "Drh. Owen Fernando", specialty: "-", experience: "", image: "/doctor/Owen Fernando.png", lokasi: "Bali" },
-
-    { name: "Drh. I Made Agus Wirawan", specialty: "General Practitioner", experience: "", image: "/doctor/I Made Agus Wirawan.png", lokasi: "Bali" },
+    {
+      name: "Drh. Owen Fernando",
+      specialty: "-",
+      specialties: ["General Practitioner"], // fallback default
+      experience: "",
+      image: "/doctor/Owen Fernando.png",
+      lokasi: "Bali"
+    },
+    {
+      name: "Drh. I Made Agus Wirawan",
+      specialty: "General Practitioner",
+      specialties: ["General Practitioner"],
+      experience: "",
+      image: "/doctor/I Made Agus Wirawan.png",
+      lokasi: "Bali"
+    }
   ];
  
   const groomers = [
@@ -136,13 +216,31 @@ export default function BookingPage() {
     const service = SERVICES.find((s) => s.id === selectedService)
     const branch = BRANCHES.find((b) => b.id === selectedBranch)
   
+    //find selected doctor/groomer object based on selectedPeople
+    const selectedDoctor = doctors.find(
+      (doc) => doc.name === selectedPeople
+    );
     // Filtered items by petType + search query (single declaration — no duplicate)
     const filteredItems =
-      service?.item?.filter((item) => {
-        const matchPet = !item.petType || item.petType.includes(petType)
-        const matchSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase())
-        return matchPet && matchSearch
-      }) || []
+    service?.item?.filter((item) => {
+      const matchPet =
+        !item.petType || item.petType.includes(petType);
+
+      const matchSearch =
+        item.name.toLowerCase().includes(searchQuery.toLowerCase());
+
+      // Jika bukan layanan klinik atau tidak ada dokter yang dipilih,
+      // maka semua item tetap ditampilkan
+      const matchDoctor =
+        service?.category !== "clinic" ||
+        !selectedDoctor ||
+        !item.specialties ||
+        item.specialties.some((spec) =>
+          selectedDoctor.specialties.includes(spec)
+        );
+
+      return matchPet && matchSearch && matchDoctor;
+    }) || [];
   
     const mainItems = filteredItems.filter((item) => item.type === "main")
     const additionalItems = filteredItems.filter((item) => item.type === "additional")
@@ -153,6 +251,7 @@ export default function BookingPage() {
         ? groomers.filter((g) => g.lokasi === selectedBranch)
         : doctors.filter((d) => d.lokasi === selectedBranch)
   
+    
     // Pricing
     const mainItemPrice =
       service?.item?.find(i => i.id === selectedMainItem)?.price || 0
@@ -996,10 +1095,12 @@ export default function BookingPage() {
                         }
                       }
                       if (step === 4) {
-                        // if (service?.item && service.item.length > 0) {
-                        //   alert("Pilih item terlebih dahulu")
-                        //   return
-                        // }
+                        const hasItems = service?.item && service.item.length > 0
+
+                        if (hasItems && !selectedMainItem) {
+                          alert("Silakan pilih minimal 1 item utama terlebih dahulu")
+                          return
+                        }
                       }
                       setStep(step + 1)
                     }}
