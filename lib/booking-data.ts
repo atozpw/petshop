@@ -17,11 +17,12 @@ export interface Service {
   requiresSchedule?: boolean
   availableModes?: ("Home Visit" | "Walk In" | "Delivery" )[]
   branchRequired?: boolean
-  requiresDoctor?: boolean
+  requiresPeople?: boolean
   item?: {
     id: string
     name: string
     price: number
+    type: "main" | "additional"
     petType?: ("Anjing" | "Kucing")[]
   }[]
   scheduleType?: "range" | "single"
@@ -62,34 +63,35 @@ export const SERVICES: Service[] = [
     availableModes: ["Home Visit", "Walk In", "Delivery"],
     requiresAddress: false,
     branchRequired: true,
+    requiresPeople: true,
     item: [
-      { id: "dog_dry_puppy", name: "Dry Grooming Dog - Puppy", price: 195000, petType: ["Anjing"] },
-      { id: "dog_dry_small", name: "Dry Grooming Dog - Small", price: 230000, petType: ["Anjing"] },
-      { id: "dog_dry_medium", name: "Dry Grooming Dog - Medium", price: 260000, petType: ["Anjing"] },
-      { id: "dog_dry_large", name: "Dry Grooming Dog - Large", price: 325000, petType: ["Anjing"] },
-      { id: "dog_dry_special", name: "Dry Grooming Dog - Special Breed", price: 390000, petType: ["Anjing"] },
+      { id: "dog_dry_puppy", name: "Dry Grooming Dog - Puppy", price: 195000, petType: ["Anjing"] , type: "main"},
+      { id: "dog_dry_small", name: "Dry Grooming Dog - Small", price: 230000, petType: ["Anjing"] , type: "main"},
+      { id: "dog_dry_medium", name: "Dry Grooming Dog - Medium", price: 260000, petType: ["Anjing"] , type: "main"},
+      { id: "dog_dry_large", name: "Dry Grooming Dog - Large", price: 325000, petType: ["Anjing"] , type: "main"},
+      { id: "dog_dry_special", name: "Dry Grooming Dog - Special Breed", price: 390000, petType: ["Anjing"] , type: "main"},
 
-      { id: "cat_dry_kitten", name: "Dry Grooming Cat - Kitten", price: 165000, petType: ["Kucing"] },
-      { id: "cat_dry_adult", name: "Dry Grooming Cat - Adult", price: 195000, petType: ["Kucing"] },
-      { id: "cat_dry_longhair", name: "Dry Grooming Cat - Longhair", price: 250000, petType: ["Kucing"] },
+      { id: "cat_dry_kitten", name: "Dry Grooming Cat - Kitten", price: 165000, petType: ["Kucing"] , type: "main"},
+      { id: "cat_dry_adult", name: "Dry Grooming Cat - Adult", price: 195000, petType: ["Kucing"] , type: "main"},
+      { id: "cat_dry_longhair", name: "Dry Grooming Cat - Longhair", price: 250000, petType: ["Kucing"] , type: "main"},
 
-      { id: "gundul_puppy", name: "Haircut Gundul - Puppy SB", price: 145000, petType: ["Anjing"] },
-      { id: "gundul_small", name: "Haircut Gundul - Small", price: 190000, petType: ["Anjing"] },
-      { id: "gundul_medium", name: "Haircut Gundul - Medium", price: 230000, petType: ["Anjing"] },
-      { id: "gundul_large", name: "Haircut Gundul - Large", price: 270000, petType: ["Anjing"] },
-      { id: "gundul_special", name: "Haircut Gundul - Special Breed", price: 300000, petType: ["Anjing"] },
+      { id: "gundul_puppy", name: "Haircut Gundul - Puppy SB", price: 145000, petType: ["Anjing"], type: "main" },
+      { id: "gundul_small", name: "Haircut Gundul - Small", price: 190000, petType: ["Anjing"], type: "main" },
+      { id: "gundul_medium", name: "Haircut Gundul - Medium", price: 230000, petType: ["Anjing"], type: "main" },
+      { id: "gundul_large", name: "Haircut Gundul - Large", price: 270000, petType: ["Anjing"], type: "main" },
+      { id: "gundul_special", name: "Haircut Gundul - Special Breed", price: 300000, petType: ["Anjing"], type: "main" },
 
-      { id: "style_puppy", name: "Haircut Style - Puppy SB", price: 250000, petType: ["Anjing"] },
-      { id: "style_small", name: "Haircut Style - Small", price: 275000, petType: ["Anjing"] },
-      { id: "style_medium", name: "Haircut Style - Medium", price: 300000, petType: ["Anjing"] },
-      { id: "style_large", name: "Haircut Style - Large", price: 350000, petType: ["Anjing"] },
-      { id: "style_special", name: "Haircut Style - Special Breed", price: 400000, petType: ["Anjing"] },
+      { id: "style_puppy", name: "Haircut Style - Puppy SB", price: 250000, petType: ["Anjing"], type: "main" },
+      { id: "style_small", name: "Haircut Style - Small", price: 275000, petType: ["Anjing"], type: "main" },
+      { id: "style_medium", name: "Haircut Style - Medium", price: 300000, petType: ["Anjing"], type: "main" },
+      { id: "style_large", name: "Haircut Style - Large", price: 350000, petType: ["Anjing"], type: "main" },
+      { id: "style_special", name: "Haircut Style - Special Breed", price: 400000, petType: ["Anjing"], type: "main" },
 
-      { id: "kusut_puppy", name: "Perawatan Bulu Kusut - Puppy SB", price: 25000, petType: ["Anjing"] },
-      { id: "kusut_small", name: "Perawatan Bulu Kusut - Small", price: 35000, petType: ["Anjing"] },
-      { id: "kusut_medium", name: "Perawatan Bulu Kusut - Medium", price: 45000, petType: ["Anjing"] },
-      { id: "kusut_large", name: "Perawatan Bulu Kusut - Large", price: 55000, petType: ["Anjing"] },
-      { id: "kusut_special", name: "Perawatan Bulu Kusut - Special Breed", price: 75000, petType: ["Anjing"] }
+      { id: "kusut_puppy", name: "Perawatan Bulu Kusut - Puppy SB", price: 25000, petType: ["Anjing"], type: "additional" },
+      { id: "kusut_small", name: "Perawatan Bulu Kusut - Small", price: 35000, petType:["Anjing", "Kucing"], type: "additional" },
+      { id: "kusut_medium", name: "Perawatan Bulu Kusut - Medium", price: 45000, petType:["Anjing", "Kucing"], type: "additional" },
+      { id: "kusut_large", name: "Perawatan Bulu Kusut - Large", price: 55000, petType:["Anjing", "Kucing"], type: "additional" },
+      { id: "kusut_special", name: "Perawatan Bulu Kusut - Special Breed", price: 75000, petType:["Anjing", "Kucing"], type: "additional" }
     ],
     scheduleType: "single"
   },
@@ -109,10 +111,10 @@ export const SERVICES: Service[] = [
     requiresAddress: false,
     branchRequired: true,
     item: [
-      { id: "small_room_normal", name: "Small Room (Normal)", price: 100000, petType: ["Anjing", "Kucing"] },
-      { id: "large_room_normal", name: "Large Room (Normal)", price: 175000, petType: ["Anjing", "Kucing"] },
-      { id: "small_room_high", name: "Small Room (High Season)", price: 200000, petType: ["Anjing", "Kucing"] },
-      { id: "large_room_high", name: "Large Room (High Season)", price: 350000, petType: ["Anjing", "Kucing"] }
+      { id: "small_room_normal", name: "Small Room (Normal)", price: 100000, petType: ["Anjing", "Kucing"], type: "main" },
+      { id: "large_room_normal", name: "Large Room (Normal)", price: 175000, petType: ["Anjing", "Kucing"], type: "main" },
+      { id: "small_room_high", name: "Small Room (High Season)", price: 200000, petType: ["Anjing", "Kucing"], type: "main" },
+      { id: "large_room_high", name: "Large Room (High Season)", price: 350000, petType: ["Anjing", "Kucing"], type: "main" }
     ],
     scheduleType: "range"
 
@@ -134,7 +136,7 @@ export const SERVICES: Service[] = [
     branchRequired: true,
     item: [],
     scheduleType: "single",
-    requiresDoctor: true
+    requiresPeople: true
   },
 
   {
