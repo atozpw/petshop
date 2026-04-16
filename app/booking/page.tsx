@@ -25,326 +25,227 @@ export default function BookingPage() {
   const [serviceMode, setServiceMode] = useState("")
   const [address, setAddress] = useState("")
   const [selectedPeople, setSelectedPeople] = useState("")
- 
+
   const [selectedMainItem, setSelectedMainItem] = useState<string | null>(null)
   const [selectedAdditionalItem, setSelectedAdditionalItem] = useState<string | null>(null)
   const [searchQuery, setSearchQuery] = useState("")
- 
+
   const [checkIn, setCheckIn] = useState("")
   const [checkOut, setCheckOut] = useState("")
- 
+
   const BRANCHES = [
     { id: "Jakarta", name: "Jakarta", phone: "6281912982996" },
     { id: "Bali", name: "Bali", phone: "628113999893" },
   ]
 
   const doctors = [
-    {
-      name: "Drh. Fransisca Olivia Ratna Dilla",
-      specialty: "Special Interest, Feline Internal Medicine",
-      specialties: ["Feline Internal Medicine"],
-      experience: "",
-      image: "/doctor/drh Fransisca.png",
-      lokasi: "Jakarta"
-    },
-    {
-      name: "Drh. Brillian Firmania Puspa Agny",
-      specialty: "General Practitioner",
-      specialties: ["General Practitioner"],
-      experience: "",
-      image: "/doctor/Drh Brillian.png",
-      lokasi: "Jakarta"
-    },
-    {
-      name: "Drh. Agung Supriyono",
-      specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator",
-      specialties: ["Exotic Pet", "Dermatology", "Surgery", "Stemcell Therapy"],
-      experience: "",
-      image: "/doctor/Drh Agung Supriono.png",
-      lokasi: "Jakarta"
-    },
-    {
-      name: "Drh. Dita Pratiwi Dwi Setyowati",
-      specialty: "General Practitioner",
-      specialties: ["General Practitioner"],
-      experience: "",
-      image: "/doctor/drh Dita.png",
-      lokasi: "Jakarta"
-    },
-    {
-      name: "Drh. Frida Ayu Salsana Billa",
-      specialty: "General Practitioner",
-      specialties: ["General Practitioner"],
-      experience: "",
-      image: "/doctor/Frida Ayu Salsana Billa.png",
-      lokasi: "Bali"
-    },
-    {
-      name: "Drh. Yunita Atok",
-      specialty: "General Practitioner",
-      specialties: ["General Practitioner"],
-      experience: "",
-      image: "/doctor/Yunita Atok.png",
-      lokasi: "Bali"
-    },
-    {
-      name: "Drh. Chendini Maharani",
-      specialty: "General Practitioner",
-      specialties: ["General Practitioner"],
-      experience: "",
-      image: "/doctor/Chendini Maharani.png",
-      lokasi: "Bali"
-    },
+    // { name: "Drh. Fransisca Olivia Ratna Dilla", specialty: "Special Interest, Feline Internal Medicine", experience: "", image: "/doctor/drh Fransisca.png", lokasi: "Jakarta" },
+    // { name: "Drh. Brillian Firmania Puspa Agny", specialty: "General Practitioner", experience: "", image: "/doctor/Drh Brillian.png", lokasi: "Jakarta" },
+    { name: "Drh. Agung Supriyono", specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator", experience: "", image: "/doctor/Drh Agung Supriono.png", lokasi: "Jakarta" },
+    // { name: "Drh. Dita Pratiwi Dwi Setyowati", specialty: "General Practitioner", experience: "", image: "/doctor/drh Dita.png", lokasi: "Jakarta" },
+
+    { name: "Drh. Frida Ayu Salsana Billa", specialty: "General Practitioner", experience: "", image: "/doctor/Frida Ayu Salsana Billa.png", lokasi: "Bali" },
+    { name: "Drh. Yunita Atok", specialty: "General Practitioner", experience: "", image: "/doctor/Yunita Atok.png", lokasi: "Bali" },
+    { name: "Drh. Chendini Maharani", specialty: "General Practitioner", experience: "", image: "/doctor/Chendini Maharani.png", lokasi: "Bali" },
+
     {
       name: "Drh. Adinda, S.KH",
       specialty: "General Veterinary Practitioner, Internal Medicine, Veterinary Dermatology, Emergency and Critical Care, Basic Surgery",
-      specialties: [
-        "General Practitioner",
-        "Internal Medicine",
-        "Dermatology",
-        "Emergency and Critical Care",
-        "Surgery"
-      ],
       experience: "",
       image: "/doctor/adinda 55.png",
       lokasi: "Bali"
     },
-    {
-      name: "Drh. Christiyanti Rambu Gedi",
-      specialty: "Universitas Wijaya Kusuma Surabaya",
-      specialties: ["General Practitioner"],
-      experience: "",
-      image: "/doctor/Christiyanti Rambu Gedi.png",
-      lokasi: "Bali"
-    },
+
+    { name: "Drh. Christiyanti Rambu Gedi", specialty: "Universitas Wijaya Kusuma Surabaya", experience: "", image: "/doctor/Christiyanti Rambu Gedi.png", lokasi: "Bali" },
+
     {
       name: "Drh. Putu Aditya Pratama Artha Putra, S.KH",
       specialty: "Surgery, Internal Medicine, Vaccine, Dentistry, Urgent Care",
-      specialties: [
-        "Surgery",
-        "Internal Medicine",
-        "Vaccination",
-        "Dentistry",
-        "Urgent Care"
-      ],
       experience: "",
       image: "/doctor/Aditya Pratama.png",
       lokasi: "Bali"
     },
+
     {
       name: "Drh. Jessy Filomena Fernanda Bento, S.KH",
       specialty: "General Practitioner, Special Interest Dermatology",
-      specialties: ["General Practitioner", "Dermatology"],
       experience: "",
-      image: "/doctor/Jessy Filomena.png",
-      lokasi: "Bali"
+      image: "/doctor/Jessy Filomena.png", lokasi: "Bali"
     },
+
     {
       name: "Drh. Dewi Ratnasari",
       specialty: "General Practitioner, Special Interest Hematology and Radiography",
-      specialties: ["General Practitioner", "Hematology", "Radiography"],
       experience: "",
-      image: "/doctor/Dewi Ratnasari.png",
-      lokasi: "Bali"
+      image: "/doctor/Dewi Ratnasari.png", lokasi: "Bali"
     },
-    {
-      name: "Drh. Owen Fernando",
-      specialty: "-",
-      specialties: ["General Practitioner"], // fallback default
-      experience: "",
-      image: "/doctor/Owen Fernando.png",
-      lokasi: "Bali"
-    },
-    {
-      name: "Drh. I Made Agus Wirawan",
-      specialty: "General Practitioner",
-      specialties: ["General Practitioner"],
-      experience: "",
-      image: "/doctor/I Made Agus Wirawan.png",
-      lokasi: "Bali"
-    }
+
+    { name: "Drh. Owen Fernando", specialty: "-", experience: "", image: "/doctor/Owen Fernando.png", lokasi: "Bali" },
+
+    { name: "Drh. I Made Agus Wirawan", specialty: "General Practitioner", experience: "", image: "/doctor/I Made Agus Wirawan.png", lokasi: "Bali" },
   ];
- 
+
   const groomers = [
     { name: "Rama", lokasi: "Jakarta", image: "/groomer/rama.png" },
     { name: "Fallen", lokasi: "Jakarta", image: "/groomer/fallen.png" }
 
   ]
   const TERMS = [
-      "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
-      "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
-      "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
-      "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
-    ]
-  
-    // ─── Effects ──────────────────────────────────────────────────────────────
-  
-    useEffect(() => {
-      const userSession = localStorage.getItem("petshop-user")
-      if (userSession) {
-        const user = JSON.parse(userSession)
-        setUserEmail(user.email)
-        setUserName(user.name)
-        setUserPhone(user.phone)
-        setIsLoggedIn(true)
-      }
-  
-      if (!selectedService) return
-  
-      const selected = SERVICES.find((s) => s.id === selectedService)
-      if (selected && selected.active) {
-        setStep(2)
-      } else {
-        setSelectedService("")
-        setStep(1)
-      }
-    }, [selectedService])
-  
-    useEffect(() => {
-      if (step === 4 && (!service?.item || service.item.length === 0)) {
-        setStep(5)
-      }
-      window.scrollTo({ top: 0, behavior: "smooth" })
-    }, [step])
-  
-    useEffect(() => {
-      setSelectedPeople("")
-    }, [selectedBranch])
-  
-    // ─── Derived values ────────────────────────────────────────────────────────
-  
-    const service = SERVICES.find((s) => s.id === selectedService)
-    const branch = BRANCHES.find((b) => b.id === selectedBranch)
-  
-    //find selected doctor/groomer object based on selectedPeople
-    const selectedDoctor = doctors.find(
-      (doc) => doc.name === selectedPeople
-    );
-    // Filtered items by petType + search query (single declaration — no duplicate)
-    const filteredItems =
+    "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
+    "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
+    "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
+    "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
+  ]
+
+  // ─── Effects ──────────────────────────────────────────────────────────────
+
+  useEffect(() => {
+    const userSession = localStorage.getItem("petshop-user")
+    if (userSession) {
+      const user = JSON.parse(userSession)
+      setUserEmail(user.email)
+      setUserName(user.name)
+      setUserPhone(user.phone)
+      setIsLoggedIn(true)
+    }
+
+    if (!selectedService) return
+
+    const selected = SERVICES.find((s) => s.id === selectedService)
+    if (selected && selected.active) {
+      setStep(2)
+    } else {
+      setSelectedService("")
+      setStep(1)
+    }
+  }, [selectedService])
+
+  useEffect(() => {
+    if (step === 4 && (!service?.item || service.item.length === 0)) {
+      setStep(5)
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" })
+  }, [step])
+
+  useEffect(() => {
+    setSelectedPeople("")
+  }, [selectedBranch])
+
+  // ─── Derived values ────────────────────────────────────────────────────────
+
+  const service = SERVICES.find((s) => s.id === selectedService)
+  const branch = BRANCHES.find((b) => b.id === selectedBranch)
+
+  // Filtered items by petType + search query (single declaration — no duplicate)
+  const filteredItems =
     service?.item?.filter((item) => {
-      const matchPet =
-        !item.petType || item.petType.includes(petType);
+      const matchPet = !item.petType || item.petType.includes(petType)
+      const matchSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      return matchPet && matchSearch
+    }) || []
 
-      const matchSearch =
-        item.name.toLowerCase().includes(searchQuery.toLowerCase());
+  const mainItems = filteredItems.filter((item) => item.type === "main")
+  const additionalItems = filteredItems.filter((item) => item.type === "additional")
 
-      // Jika bukan layanan klinik atau tidak ada dokter yang dipilih,
-      // maka semua item tetap ditampilkan
-      const matchDoctor =
-        service?.category !== "clinic" ||
-        !selectedDoctor ||
-        !item.specialties ||
-        item.specialties.some((spec) =>
-          selectedDoctor.specialties.includes(spec)
-        );
+  // People list (doctors or groomers filtered by branch)
+  const filteredPeople =
+    service?.name === "Pet Grooming"
+      ? groomers.filter((g) => g.lokasi === selectedBranch)
+      : doctors.filter((d) => d.lokasi === selectedBranch)
 
-      return matchPet && matchSearch && matchDoctor;
-    }) || [];
-  
-    const mainItems = filteredItems.filter((item) => item.type === "main")
-    const additionalItems = filteredItems.filter((item) => item.type === "additional")
-  
-    // People list (doctors or groomers filtered by branch)
-    const filteredPeople =
-      service?.name === "Pet Grooming"
-        ? groomers.filter((g) => g.lokasi === selectedBranch)
-        : doctors.filter((d) => d.lokasi === selectedBranch)
-  
-    
-    // Pricing
-    const mainItemPrice =
-      service?.item?.find(i => i.id === selectedMainItem)?.price || 0
+  // Pricing
+  const mainItemPrice =
+    service?.item?.find(i => i.id === selectedMainItem)?.price || 0
 
-    const additionalItemPrice =
-      service?.item?.find(i => i.id === selectedAdditionalItem)?.price || 0
+  const additionalItemPrice =
+    service?.item?.find(i => i.id === selectedAdditionalItem)?.price || 0
 
-    const selectedItemTotal = mainItemPrice + additionalItemPrice
-    
-  
-    const getTotalDays = () => {
-      if (!checkIn || !checkOut) return 0
-      const start = new Date(checkIn)
-      const end = new Date(checkOut)
-      const diffTime = end.getTime() - start.getTime()
-      return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 0
+  const selectedItemTotal = mainItemPrice + additionalItemPrice
+
+
+  const getTotalDays = () => {
+    if (!checkIn || !checkOut) return 0
+    const start = new Date(checkIn)
+    const end = new Date(checkOut)
+    const diffTime = end.getTime() - start.getTime()
+    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 0
+  }
+  const totalDays = getTotalDays()
+
+  const totalPrice =
+    service?.scheduleType === "range" ? selectedItemTotal * (totalDays + 1) : selectedItemTotal
+
+  // Time slot helper
+  const isPastTime = (slotTime: string) => {
+    if (!selectedDate) return false
+    const now = new Date()
+    const selected = new Date(selectedDate)
+    if (
+      selected.getFullYear() !== now.getFullYear() ||
+      selected.getMonth() !== now.getMonth() ||
+      selected.getDate() !== now.getDate()
+    ) {
+      return false
     }
-    const totalDays = getTotalDays()
-  
-    const totalPrice =
-      service?.scheduleType === "range" ? selectedItemTotal * (totalDays + 1) : selectedItemTotal
-  
-    // Time slot helper
-    const isPastTime = (slotTime: string) => {
-      if (!selectedDate) return false
-      const now = new Date()
-      const selected = new Date(selectedDate)
-      if (
-        selected.getFullYear() !== now.getFullYear() ||
-        selected.getMonth() !== now.getMonth() ||
-        selected.getDate() !== now.getDate()
-      ) {
-        return false
-      }
-      const [hour, minute] = slotTime.split(":").map(Number)
-      const slotDate = new Date()
-      slotDate.setHours(hour, minute, 0, 0)
-      return slotDate <= now
-    }
-  
-    // ─── Handlers ─────────────────────────────────────────────────────────────
-  
-    const handleSelectMainItem = (itemId: string) => {
-      setSelectedMainItem((prev) => (prev === itemId ? null : itemId))
+    const [hour, minute] = slotTime.split(":").map(Number)
+    const slotDate = new Date()
+    slotDate.setHours(hour, minute, 0, 0)
+    return slotDate <= now
+  }
+
+  // ─── Handlers ─────────────────────────────────────────────────────────────
+
+  const handleSelectMainItem = (itemId: string) => {
+    setSelectedMainItem((prev) => (prev === itemId ? null : itemId))
+  }
+
+  const handleSelectAdditionalItem = (itemId: string) => {
+    setSelectedAdditionalItem((prev) => (prev === itemId ? null : itemId))
+  }
+
+  const handleSubmit = () => {
+    if (!userEmail || !userName || !userPhone || !petName || !petType) {
+      alert("Mohon isi semua field")
+      return
     }
 
-    const handleSelectAdditionalItem = (itemId: string) => {
-      setSelectedAdditionalItem((prev) => (prev === itemId ? null : itemId))
-    }
-  
-    const handleSubmit = () => {
-      if (!userEmail || !userName || !userPhone || !petName || !petType) {
-        alert("Mohon isi semua field")
-        return
-      }
+    const mainItemName =
+      service?.item?.find(i => i.id === selectedMainItem)?.name || "-"
 
-      const mainItemName =
-        service?.item?.find(i => i.id === selectedMainItem)?.name || "-"
+    const additionalItemName =
+      service?.item?.find(i => i.id === selectedAdditionalItem)?.name || "-"
 
-      const additionalItemName =
-        service?.item?.find(i => i.id === selectedAdditionalItem)?.name || "-"
+    const peopleLabel =
+      service?.name === "Pet Grooming" ? "Groomer" : "Dokter"
 
-      const peopleLabel =
-        service?.name === "Pet Grooming" ? "Groomer" : "Dokter"
-
-      const scheduleText =
-        service?.scheduleType === "single"
-          ? `Jadwal
+    const scheduleText =
+      service?.scheduleType === "single"
+        ? `Jadwal
     - Tanggal: ${selectedDate || "-"}
     - Waktu: ${selectedTime || "-"}`
-          : `Jadwal
+        : `Jadwal
     - Check-in: ${checkIn || "-"}
     - Check-out: ${checkOut || "-"}`
 
-      const addressText =
-        (service?.requiresAddress ||
-          serviceMode === "Home Visit" ||
-          serviceMode === "Delivery")
-          ? `- Alamat: ${address || "-"}`
-          : ""
-
-      const peopleText =
-        service?.requiresPeople
-          ? `${peopleLabel}
-    - ${selectedPeople || "-"}`
-          : ""
-
-      const notesText = notes
-        ? `Catatan
-    - ${notes}`
+    const addressText =
+      (service?.requiresAddress ||
+        serviceMode === "Home Visit" ||
+        serviceMode === "Delivery")
+        ? `- Alamat: ${address || "-"}`
         : ""
 
-      const message = `
+    const peopleText =
+      service?.requiresPeople
+        ? `${peopleLabel}
+    - ${selectedPeople || "-"}`
+        : ""
+
+    const notesText = notes
+      ? `Catatan
+    - ${notes}`
+      : ""
+
+    const message = `
     Halo, saya ingin melakukan booking layanan.
 
     Layanan
@@ -375,14 +276,14 @@ export default function BookingPage() {
     Rp ${totalPrice.toLocaleString("id-ID")}
       `.trim()
 
-      const phone = branch?.phone || "628xxxx"
+    const phone = branch?.phone || "628xxxx"
 
-      window.open(
-        `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
-        "_blank"
-      )
-    }
-  
+    window.open(
+      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
+      "_blank"
+    )
+  }
+
   return (
     <>
       <Header />
@@ -401,7 +302,7 @@ export default function BookingPage() {
                     ? "Pilih Tanggal & Waktu"
                     : step === 3
                       ? "Data Hewan Peliharaan"
-                       : step === 4
+                      : step === 4
                         ? "Item Selection"
                         : "Konfirmasi & Data Pemesan"}
               </p>
@@ -409,7 +310,7 @@ export default function BookingPage() {
 
             {/* Progress Bar */}
             <div className="mb-12 flex gap-2">
-              {[1, 2, 3, 4,5].map((s) => (
+              {[1, 2, 3, 4, 5].map((s) => (
                 <div
                   key={s}
                   className={`flex-1 h-2 rounded-full transition-colors ${s <= step ? "bg-primary" : "bg-muted"}`}
@@ -428,11 +329,10 @@ export default function BookingPage() {
                         key={svc.id}
                         onClick={() => svc.active && setSelectedService(svc.id)}
                         disabled={!svc.active}
-                        className={`p-4 rounded-lg border-2 transition-all text-left ${
-                          selectedService === svc.id
-                            ? "border-primary bg-primary/5"
-                            : "border-border hover:border-primary"
-                        }`}
+                        className={`p-4 rounded-lg border-2 transition-all text-left ${selectedService === svc.id
+                          ? "border-primary bg-primary/5"
+                          : "border-border hover:border-primary"
+                          }`}
                       >
                         <h3 className="font-semibold text-foreground">{svc.name}</h3>
                         <p className="text-sm text-muted-foreground">{svc.description}</p>
@@ -447,8 +347,8 @@ export default function BookingPage() {
               {step === 2 && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-foreground">Pilih Tanggal & Waktu</h2>
-                  
-                    {service?.branchRequired && (
+
+                  {service?.branchRequired && (
                     <div>
                       {service && (
                         <div className="mb-4 p-3 bg-primary/10 rounded">
@@ -463,9 +363,8 @@ export default function BookingPage() {
                           <button
                             key={b.id}
                             onClick={() => setSelectedBranch(b.id)}
-                            className={`p-3 border rounded ${
-                              selectedBranch === b.id ? "bg-primary text-white" : ""
-                            }`}
+                            className={`p-3 border rounded ${selectedBranch === b.id ? "bg-primary text-white" : ""
+                              }`}
                           >
                             {b.name}
                           </button>
@@ -482,9 +381,8 @@ export default function BookingPage() {
                           <button
                             key={mode}
                             onClick={() => setServiceMode(mode)}
-                            className={`px-4 py-2 border rounded ${
-                              serviceMode === mode ? "bg-primary text-white" : ""
-                            }`}
+                            className={`px-4 py-2 border rounded ${serviceMode === mode ? "bg-primary text-white" : ""
+                              }`}
                           >
                             {mode}
                           </button>
@@ -511,7 +409,7 @@ export default function BookingPage() {
                       <input
                         type="date"
                         value={selectedDate}
-                         min={new Date().toISOString().split("T")[0]}
+                        min={new Date().toISOString().split("T")[0]}
                         onChange={(e) => setSelectedDate(e.target.value)}
                         className="w-full px-4 py-2 border rounded-lg"
                       />
@@ -525,7 +423,7 @@ export default function BookingPage() {
                         <input
                           type="date"
                           value={checkIn}
-                           min={new Date().toISOString().split("T")[0]}
+                          min={new Date().toISOString().split("T")[0]}
                           onChange={(e) => setCheckIn(e.target.value)}
                           className="w-full px-4 py-2 border rounded-lg"
                         />
@@ -543,7 +441,7 @@ export default function BookingPage() {
                       </div>
                     </div>
                   )}
-                  
+
 
                   {service?.scheduleType === "single" && (
                     <div>
@@ -557,13 +455,12 @@ export default function BookingPage() {
                               key={slot.time}
                               onClick={() => !isDisabled && setSelectedTime(slot.time)}
                               disabled={isDisabled}
-                              className={`p-3 rounded-lg border transition-all font-semibold ${
-                                selectedTime === slot.time
-                                  ? "border-primary bg-primary text-white"
-                                  : !isDisabled
-                                    ? "border-border hover:border-primary bg-white"
-                                    : "border-border bg-muted text-muted-foreground cursor-not-allowed opacity-60"
-                              }`}
+                              className={`p-3 rounded-lg border transition-all font-semibold ${selectedTime === slot.time
+                                ? "border-primary bg-primary text-white"
+                                : !isDisabled
+                                  ? "border-border hover:border-primary bg-white"
+                                  : "border-border bg-muted text-muted-foreground cursor-not-allowed opacity-60"
+                                }`}
                             >
                               {slot.time}
                             </button>
@@ -575,7 +472,7 @@ export default function BookingPage() {
 
                   {service?.requiresPeople && (
                     <div>
-                     <p className="text-sm text-muted-foreground mb-2">
+                      <p className="text-sm text-muted-foreground mb-2">
                         {service.name === "Pet Grooming"
                           ? "Pilih groomer untuk layanan ini"
                           : "Pilih dokter untuk layanan ini"}
@@ -600,11 +497,10 @@ export default function BookingPage() {
                               key={doc.name}
                               onClick={() => setSelectedPeople(doc.name)}
                               disabled={!selectedBranch}
-                              className={`border rounded-lg p-3 text-left transition ${
-                                isSelected
-                                  ? "border-primary bg-primary/5"
-                                  : "border-border hover:border-primary"
-                              } ${!selectedBranch ? "opacity-50 cursor-not-allowed" : ""}`}
+                              className={`border rounded-lg p-3 text-left transition ${isSelected
+                                ? "border-primary bg-primary/5"
+                                : "border-border hover:border-primary"
+                                } ${!selectedBranch ? "opacity-50 cursor-not-allowed" : ""}`}
                             >
                               <img
                                 src={doc.image}
@@ -626,7 +522,7 @@ export default function BookingPage() {
                     </div>
                   )}
 
-                  
+
                 </div>
               )}
 
@@ -672,19 +568,19 @@ export default function BookingPage() {
                       className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
-                  
+
                 </div>
               )}
 
-              
+
               {/* Step 4: Item Selection (if applicable) */}
               {step === 4 && (
                 <div className="space-y-6">
                   <div>
                     <h2 className="text-2xl font-bold text-foreground">Pilih Item</h2>
-                    
+
                   </div>
- 
+
                   {/* Search bar */}
                   <div className="relative">
                     <svg
@@ -705,14 +601,14 @@ export default function BookingPage() {
                       className="w-full pl-9 pr-4 py-2 border border-input rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-background"
                     />
                   </div>
- 
+
                   {/* Main items */}
                   <div>
                     <p className="text-sm font-semibold mb-1">
                       Item Utama{" "}
-                     
+
                     </p>
-                    
+
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                       {mainItems.map((item) => {
                         const isSelected = selectedMainItem === item.id
@@ -721,11 +617,10 @@ export default function BookingPage() {
                             key={item.id}
                             type="button"
                             onClick={() => handleSelectMainItem(item.id)}
-                            className={`p-3 rounded-lg border text-left ${
-                              isSelected
-                                ? "border-primary bg-primary/5"
-                                : "border-border hover:border-primary"
-                            }`}
+                            className={`p-3 rounded-lg border text-left ${isSelected
+                              ? "border-primary bg-primary/5"
+                              : "border-border hover:border-primary"
+                              }`}
                           >
                             <p className="text-sm font-medium">{item.name}</p>
                             <p className="text-xs text-muted-foreground">
@@ -741,7 +636,7 @@ export default function BookingPage() {
                       )}
                     </div>
                   </div>
- 
+
                   {/* Additional items */}
                   <div>
                     <p className="text-sm font-semibold mb-1">
@@ -756,11 +651,10 @@ export default function BookingPage() {
                             key={item.id}
                             type="button"
                             onClick={() => handleSelectAdditionalItem(item.id)}
-                            className={`p-3 rounded-lg border text-left ${
-                              isSelected
-                                ? "border-emerald-500 bg-emerald-50"
-                                : "border-border hover:border-primary"
-                            }`}
+                            className={`p-3 rounded-lg border text-left ${isSelected
+                              ? "border-emerald-500 bg-emerald-50"
+                              : "border-border hover:border-primary"
+                              }`}
                           >
                             <p className="text-sm font-medium">{item.name}</p>
                             <p className="text-xs text-muted-foreground">
@@ -780,238 +674,240 @@ export default function BookingPage() {
               )}
 
               {/* Step 5: Confirmation & User Data */}
-              {step === 5 && (
-                <div className="space-y-6">
-                  <h2 className="text-2xl font-bold text-foreground">Konfirmasi Booking</h2>
+              {
+                step === 5 && (
+                  <div className="space-y-6">
+                    <h2 className="text-2xl font-bold text-foreground">Konfirmasi Booking</h2>
 
-                  {!isLoggedIn ? (
-                    <>
-                      <div className="bg-blue-50 border border-primary/20 rounded-lg p-4">
-                        <p className="text-sm text-foreground">
-                          Belum login?{" "}
-                          <Link href="/login?redirect=/booking" className="text-primary font-semibold hover:underline">
-                            Login di sini
-                          </Link>{" "}
-                          atau isi data di bawah
+                    {!isLoggedIn ? (
+                      <>
+                        <div className="bg-blue-50 border border-primary/20 rounded-lg p-4">
+                          <p className="text-sm text-foreground">
+                            Belum login?{" "}
+                            <Link href="/login?redirect=/booking" className="text-primary font-semibold hover:underline">
+                              Login di sini
+                            </Link>{" "}
+                            atau isi data di bawah
+                          </p>
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-foreground mb-3">Nama Lengkap</label>
+                          <input
+                            type="text"
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                            placeholder="Nama Lengkap Anda"
+                            className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-foreground mb-3">Email</label>
+                          <input
+                            type="email"
+                            value={userEmail}
+                            onChange={(e) => setUserEmail(e.target.value)}
+                            placeholder="Email Anda"
+                            className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block text-sm font-semibold text-foreground mb-3">No. Telepon</label>
+                          <input
+                            type="tel"
+                            value={userPhone}
+                            onChange={(e) => setUserPhone(e.target.value)}
+                            placeholder="No. Telepon Anda"
+                            className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
+                          />
+                        </div>
+                      </>
+                    ) : (
+                      <div className="bg-green-50 border border-green-200 rounded-lg p-4 space-y-2">
+                        <p className="text-sm">
+                          <span className="font-semibold">Nama:</span> {userName}
+                        </p>
+                        <p className="text-sm">
+                          <span className="font-semibold">Email:</span> {userEmail}
+                        </p>
+                        <p className="text-sm">
+                          <span className="font-semibold">No. Telepon:</span> {userPhone}
                         </p>
                       </div>
+                    )}
 
-                      <div>
-                        <label className="block text-sm font-semibold text-foreground mb-3">Nama Lengkap</label>
-                        <input
-                          type="text"
-                          value={userName}
-                          onChange={(e) => setUserName(e.target.value)}
-                          placeholder="Nama Lengkap Anda"
-                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                        />
-                      </div>
+                    {/* Booking Summary */}
+                    <div className="rounded-xl border border-border overflow-hidden">
 
-                      <div>
-                        <label className="block text-sm font-semibold text-foreground mb-3">Email</label>
-                        <input
-                          type="email"
-                          value={userEmail}
-                          onChange={(e) => setUserEmail(e.target.value)}
-                          placeholder="Email Anda"
-                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-sm font-semibold text-foreground mb-3">No. Telepon</label>
-                        <input
-                          type="tel"
-                          value={userPhone}
-                          onChange={(e) => setUserPhone(e.target.value)}
-                          placeholder="No. Telepon Anda"
-                          className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                        />
-                      </div>
-                    </>
-                  ) : (
-                    <div className="bg-green-50 border border-green-200 rounded-lg p-4 space-y-2">
-                      <p className="text-sm">
-                        <span className="font-semibold">Nama:</span> {userName}
-                      </p>
-                      <p className="text-sm">
-                        <span className="font-semibold">Email:</span> {userEmail}
-                      </p>
-                      <p className="text-sm">
-                        <span className="font-semibold">No. Telepon:</span> {userPhone}
-                      </p>
-                    </div>
-                  )}
-
-                  {/* Booking Summary */}
-                  <div className="rounded-xl border border-border overflow-hidden">
-                    
-                    {/* Header */}
-                    <div className="bg-blue-50 dark:bg-blue-950 px-5 py-4 flex justify-between items-start">
-                      <div>
-                        <p className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1">
-                          Ringkasan Booking
-                        </p>
-                        <p className="text-lg font-semibold text-foreground">{service?.name}</p>
-                      </div>
-                      {/* <span className="inline-flex items-center gap-1.5 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium px-3 py-1 rounded-full">
+                      {/* Header */}
+                      <div className="bg-blue-50 dark:bg-blue-950 px-5 py-4 flex justify-between items-start">
+                        <div>
+                          <p className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1">
+                            Ringkasan Booking
+                          </p>
+                          <p className="text-lg font-semibold text-foreground">{service?.name}</p>
+                        </div>
+                        {/* <span className="inline-flex items-center gap-1.5 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium px-3 py-1 rounded-full">
                         <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
                         Terkonfirmasi
                       </span> */}
-                    </div>
-
-                    {/* Body */}
-                    <div className="px-5 py-4 space-y-4 text-sm">
-
-                      {/* Layanan */}
-                      <div>
-                        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Layanan</p>
-                        <div className="space-y-2">
-                          {service?.branchRequired && (
-                            <div className="flex justify-between items-center">
-                              <span className="text-muted-foreground">Cabang</span>
-                              <span className="font-medium">{branch?.name}</span>
-                            </div>
-                          )}
-                          {service?.availableModes && (
-                            <div className="flex justify-between items-center">
-                              <span className="text-muted-foreground">Tipe layanan</span>
-                              <span className="font-medium">{serviceMode || "-"}</span>
-                            </div>
-                          )}
-                          {(service?.requiresAddress ||
-                            serviceMode === "Home Visit" ||
-                           
-                            serviceMode === "Delivery") && (
-                            <div className="flex justify-between items-start gap-3">
-                              <span className="text-muted-foreground shrink-0">Alamat</span>
-                              <span className="font-medium text-right">{address || "-"}</span>
-                            </div>
-                          )}
-                        </div>
                       </div>
 
-                      <div className="border-t border-border" />
-                      
-                      {/* Jadwal */}
-                      <div>
-                        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Jadwal</p>
-                        <div className="space-y-2">
-                          {service?.scheduleType === "single" && (
-                            <>
+                      {/* Body */}
+                      <div className="px-5 py-4 space-y-4 text-sm">
+
+                        {/* Layanan */}
+                        <div>
+                          <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Layanan</p>
+                          <div className="space-y-2">
+                            {service?.branchRequired && (
                               <div className="flex justify-between items-center">
-                                <span className="text-muted-foreground">Tanggal</span>
-                                <span className="font-medium">{selectedDate || "-"}</span>
+                                <span className="text-muted-foreground">Cabang</span>
+                                <span className="font-medium">{branch?.name}</span>
                               </div>
+                            )}
+                            {service?.availableModes && (
                               <div className="flex justify-between items-center">
-                                <span className="text-muted-foreground">Waktu</span>
-                                <span className="font-medium">{selectedTime || "-"}</span>
+                                <span className="text-muted-foreground">Tipe layanan</span>
+                                <span className="font-medium">{serviceMode || "-"}</span>
                               </div>
-                            </>
-                          )}
-                          {/* {service?.scheduleType === "range" && (
+                            )}
+                            {(service?.requiresAddress ||
+                              serviceMode === "Home Visit" ||
+
+                              serviceMode === "Delivery") && (
+                                <div className="flex justify-between items-start gap-3">
+                                  <span className="text-muted-foreground shrink-0">Alamat</span>
+                                  <span className="font-medium text-right">{address || "-"}</span>
+                                </div>
+                              )}
+                          </div>
+                        </div>
+
+                        <div className="border-t border-border" />
+
+                        {/* Jadwal */}
+                        <div>
+                          <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Jadwal</p>
+                          <div className="space-y-2">
+                            {service?.scheduleType === "single" && (
+                              <>
+                                <div className="flex justify-between items-center">
+                                  <span className="text-muted-foreground">Tanggal</span>
+                                  <span className="font-medium">{selectedDate || "-"}</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                  <span className="text-muted-foreground">Waktu</span>
+                                  <span className="font-medium">{selectedTime || "-"}</span>
+                                </div>
+                              </>
+                            )}
+                            {/* {service?.scheduleType === "range" && (
                             <div className="flex justify-between">
                               <span>Lama inap</span>
                               <span>{totalDays} hari</span>
                             </div>
                           )} */}
-                          {service?.scheduleType === "range" && (
-                            <>
-                              <div className="flex justify-between items-center">
-                                <span className="text-muted-foreground">Check-in</span>
-                                <span className="font-medium">{checkIn || "-"}</span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="text-muted-foreground">Check-out</span>
-                                <span className="font-medium">{checkOut || "-"}</span>
-                              </div>
-                            </>
-                          )}
+                            {service?.scheduleType === "range" && (
+                              <>
+                                <div className="flex justify-between items-center">
+                                  <span className="text-muted-foreground">Check-in</span>
+                                  <span className="font-medium">{checkIn || "-"}</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                  <span className="text-muted-foreground">Check-out</span>
+                                  <span className="font-medium">{checkOut || "-"}</span>
+                                </div>
+                              </>
+                            )}
+                          </div>
                         </div>
-                      </div>
-                      {service?.requiresPeople && (
-                        <div className="flex justify-between items-center">
-                          {service.name === "Pet Grooming" ? (
-                            <span className="text-muted-foreground">Groomer</span>
-                          ) : (
-                            <span className="text-muted-foreground">Dokter</span>
-                          )}
-                          <span className="font-medium">{selectedPeople || "-"}</span>
-                        </div>
-                      )}
-                      
-                      
-                      <div className="border-t border-border" />
-                      {/* Hewan Peliharaan */}
-                      <div>
-                        <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Hewan Peliharaan</p>
-                        <div className="space-y-2">
+                        {service?.requiresPeople && (
                           <div className="flex justify-between items-center">
-                            <span className="text-muted-foreground">Nama</span>
-                            <span className="font-medium">🐾 {petName || "-"}</span>
+                            {service.name === "Pet Grooming" ? (
+                              <span className="text-muted-foreground">Groomer</span>
+                            ) : (
+                              <span className="text-muted-foreground">Dokter</span>
+                            )}
+                            <span className="font-medium">{selectedPeople || "-"}</span>
                           </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-muted-foreground">Jenis</span>
-                            <span className="font-medium">{petType || "-"}</span>
-                          </div>
-                        </div>
-                      </div>
-                      {/* Catatan */}
-                      {notes && (
-                        <>
-                          
-                          <div>
-                            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Catatan</p>
-                            <p className="text-foreground leading-relaxed">{notes}</p>
-                          </div>
-                        </>
-                      )}
-                      <div className="border-t border-border" />
-                      
-                      {/* Item Tambahan */}
-                      {(selectedMainItem || selectedAdditionalItem) && (
-                        <>
-                          
-                          <div>
-                            <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">
-                              Item
-                            </p>
-                            <div className="flex flex-wrap gap-1.5">
-                              {selectedMainItem && (
-                                <span className="inline-block bg-muted text-foreground text-xs font-medium px-3 py-1 rounded-full border border-border">
-                                  {
-                                    service?.item?.find(i => i.id === selectedMainItem)?.name
-                                  } (Utama)
-                                </span>
-                              )}
-                              {selectedAdditionalItem && (
-                                <span className="inline-block bg-muted text-foreground text-xs font-medium px-3 py-1 rounded-full border border-border">
-                                  {
-                                    service?.item?.find(i => i.id === selectedAdditionalItem)?.name
-                                  } (Additional)
-                                </span>
-                              )}
+                        )}
+
+
+                        <div className="border-t border-border" />
+                        {/* Hewan Peliharaan */}
+                        <div>
+                          <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Hewan Peliharaan</p>
+                          <div className="space-y-2">
+                            <div className="flex justify-between items-center">
+                              <span className="text-muted-foreground">Nama</span>
+                              <span className="font-medium">🐾 {petName || "-"}</span>
+                            </div>
+                            <div className="flex justify-between items-center">
+                              <span className="text-muted-foreground">Jenis</span>
+                              <span className="font-medium">{petType || "-"}</span>
                             </div>
                           </div>
-                        </>
-                      )}
-                      
+                        </div>
+                        {/* Catatan */}
+                        {notes && (
+                          <>
+
+                            <div>
+                              <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Catatan</p>
+                              <p className="text-foreground leading-relaxed">{notes}</p>
+                            </div>
+                          </>
+                        )}
+                        <div className="border-t border-border" />
+
+                        {/* Item Tambahan */}
+                        {(selectedMainItem || selectedAdditionalItem) && (
+                          <>
+
+                            <div>
+                              <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">
+                                Item
+                              </p>
+                              <div className="flex flex-wrap gap-1.5">
+                                {selectedMainItem && (
+                                  <span className="inline-block bg-muted text-foreground text-xs font-medium px-3 py-1 rounded-full border border-border">
+                                    {
+                                      service?.item?.find(i => i.id === selectedMainItem)?.name
+                                    } (Utama)
+                                  </span>
+                                )}
+                                {selectedAdditionalItem && (
+                                  <span className="inline-block bg-muted text-foreground text-xs font-medium px-3 py-1 rounded-full border border-border">
+                                    {
+                                      service?.item?.find(i => i.id === selectedAdditionalItem)?.name
+                                    } (Additional)
+                                  </span>
+                                )}
+                              </div>
+                            </div>
+                          </>
+                        )}
 
 
+
+
+                      </div>
+
+                      {/* Total Harga */}
+                      <div className="flex justify-between items-center px-5 py-4 bg-muted/40 border-t border-border">
+                        <span className="text-sm text-muted-foreground">Total harga</span>
+                        <span className="text-xl font-semibold text-foreground">
+                          Rp {totalPrice.toLocaleString("id-ID")}
+                        </span>
+                      </div>
 
                     </div>
-
-                    {/* Total Harga */}
-                    <div className="flex justify-between items-center px-5 py-4 bg-muted/40 border-t border-border">
-                      <span className="text-sm text-muted-foreground">Total harga</span>
-                      <span className="text-xl font-semibold text-foreground">
-                        Rp {totalPrice.toLocaleString("id-ID")}
-                      </span>
-                    </div>
-
                   </div>
-                </div>
-              )}
+                )
+              }
               <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 space-y-2 mt-6">
                 <h4 className="font-semibold text-sm text-foreground">
                   Syarat & Ketentuan
@@ -1051,7 +947,7 @@ export default function BookingPage() {
 
                         if (!selected || !selected.active) {
                           alert("Layanan tidak tersedia")
-                          return  
+                          return
                         }
                       }
                       if (step === 2) {
@@ -1077,7 +973,7 @@ export default function BookingPage() {
                         alert("Pilih cabang terlebih dahulu")
                         return
                       }
-                      
+
                       if (step === 2 && service?.availableModes && !serviceMode) {
                         alert("Pilih tipe layanan terlebih dahulu")
                         return
@@ -1095,21 +991,19 @@ export default function BookingPage() {
                         }
                       }
                       if (step === 4) {
-                        const hasItems = service?.item && service.item.length > 0
-
-                        if (hasItems && !selectedMainItem) {
-                          alert("Silakan pilih minimal 1 item utama terlebih dahulu")
-                          return
-                        }
+                        // if (service?.item && service.item.length > 0) {
+                        //   alert("Pilih item terlebih dahulu")
+                        //   return
+                        // }
                       }
                       setStep(step + 1)
                     }}
                     className="ml-auto px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90"
-                    >
+                  >
                     Lanjut
                   </button>
                 ) : (
-                  <button 
+                  <button
                     onClick={handleSubmit}
                     className="ml-auto px-6 py-2 bg-accent text-white rounded-lg font-semibold hover:bg-accent/90"
                   >
@@ -1117,10 +1011,10 @@ export default function BookingPage() {
                   </button>
                 )}
               </div>
-            </div>
-          </div>
-        </div>
-      </main>
+            </div >
+          </div >
+        </div >
+      </main >
 
       <Footer />
     </>

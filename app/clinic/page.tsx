@@ -5,55 +5,55 @@ import { Clock, Users, Award, CheckCircle2, PhoneCall, MessageCircle } from "luc
 import Link from "next/link"
 import { useState } from "react"
 
-export default function ClinicPage() {  
- const doctors = [
-  { name: "Drh. Fransisca Olivia Ratna Dilla", specialty: "Special Interest, Feline Internal Medicine", experience: "", image: "/doctor/drh Fransisca.png", lokasi: "Jakarta" },
-  { name: "Drh. Brillian Firmania Puspa Agny", specialty: "General Practitioner", experience: "", image: "/doctor/Drh Brillian.png", lokasi: "Jakarta" },
-  { name: "Drh. Agung Supriyono", specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator", experience: "", image: "/doctor/Drh Agung Supriono.png", lokasi: "Jakarta" },
-  { name: "Drh. Dita Pratiwi Dwi Setyowati", specialty: "General Practitioner", experience: "", image: "/doctor/drh Dita.png", lokasi: "Jakarta" },
+export default function ClinicPage() {
+  const doctors = [
+    // { name: "Drh. Fransisca Olivia Ratna Dilla", specialty: "Special Interest, Feline Internal Medicine", experience: "", image: "/doctor/drh Fransisca.png", lokasi: "Jakarta" },
+    // { name: "Drh. Brillian Firmania Puspa Agny", specialty: "General Practitioner", experience: "", image: "/doctor/Drh Brillian.png", lokasi: "Jakarta" },
+    { name: "Drh. Agung Supriyono", specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator", experience: "", image: "/doctor/Drh Agung Supriono.png", lokasi: "Jakarta" },
+    // { name: "Drh. Dita Pratiwi Dwi Setyowati", specialty: "General Practitioner", experience: "", image: "/doctor/drh Dita.png", lokasi: "Jakarta" },
 
-  { name: "Drh. Frida Ayu Salsana Billa", specialty: "General Practitioner", experience: "", image: "/doctor/Frida Ayu Salsana Billa.png", lokasi: "Bali" },
-  { name: "Drh. Yunita Atok", specialty: "General Practitioner", experience: "", image: "/doctor/Yunita Atok.png", lokasi: "Bali" },
-  { name: "Drh. Chendini Maharani", specialty: "General Practitioner", experience: "", image: "/doctor/Chendini Maharani.png", lokasi: "Bali" },
+    { name: "Drh. Frida Ayu Salsana Billa", specialty: "General Practitioner", experience: "", image: "/doctor/Frida Ayu Salsana Billa.png", lokasi: "Bali" },
+    { name: "Drh. Yunita Atok", specialty: "General Practitioner", experience: "", image: "/doctor/Yunita Atok.png", lokasi: "Bali" },
+    { name: "Drh. Chendini Maharani", specialty: "General Practitioner", experience: "", image: "/doctor/Chendini Maharani.png", lokasi: "Bali" },
 
-  { 
-    name: "Drh. Adinda, S.KH", 
-    specialty: "General Veterinary Practitioner, Internal Medicine, Veterinary Dermatology, Emergency and Critical Care, Basic Surgery", 
-    experience: "", 
-    image: "/doctor/adinda 55.png",
-    lokasi: "Bali"
-  },
+    {
+      name: "Drh. Adinda, S.KH",
+      specialty: "General Veterinary Practitioner, Internal Medicine, Veterinary Dermatology, Emergency and Critical Care, Basic Surgery",
+      experience: "",
+      image: "/doctor/adinda 55.png",
+      lokasi: "Bali"
+    },
 
-  { name: "Drh. Christiyanti Rambu Gedi", specialty: "Universitas Wijaya Kusuma Surabaya", experience: "", image: "/doctor/Christiyanti Rambu Gedi.png", lokasi: "Bali" },
+    { name: "Drh. Christiyanti Rambu Gedi", specialty: "Universitas Wijaya Kusuma Surabaya", experience: "", image: "/doctor/Christiyanti Rambu Gedi.png", lokasi: "Bali" },
 
-  { 
-    name: "Drh. Putu Aditya Pratama Artha Putra, S.KH", 
-    specialty: "Surgery, Internal Medicine, Vaccine, Dentistry, Urgent Care", 
-    experience: "", 
-    image: "/doctor/Aditya Pratama.png",
-    lokasi: "Bali"
-  },
+    {
+      name: "Drh. Putu Aditya Pratama Artha Putra, S.KH",
+      specialty: "Surgery, Internal Medicine, Vaccine, Dentistry, Urgent Care",
+      experience: "",
+      image: "/doctor/Aditya Pratama.png",
+      lokasi: "Bali"
+    },
 
-  { 
-    name: "Drh. Jessy Filomena Fernanda Bento, S.KH", 
-    specialty: "General Practitioner, Special Interest Dermatology", 
-    experience: "", 
-    image: "/doctor/Jessy Filomena.png", lokasi: "Bali"
-  },
+    {
+      name: "Drh. Jessy Filomena Fernanda Bento, S.KH",
+      specialty: "General Practitioner, Special Interest Dermatology",
+      experience: "",
+      image: "/doctor/Jessy Filomena.png", lokasi: "Bali"
+    },
 
-  { 
-    name: "Drh. Dewi Ratnasari", 
-    specialty: "General Practitioner, Special Interest Hematology and Radiography", 
-    experience: "", 
-    image: "/doctor/Dewi Ratnasari.png", lokasi: "Bali"
-  },
+    {
+      name: "Drh. Dewi Ratnasari",
+      specialty: "General Practitioner, Special Interest Hematology and Radiography",
+      experience: "",
+      image: "/doctor/Dewi Ratnasari.png", lokasi: "Bali"
+    },
 
-  { name: "Drh. Owen Fernando", specialty: "-", experience: "", image: "/doctor/Owen Fernando.png", lokasi: "Bali" },
+    { name: "Drh. Owen Fernando", specialty: "-", experience: "", image: "/doctor/Owen Fernando.png", lokasi: "Bali" },
 
-  { name: "Drh. I Made Agus Wirawan", specialty: "General Practitioner", experience: "", image: "/doctor/I Made Agus Wirawan.png", lokasi: "Bali" },
-];
-const [selectedLocation, setSelectedLocation] = useState("All");
-const filteredDoctors =
+    { name: "Drh. I Made Agus Wirawan", specialty: "General Practitioner", experience: "", image: "/doctor/I Made Agus Wirawan.png", lokasi: "Bali" },
+  ];
+  const [selectedLocation, setSelectedLocation] = useState("All");
+  const filteredDoctors =
     selectedLocation === "All"
       ? doctors
       : doctors.filter((doc) => doc.lokasi === selectedLocation);
@@ -140,10 +140,9 @@ const filteredDoctors =
                   key={loc}
                   onClick={() => setSelectedLocation(loc)}
                   className={`px-4 py-2 rounded-full text-sm font-semibold transition
-                    ${
-                      selectedLocation === loc
-                        ? "bg-primary text-white"
-                        : "bg-muted text-foreground hover:bg-primary/20"
+                    ${selectedLocation === loc
+                      ? "bg-primary text-white"
+                      : "bg-muted text-foreground hover:bg-primary/20"
                     }`}
                 >
                   {loc}
@@ -170,8 +169,8 @@ const filteredDoctors =
                     <p className="text-sm text-primary font-semibold mb-2">
                       {doctor.specialty}
                     </p>
-                   
-                    
+
+
                   </div>
                 </div>
               ))}
