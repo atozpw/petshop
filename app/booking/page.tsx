@@ -25,7 +25,7 @@ export default function BookingPage() {
   const [serviceMode, setServiceMode] = useState("")
   const [address, setAddress] = useState("")
   const [selectedDoctor, setSelectedDoctor] = useState("")
-  
+
   const BRANCHES = [
     { id: "Jakarta", name: "Jakarta", phone: "6281912982996" },
     { id: "Bali", name: "Bali", phone: "628113999893" },
@@ -35,44 +35,44 @@ export default function BookingPage() {
   const [checkOut, setCheckOut] = useState("")
 
   const doctors = [
-    { name: "Drh. Fransisca Olivia Ratna Dilla", specialty: "Special Interest, Feline Internal Medicine", experience: "", image: "/doctor/drh Fransisca.png", lokasi: "Jakarta" },
-    { name: "Drh. Brillian Firmania Puspa Agny", specialty: "General Practitioner", experience: "", image: "/doctor/Drh Brillian.png", lokasi: "Jakarta" },
+    // { name: "Drh. Fransisca Olivia Ratna Dilla", specialty: "Special Interest, Feline Internal Medicine", experience: "", image: "/doctor/drh Fransisca.png", lokasi: "Jakarta" },
+    // { name: "Drh. Brillian Firmania Puspa Agny", specialty: "General Practitioner", experience: "", image: "/doctor/Drh Brillian.png", lokasi: "Jakarta" },
     { name: "Drh. Agung Supriyono", specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator", experience: "", image: "/doctor/Drh Agung Supriono.png", lokasi: "Jakarta" },
-    { name: "Drh. Dita Pratiwi Dwi Setyowati", specialty: "General Practitioner", experience: "", image: "/doctor/drh Dita.png", lokasi: "Jakarta" },
+    // { name: "Drh. Dita Pratiwi Dwi Setyowati", specialty: "General Practitioner", experience: "", image: "/doctor/drh Dita.png", lokasi: "Jakarta" },
 
     { name: "Drh. Frida Ayu Salsana Billa", specialty: "General Practitioner", experience: "", image: "/doctor/Frida Ayu Salsana Billa.png", lokasi: "Bali" },
     { name: "Drh. Yunita Atok", specialty: "General Practitioner", experience: "", image: "/doctor/Yunita Atok.png", lokasi: "Bali" },
     { name: "Drh. Chendini Maharani", specialty: "General Practitioner", experience: "", image: "/doctor/Chendini Maharani.png", lokasi: "Bali" },
 
-    { 
-      name: "Drh. Adinda, S.KH", 
-      specialty: "General Veterinary Practitioner, Internal Medicine, Veterinary Dermatology, Emergency and Critical Care, Basic Surgery", 
-      experience: "", 
+    {
+      name: "Drh. Adinda, S.KH",
+      specialty: "General Veterinary Practitioner, Internal Medicine, Veterinary Dermatology, Emergency and Critical Care, Basic Surgery",
+      experience: "",
       image: "/doctor/adinda 55.png",
       lokasi: "Bali"
     },
 
     { name: "Drh. Christiyanti Rambu Gedi", specialty: "Universitas Wijaya Kusuma Surabaya", experience: "", image: "/doctor/Christiyanti Rambu Gedi.png", lokasi: "Bali" },
 
-    { 
-      name: "Drh. Putu Aditya Pratama Artha Putra, S.KH", 
-      specialty: "Surgery, Internal Medicine, Vaccine, Dentistry, Urgent Care", 
-      experience: "", 
+    {
+      name: "Drh. Putu Aditya Pratama Artha Putra, S.KH",
+      specialty: "Surgery, Internal Medicine, Vaccine, Dentistry, Urgent Care",
+      experience: "",
       image: "/doctor/Aditya Pratama.png",
       lokasi: "Bali"
     },
 
-    { 
-      name: "Drh. Jessy Filomena Fernanda Bento, S.KH", 
-      specialty: "General Practitioner, Special Interest Dermatology", 
-      experience: "", 
+    {
+      name: "Drh. Jessy Filomena Fernanda Bento, S.KH",
+      specialty: "General Practitioner, Special Interest Dermatology",
+      experience: "",
       image: "/doctor/Jessy Filomena.png", lokasi: "Bali"
     },
 
-    { 
-      name: "Drh. Dewi Ratnasari", 
-      specialty: "General Practitioner, Special Interest Hematology and Radiography", 
-      experience: "", 
+    {
+      name: "Drh. Dewi Ratnasari",
+      specialty: "General Practitioner, Special Interest Hematology and Radiography",
+      experience: "",
       image: "/doctor/Dewi Ratnasari.png", lokasi: "Bali"
     },
 
@@ -80,7 +80,7 @@ export default function BookingPage() {
 
     { name: "Drh. I Made Agus Wirawan", specialty: "General Practitioner", experience: "", image: "/doctor/I Made Agus Wirawan.png", lokasi: "Bali" },
   ];
- 
+
 
   useEffect(() => {
     // Check if user is logged in (from localStorage or session)
@@ -105,13 +105,13 @@ export default function BookingPage() {
       setSelectedService("")
       setStep(1)
     }
-    
+
   }, [selectedService])
 
   const service = SERVICES.find((s) => s.id === selectedService)
   const branch = BRANCHES.find((b) => b.id === selectedBranch)
 
-  
+
 
   // const handleSubmit = () => {
   //   if (!userEmail || !userName || !userPhone || !petName || !petType || !selectedDate || !selectedTime) {
@@ -148,7 +148,7 @@ export default function BookingPage() {
       return
     }
 
-    
+
 
     const branch = BRANCHES.find((b) => b.id === selectedBranch)
 
@@ -170,13 +170,12 @@ export default function BookingPage() {
     Jenis: ${petType}
 
     📅 *Jadwal*
-    ${
-      service?.scheduleType === "single"
+    ${service?.scheduleType === "single"
         ? `Tanggal: ${selectedDate}
     Waktu: ${selectedTime}`
         : `Check-in: ${checkIn}
     Check-out: ${checkOut}`
-    }
+      }
 
     🛠 *Tipe Layanan*
     ${serviceMode || "-"}
@@ -185,11 +184,10 @@ export default function BookingPage() {
     ${address || "-"}
 
     🧾 *Item*
-    ${
-      selectedItemNames.length > 0
+    ${selectedItemNames.length > 0
         ? selectedItemNames.map(i => `- ${i}`).join("\n")
         : "-"
-    }
+      }
 
     👨‍⚕️ *Dokter*
     ${selectedDoctor || "-"}
@@ -216,7 +214,7 @@ export default function BookingPage() {
     "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
     "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
   ]
-  
+
   const toggleItem = (itemId) => {
     setSelectedItems((prev) =>
       prev.includes(itemId)
@@ -246,7 +244,7 @@ export default function BookingPage() {
     return total + (item?.price || 0)
   }, 0)
 
- 
+
   //jumlah hari untuk layanan dengan scheduleType "range"
   const getTotalDays = () => {
     if (!checkIn || !checkOut) return 0
@@ -298,8 +296,8 @@ export default function BookingPage() {
   useEffect(() => {
     setSelectedDoctor("")
   }, [selectedBranch])
-  
- 
+
+
   return (
     <>
       <Header />
@@ -318,7 +316,7 @@ export default function BookingPage() {
                     ? "Pilih Tanggal & Waktu"
                     : step === 3
                       ? "Data Hewan Peliharaan"
-                       : step === 4
+                      : step === 4
                         ? "Item Selection"
                         : "Konfirmasi & Data Pemesan"}
               </p>
@@ -326,7 +324,7 @@ export default function BookingPage() {
 
             {/* Progress Bar */}
             <div className="mb-12 flex gap-2">
-              {[1, 2, 3, 4,5].map((s) => (
+              {[1, 2, 3, 4, 5].map((s) => (
                 <div
                   key={s}
                   className={`flex-1 h-2 rounded-full transition-colors ${s <= step ? "bg-primary" : "bg-muted"}`}
@@ -345,11 +343,10 @@ export default function BookingPage() {
                         key={svc.id}
                         onClick={() => svc.active && setSelectedService(svc.id)}
                         disabled={!svc.active}
-                        className={`p-4 rounded-lg border-2 transition-all text-left ${
-                          selectedService === svc.id
+                        className={`p-4 rounded-lg border-2 transition-all text-left ${selectedService === svc.id
                             ? "border-primary bg-primary/5"
                             : "border-border hover:border-primary"
-                        }`}
+                          }`}
                       >
                         <h3 className="font-semibold text-foreground">{svc.name}</h3>
                         <p className="text-sm text-muted-foreground">{svc.description}</p>
@@ -364,8 +361,8 @@ export default function BookingPage() {
               {step === 2 && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-foreground">Pilih Tanggal & Waktu</h2>
-                  
-                    {service?.branchRequired && (
+
+                  {service?.branchRequired && (
                     <div>
                       {service && (
                         <div className="mb-4 p-3 bg-primary/10 rounded">
@@ -380,9 +377,8 @@ export default function BookingPage() {
                           <button
                             key={b.id}
                             onClick={() => setSelectedBranch(b.id)}
-                            className={`p-3 border rounded ${
-                              selectedBranch === b.id ? "bg-primary text-white" : ""
-                            }`}
+                            className={`p-3 border rounded ${selectedBranch === b.id ? "bg-primary text-white" : ""
+                              }`}
                           >
                             {b.name}
                           </button>
@@ -399,9 +395,8 @@ export default function BookingPage() {
                           <button
                             key={mode}
                             onClick={() => setServiceMode(mode)}
-                            className={`px-4 py-2 border rounded ${
-                              serviceMode === mode ? "bg-primary text-white" : ""
-                            }`}
+                            className={`px-4 py-2 border rounded ${serviceMode === mode ? "bg-primary text-white" : ""
+                              }`}
                           >
                             {mode}
                           </button>
@@ -428,7 +423,7 @@ export default function BookingPage() {
                       <input
                         type="date"
                         value={selectedDate}
-                         min={new Date().toISOString().split("T")[0]}
+                        min={new Date().toISOString().split("T")[0]}
                         onChange={(e) => setSelectedDate(e.target.value)}
                         className="w-full px-4 py-2 border rounded-lg"
                       />
@@ -442,7 +437,7 @@ export default function BookingPage() {
                         <input
                           type="date"
                           value={checkIn}
-                           min={new Date().toISOString().split("T")[0]}
+                          min={new Date().toISOString().split("T")[0]}
                           onChange={(e) => setCheckIn(e.target.value)}
                           className="w-full px-4 py-2 border rounded-lg"
                         />
@@ -460,7 +455,7 @@ export default function BookingPage() {
                       </div>
                     </div>
                   )}
-                  
+
 
                   {service?.scheduleType === "single" && (
                     <div>
@@ -474,13 +469,12 @@ export default function BookingPage() {
                               key={slot.time}
                               onClick={() => !isDisabled && setSelectedTime(slot.time)}
                               disabled={isDisabled}
-                              className={`p-3 rounded-lg border transition-all font-semibold ${
-                                selectedTime === slot.time
+                              className={`p-3 rounded-lg border transition-all font-semibold ${selectedTime === slot.time
                                   ? "border-primary bg-primary text-white"
                                   : !isDisabled
                                     ? "border-border hover:border-primary bg-white"
                                     : "border-border bg-muted text-muted-foreground cursor-not-allowed opacity-60"
-                              }`}
+                                }`}
                             >
                               {slot.time}
                             </button>
@@ -509,11 +503,10 @@ export default function BookingPage() {
                               key={doc.name}
                               onClick={() => setSelectedDoctor(doc.name)}
                               disabled={!selectedBranch}
-                              className={`border rounded-lg p-3 text-left transition ${
-                                isSelected
+                              className={`border rounded-lg p-3 text-left transition ${isSelected
                                   ? "border-primary bg-primary/5"
                                   : "border-border hover:border-primary"
-                              } ${!selectedBranch ? "opacity-50 cursor-not-allowed" : ""}`}
+                                } ${!selectedBranch ? "opacity-50 cursor-not-allowed" : ""}`}
                             >
                               <img
                                 src={doc.image}
@@ -535,7 +528,7 @@ export default function BookingPage() {
                     </div>
                   )}
 
-                  
+
                 </div>
               )}
 
@@ -581,11 +574,11 @@ export default function BookingPage() {
                       className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
-                  
+
                 </div>
               )}
 
-              
+
               {/* Step 4: Item Selection (if applicable) */}
               {step === 4 && filteredItems.length > 0 && (
                 <div className="space-y-5">
@@ -604,29 +597,25 @@ export default function BookingPage() {
                           key={item.id}
                           type="button"
                           onClick={() => toggleItem(item.id)}
-                          className={`relative flex flex-col items-start p-3 rounded-lg border text-left transition-colors ${
-                            isSelected
+                          className={`relative flex flex-col items-start p-3 rounded-lg border text-left transition-colors ${isSelected
                               ? "border-primary bg-primary/5"
                               : "border-border bg-background hover:bg-muted/50"
-                          }`}
+                            }`}
                         >
                           {/* Dot indikator pojok kanan atas */}
                           <div
-                            className={`absolute top-2.5 right-2.5 w-3 h-3 rounded-full border-2 transition-colors ${
-                              isSelected
+                            className={`absolute top-2.5 right-2.5 w-3 h-3 rounded-full border-2 transition-colors ${isSelected
                                 ? "border-primary bg-primary"
                                 : "border-muted-foreground/40"
-                            }`}
+                              }`}
                           />
 
-                          <p className={`text-sm font-medium leading-snug pr-5 ${
-                            isSelected ? "text-primary" : "text-foreground"
-                          }`}>
+                          <p className={`text-sm font-medium leading-snug pr-5 ${isSelected ? "text-primary" : "text-foreground"
+                            }`}>
                             {item.name}
                           </p>
-                          <p className={`text-xs mt-1 ${
-                            isSelected ? "text-primary/70" : "text-muted-foreground"
-                          }`}>
+                          <p className={`text-xs mt-1 ${isSelected ? "text-primary/70" : "text-muted-foreground"
+                            }`}>
                             Rp {item.price.toLocaleString()}
                           </p>
                         </button>
@@ -702,7 +691,7 @@ export default function BookingPage() {
 
                   {/* Booking Summary */}
                   <div className="rounded-xl border border-border overflow-hidden">
-                    
+
                     {/* Header */}
                     <div className="bg-blue-50 dark:bg-blue-950 px-5 py-4 flex justify-between items-start">
                       <div>
@@ -740,11 +729,11 @@ export default function BookingPage() {
                             serviceMode === "Home Visit" ||
                             serviceMode === "Walk In" ||
                             serviceMode === "Delivery") && (
-                            <div className="flex justify-between items-start gap-3">
-                              <span className="text-muted-foreground shrink-0">Alamat</span>
-                              <span className="font-medium text-right">{address || "-"}</span>
-                            </div>
-                          )}
+                              <div className="flex justify-between items-start gap-3">
+                                <span className="text-muted-foreground shrink-0">Alamat</span>
+                                <span className="font-medium text-right">{address || "-"}</span>
+                              </div>
+                            )}
                         </div>
                       </div>
 
@@ -895,7 +884,7 @@ export default function BookingPage() {
 
                         if (!selected || !selected.active) {
                           alert("Layanan tidak tersedia")
-                          return  
+                          return
                         }
                       }
                       if (step === 2) {
@@ -921,7 +910,7 @@ export default function BookingPage() {
                         alert("Pilih cabang terlebih dahulu")
                         return
                       }
-                      
+
                       if (step === 2 && service?.availableModes && !serviceMode) {
                         alert("Pilih tipe layanan terlebih dahulu")
                         return
@@ -945,11 +934,11 @@ export default function BookingPage() {
                       setStep(step + 1)
                     }}
                     className="ml-auto px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90"
-                    >
+                  >
                     Lanjut
                   </button>
                 ) : (
-                  <button 
+                  <button
                     onClick={handleSubmit}
                     className="ml-auto px-6 py-2 bg-accent text-white rounded-lg font-semibold hover:bg-accent/90"
                   >
