@@ -180,12 +180,38 @@ export default function BookingPage() {
     { name: "Fallen", lokasi: "Jakarta", image: "/groomer/fallen.png" }
 
   ]
-  const TERMS = [
-    "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
-    "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
-    "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
-    "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
-  ]
+  const TERMS = {
+    default: [
+      "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
+      "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
+      "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
+      "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
+    ],  
+    grooming : [
+      "Grooming hanya untuk anjing dan kucing.",
+      "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
+      "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
+      "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
+      "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
+    ],
+    boarding : [
+      "Boarding hanya untuk anjing dan kucing.",
+      "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
+      "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
+      "Jam operasional boarding pukul 08:00 - 20:00 WIB.",
+      "Hewan yang dijemput melebihi jam booking terakhir akan otomatis masuk layanan boarding dan dijemput keesokan hari.",
+    ],
+
+  }
+  
+
+
+  // const TERMS = [
+  //   "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
+  //   "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
+  //   "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
+  //   "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
+  // ]
 
   // ─── Effects ──────────────────────────────────────────────────────────────
 
@@ -225,6 +251,9 @@ export default function BookingPage() {
 
   const service = SERVICES.find((s) => s.id === selectedService)
   const branch = BRANCHES.find((b) => b.id === selectedBranch)
+
+const serviceTerms = TERMS[service?.category ?? "default"] || TERMS.default
+
 
   // Selected doctor/groomer object based on name (for displaying specialty, image, etc.)
   const selectedDoctor = doctors.find(
@@ -302,6 +331,7 @@ export default function BookingPage() {
     return slotDate <= now
   }
 
+  
   // ─── Handlers ─────────────────────────────────────────────────────────────
 
   const handleSelectMainItem = (itemId: string) => {
@@ -1017,14 +1047,20 @@ export default function BookingPage() {
                   </div>
                 )
               }
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 space-y-2 mt-6">
-                <h4 className="font-semibold text-sm text-foreground">
-                  Syarat & Ketentuan
-                </h4>
+              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-5 mt-6">
+                <div className="flex items-center gap-2 mb-3">
+                  <span className="text-yellow-600 text-lg">⚠️</span>
+                  <h4 className="font-semibold text-sm text-yellow-800">
+                    Syarat & Ketentuan
+                  </h4>
+                </div>
 
-                <ul className="text-sm text-muted-foreground list-disc pl-5 space-y-1">
-                  {TERMS.map((term, i) => (
-                    <li key={i}>{term}</li>
+                <ul className="space-y-2 text-sm text-yellow-900">
+                  {serviceTerms.map((term, i) => (
+                    <li key={i} className="flex items-start gap-2">
+                      <span className="mt-[6px] w-1.5 h-1.5 rounded-full bg-yellow-500 shrink-0"></span>
+                      <span className="leading-relaxed">{term}</span>
+                    </li>
                   ))}
                 </ul>
               </div>

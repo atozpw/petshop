@@ -208,9 +208,9 @@ export function Header() {
       </nav>
 
       {/* DESKTOP MENU */}
-      <div className="hidden lg:flex border-b border-white/10 text-white pb-2">
+      <div className="hidden lg:flex border-b border-white/10 text-white pb-2 items-center">
         <div className="container mx-auto px-4">
-          <div className="flex gap-8 font-bold text-xs" style={{ paddingLeft: "calc(240px + 0.5rem)" }}>
+          <div className="flex justify-center gap-8 font-bold text-xs">
             {navItems.map(item => (
               <Link key={item.href} href={item.href} className="hover:text-white/60 transition-colors">
                 {item.label}
