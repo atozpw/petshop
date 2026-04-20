@@ -24,7 +24,7 @@ export function Header() {
     { label: "Services", href: "/services" },
     { label: "Pet Room", href: "/discussion" },
     { label: "Our Store", href: "/branches" },
-    { label: "Marketplace", href: "/adopt" },
+    { label: "Pet Store", href: "/adopt" },
     { label: "Event", href: "#" },
   ]
 
@@ -63,7 +63,7 @@ export function Header() {
       </div>
       {/* HEADER ROW */}
       <nav>
-        <div className="container mx-auto px-4 py-2 flex items-center gap-2">
+        <div className="container mx-auto px-4 pt-2 flex items-center gap-2 pb-4 lg:pb-0">
 
           {/* LOGO */}
           <Link
@@ -73,10 +73,10 @@ export function Header() {
             <Image
               src="/logo.png"
               alt="JJ Pet House Logo"
-              width={90}
-              height={90}
+              width={110}
+              height={110}
             />
-            <span className="hidden sm:block text-white">JJ PET HOUSE</span>
+            {/* <span className="hidden sm:block text-white">JJ PET HOUSE</span> */}
           </Link>
 
           {/* MOBILE SEARCH (SEJAJAR LOGO) */}
@@ -208,7 +208,7 @@ export function Header() {
       </nav>
 
       {/* DESKTOP MENU */}
-      <div className="hidden lg:flex border-b border-white/10 text-white pb-2 items-center">
+      <div className="hidden lg:flex border-b border-white/10 text-white pb-3 items-center">
         <div className="container mx-auto px-4">
           <div className="flex justify-center gap-8 font-bold text-xs">
             {navItems.map(item => (
