@@ -15,7 +15,7 @@ export interface Service {
   requiresAddress?: boolean
   requiresPickup?: boolean
   requiresSchedule?: boolean
-  availableModes?: ("Home Visit" | "Walk In" | "Delivery" )[]
+  availableModes?: ("Home Visit" | "Walk In" | "Delivery")[]
   branchRequired?: boolean
   requiresPeople?: boolean
   item?: {
@@ -44,7 +44,7 @@ export interface Booking {
   petType: string
   status: "pending" | "confirmed" | "completed" | "cancelled"
   totalPrice: number
-  
+
 
 }
 
@@ -66,15 +66,15 @@ export const SERVICES: Service[] = [
     branchRequired: true,
     requiresPeople: true,
     item: [
-      { id: "dog_dry_puppy", name: "Dry Grooming Dog - Puppy", price: 195000, petType: ["Anjing"] , type: "main"},
-      { id: "dog_dry_small", name: "Dry Grooming Dog - Small", price: 230000, petType: ["Anjing"] , type: "main"},
-      { id: "dog_dry_medium", name: "Dry Grooming Dog - Medium", price: 260000, petType: ["Anjing"] , type: "main"},
-      { id: "dog_dry_large", name: "Dry Grooming Dog - Large", price: 325000, petType: ["Anjing"] , type: "main"},
-      { id: "dog_dry_special", name: "Dry Grooming Dog - Special Breed", price: 390000, petType: ["Anjing"] , type: "main"},
+      { id: "dog_dry_puppy", name: "Dry Grooming Dog - Puppy", price: 195000, petType: ["Anjing"], type: "main" },
+      { id: "dog_dry_small", name: "Dry Grooming Dog - Small", price: 230000, petType: ["Anjing"], type: "main" },
+      { id: "dog_dry_medium", name: "Dry Grooming Dog - Medium", price: 260000, petType: ["Anjing"], type: "main" },
+      { id: "dog_dry_large", name: "Dry Grooming Dog - Large", price: 325000, petType: ["Anjing"], type: "main" },
+      { id: "dog_dry_special", name: "Dry Grooming Dog - Special Breed", price: 390000, petType: ["Anjing"], type: "main" },
 
-      { id: "cat_dry_kitten", name: "Dry Grooming Cat - Kitten", price: 165000, petType: ["Kucing"] , type: "main"},
-      { id: "cat_dry_adult", name: "Dry Grooming Cat - Adult", price: 195000, petType: ["Kucing"] , type: "main"},
-      { id: "cat_dry_longhair", name: "Dry Grooming Cat - Longhair", price: 250000, petType: ["Kucing"] , type: "main"},
+      { id: "cat_dry_kitten", name: "Dry Grooming Cat - Kitten", price: 165000, petType: ["Kucing"], type: "main" },
+      { id: "cat_dry_adult", name: "Dry Grooming Cat - Adult", price: 195000, petType: ["Kucing"], type: "main" },
+      { id: "cat_dry_longhair", name: "Dry Grooming Cat - Longhair", price: 250000, petType: ["Kucing"], type: "main" },
 
       { id: "gundul_puppy", name: "Haircut Gundul - Puppy SB", price: 145000, petType: ["Anjing"], type: "main" },
       { id: "gundul_small", name: "Haircut Gundul - Small", price: 190000, petType: ["Anjing"], type: "main" },
@@ -89,10 +89,10 @@ export const SERVICES: Service[] = [
       { id: "style_special", name: "Haircut Style - Special Breed", price: 400000, petType: ["Anjing"], type: "main" },
 
       { id: "kusut_puppy", name: "Perawatan Bulu Kusut - Puppy SB", price: 25000, petType: ["Anjing"], type: "additional" },
-      { id: "kusut_small", name: "Perawatan Bulu Kusut - Small", price: 35000, petType:["Anjing", "Kucing"], type: "additional" },
-      { id: "kusut_medium", name: "Perawatan Bulu Kusut - Medium", price: 45000, petType:["Anjing", "Kucing"], type: "additional" },
-      { id: "kusut_large", name: "Perawatan Bulu Kusut - Large", price: 55000, petType:["Anjing", "Kucing"], type: "additional" },
-      { id: "kusut_special", name: "Perawatan Bulu Kusut - Special Breed", price: 75000, petType:["Anjing", "Kucing"], type: "additional" }
+      { id: "kusut_small", name: "Perawatan Bulu Kusut - Small", price: 35000, petType: ["Anjing", "Kucing"], type: "additional" },
+      { id: "kusut_medium", name: "Perawatan Bulu Kusut - Medium", price: 45000, petType: ["Anjing", "Kucing"], type: "additional" },
+      { id: "kusut_large", name: "Perawatan Bulu Kusut - Large", price: 55000, petType: ["Anjing", "Kucing"], type: "additional" },
+      { id: "kusut_special", name: "Perawatan Bulu Kusut - Special Breed", price: 75000, petType: ["Anjing", "Kucing"], type: "additional" }
     ],
     scheduleType: "single"
   },
@@ -133,7 +133,7 @@ export const SERVICES: Service[] = [
     active: true,
     requiresSchedule: true,
     availableModes: ["Home Visit", "Walk In", "Delivery"],
-    requiresAddress: false, 
+    requiresAddress: false,
     branchRequired: true,
     item: [
       {
@@ -361,4 +361,4 @@ export const TIME_SLOTS: TimeSlot[] = [
   { time: "23:00", available: true },
 ]
 
-export const PET_TYPES = ["Anjing", "Kucing"]
+export const PET_TYPES = ["Anjing", "Kucing", "Other"]
