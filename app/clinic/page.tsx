@@ -13,7 +13,7 @@ export default function ClinicPage() {
     // { name: "Drh. Dita Pratiwi Dwi Setyowati", specialty: "General Practitioner", experience: "", image: "/doctor/drh Dita.png", lokasi: "Jakarta" },
 
     { name: "Drh. Frida Ayu Salsana Billa", specialty: "General Practitioner", experience: "", image: "/doctor/Frida Ayu Salsana Billa.png", lokasi: "Bali" },
-    { name: "Drh. Yunita Atok", specialty: "General Practitioner", experience: "", image: "/doctor/Yunita Atok.png", lokasi: "Bali" },
+    { name: "Drh. Yunita Atok", specialty: "General Practitioner", experience: "", image: "/doctor/yunita atok.png", lokasi: "Bali" },
     { name: "Drh. Chendini Maharani", specialty: "General Practitioner", experience: "", image: "/doctor/Chendini Maharani.png", lokasi: "Bali" },
 
     {

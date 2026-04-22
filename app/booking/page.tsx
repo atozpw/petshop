@@ -87,7 +87,7 @@ export default function BookingPage() {
       specialty: "General Practitioner",
       specialties: ["General Practitioner"],
       experience: "",
-      image: "/doctor/Yunita Atok.png",
+      image: "/doctor/yunita atok.png",
       lokasi: "Bali"
     },
     {
@@ -186,15 +186,15 @@ export default function BookingPage() {
       "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
       "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
       "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
-    ],  
-    grooming : [
+    ],
+    grooming: [
       "Grooming hanya untuk anjing dan kucing.",
       "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
       "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
       "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
       "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
     ],
-    boarding : [
+    boarding: [
       "Boarding hanya untuk anjing dan kucing.",
       "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
       "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
@@ -203,7 +203,7 @@ export default function BookingPage() {
     ],
 
   }
-  
+
 
 
   // const TERMS = [
@@ -252,7 +252,7 @@ export default function BookingPage() {
   const service = SERVICES.find((s) => s.id === selectedService)
   const branch = BRANCHES.find((b) => b.id === selectedBranch)
 
-const serviceTerms = TERMS[service?.category ?? "default"] || TERMS.default
+  const serviceTerms = TERMS[service?.category ?? "default"] || TERMS.default
 
 
   // Selected doctor/groomer object based on name (for displaying specialty, image, etc.)
@@ -262,25 +262,25 @@ const serviceTerms = TERMS[service?.category ?? "default"] || TERMS.default
 
   // Filtered items by petType + search query (single declaration — no duplicate)
   const filteredItems =
-  service?.item?.filter((item) => {
-    const matchPet =
-      !item.petType || item.petType.includes(petType);
+    service?.item?.filter((item) => {
+      const matchPet =
+        !item.petType || item.petType.includes(petType);
 
-    const matchSearch =
-      item.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchSearch =
+        item.name.toLowerCase().includes(searchQuery.toLowerCase());
 
-    // Jika bukan layanan klinik atau tidak ada dokter yang dipilih,
-    // maka semua item tetap ditampilkan
-    const matchDoctor =
-      service?.category !== "clinic" ||
-      !selectedDoctor ||
-      !item.specialties ||
-      item.specialties.some((spec) =>
-        selectedDoctor.specialties.includes(spec)
-      );
+      // Jika bukan layanan klinik atau tidak ada dokter yang dipilih,
+      // maka semua item tetap ditampilkan
+      const matchDoctor =
+        service?.category !== "clinic" ||
+        !selectedDoctor ||
+        !item.specialties ||
+        item.specialties.some((spec) =>
+          selectedDoctor.specialties.includes(spec)
+        );
 
-    return matchPet && matchSearch && matchDoctor;
-  }) || [];
+      return matchPet && matchSearch && matchDoctor;
+    }) || [];
 
   const mainItems = filteredItems.filter((item) => item.type === "main")
   const additionalItems = filteredItems.filter((item) => item.type === "additional")
@@ -331,7 +331,7 @@ const serviceTerms = TERMS[service?.category ?? "default"] || TERMS.default
     return slotDate <= now
   }
 
-  
+
   // ─── Handlers ─────────────────────────────────────────────────────────────
 
   const handleSelectMainItem = (itemId: string) => {
@@ -1136,7 +1136,7 @@ const serviceTerms = TERMS[service?.category ?? "default"] || TERMS.default
                         }
                       }
                       if (step === 4) {
-                         const hasItems = service?.item && service.item.length > 0
+                        const hasItems = service?.item && service.item.length > 0
                         // Jika layanan memiliki item, maka minimal 1 item utama harus dipilih
                         if (hasItems && !selectedMainItem) {
                           alert("Silakan pilih minimal 1 item utama terlebih dahulu")
