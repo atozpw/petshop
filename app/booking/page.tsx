@@ -1,222 +1,130 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { useRouter, useSearchParams } from "next/navigation"
+import { useEffect, useMemo, useState, type ReactNode } from "react"
+import { useSearchParams } from "next/navigation"
+import Link from "next/link"
 import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
-import { SERVICES, TIME_SLOTS, PET_TYPES } from "@/lib/booking-data"
-import Link from "next/link"
+import {
+  BRANCHES,
+  CITIES,
+  DOCTORS,
+  GROOMERS,
+  PET_TYPES,
+  SERVICES,
+  TIME_SLOTS,
+  type BookingPerson,
+  type Branch,
+  type PetType,
+  type ServiceItem,
+} from "@/lib/booking-data"
+
+type PetBooking = {
+  id: string
+  name: string
+  type: string
+  notes: string
+  mainItemId: string
+  additionalItemId: string
+}
+
+const TERMS: Record<string, string[]> = {
+  default: [
+    "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
+    "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
+    "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
+    "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
+  ],
+  grooming: [
+    "Grooming hanya untuk anjing dan kucing.",
+    "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
+    "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
+    "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
+    "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
+  ],
+  boarding: [
+    "Boarding hanya untuk anjing dan kucing.",
+    "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
+    "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
+    "Jam operasional boarding pukul 08:00 - 20:00 WIB.",
+    "Hewan yang dijemput melebihi jam booking terakhir akan otomatis masuk layanan boarding dan dijemput keesokan hari.",
+  ],
+  clinic: [
+    "Layanan klinik mengikuti jadwal dokter dan cabang yang dipilih.",
+    "Pilih layanan klinik sesuai spesialisasi dokter yang tersedia.",
+    "Untuk kondisi darurat, hubungi cabang terlebih dahulu sebelum datang.",
+  ],
+}
+
+const createPet = (index: number): PetBooking => ({
+  id: `${Date.now()}-${index}`,
+  name: "",
+  type: "",
+  notes: "",
+  mainItemId: "",
+  additionalItemId: "",
+})
 
 export default function BookingPage() {
-  const router = useRouter()
   const searchParams = useSearchParams()
-  const [step, setStep] = useState(1)
-  const [selectedService, setSelectedService] = useState(searchParams.get("service") || "")
+  const serviceParam = searchParams.get("service") || ""
+  const initialService = SERVICES.find((service) => service.id === serviceParam && service.active)
+
+  const [step, setStep] = useState(initialService ? 2 : 1)
+  const [selectedService, setSelectedService] = useState(initialService?.id || "")
+  const [selectedCity, setSelectedCity] = useState<Branch["city"] | "">("")
+  const [selectedBranch, setSelectedBranch] = useState("")
+  const [serviceMode, setServiceMode] = useState("")
+  const [address, setAddress] = useState("")
   const [selectedDate, setSelectedDate] = useState("")
   const [selectedTime, setSelectedTime] = useState("")
-  const [petName, setPetName] = useState("")
-  const [petType, setPetType] = useState("")
-  const [notes, setNotes] = useState("")
+  const [checkIn, setCheckIn] = useState("")
+  const [checkOut, setCheckOut] = useState("")
+  const [selectedPeople, setSelectedPeople] = useState("")
+  const [pets, setPets] = useState<PetBooking[]>([createPet(1)])
+  const [searchQuery, setSearchQuery] = useState("")
   const [userEmail, setUserEmail] = useState("")
   const [userName, setUserName] = useState("")
   const [userPhone, setUserPhone] = useState("")
   const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [selectedBranch, setSelectedBranch] = useState("")
-  const [serviceMode, setServiceMode] = useState("")
-  const [address, setAddress] = useState("")
-  const [selectedPeople, setSelectedPeople] = useState("")
 
-  const [selectedMainItem, setSelectedMainItem] = useState<string | null>(null)
-  const [selectedAdditionalItem, setSelectedAdditionalItem] = useState<string | null>(null)
-  const [searchQuery, setSearchQuery] = useState("")
+  const service = SERVICES.find((item) => item.id === selectedService)
+  const branch = BRANCHES.find((item) => item.id === selectedBranch)
+  const serviceTerms = TERMS[service?.category ?? "default"] || TERMS.default
+  const requiresPeople = Boolean(service?.requiresPeople)
+  const visibleSteps = requiresPeople ? [1, 2, 3, 4, 5, 6] : [1, 2, 3, 5, 6]
+  const displayStep = Math.max(visibleSteps.indexOf(step) + 1, 1)
+  const selectedPerson = getSelectedPerson(service?.category, selectedPeople)
+  const stepTitle = getStepTitle(step, service?.category)
 
-  const [checkIn, setCheckIn] = useState("")
-  const [checkOut, setCheckOut] = useState("")
+  const availableBranches = useMemo(() => {
+    if (!service || !selectedCity) return []
 
-  const BRANCHES = [
-    { id: "Jakarta", name: "Jakarta", phone: "6281912982996" },
-    { id: "Bali", name: "Bali", phone: "628113999893" },
-  ]
+    return BRANCHES.filter(
+      (item) => item.city === selectedCity && item.services.includes(service.category),
+    )
+  }, [selectedCity, service])
 
-  const doctors = [
-    // {
-    //   name: "Drh. Fransisca Olivia Ratna Dilla",
-    //   specialty: "Special Interest, Feline Internal Medicine",
-    //   specialties: ["Feline Internal Medicine"],
-    //   experience: "",
-    //   image: "/doctor/drh Fransisca.png",
-    //   lokasi: "Jakarta"
-    // },
-    // {
-    //   name: "Drh. Brillian Firmania Puspa Agny",
-    //   specialty: "General Practitioner",
-    //   specialties: ["General Practitioner"],
-    //   experience: "",
-    //   image: "/doctor/Drh Brillian.png",
-    //   lokasi: "Jakarta"
-    // },
+  const filteredPeople = useMemo(() => {
+    if (!service || !selectedBranch) return []
 
-    {
-      name: "Drh. Agung Supriyono",
-      specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator",
-      specialties: ["Exotic Pet", "Dermatology", "Surgery", "Stemcell Therapy"],
-      experience: "",
-      image: "/doctor/Drh Agung Supriono.png",
-      lokasi: "Jakarta"
-    },
-
-    // {
-    //   name: "Drh. Dita Pratiwi Dwi Setyowati",
-    //   specialty: "General Practitioner",
-    //   specialties: ["General Practitioner"],
-    //   experience: "",
-    //   image: "/doctor/drh Dita.png",
-    //   lokasi: "Jakarta"
-    // },
-
-    {
-      name: "Drh. Frida Ayu Salsana Billa",
-      specialty: "General Practitioner",
-      specialties: ["General Practitioner"],
-      experience: "",
-      image: "/doctor/Frida Ayu Salsana Billa.png",
-      lokasi: "Bali"
-    },
-    {
-      name: "Drh. Yunita Atok",
-      specialty: "General Practitioner",
-      specialties: ["General Practitioner"],
-      experience: "",
-      image: "/doctor/yunita atok.png",
-      lokasi: "Bali"
-    },
-    {
-      name: "Drh. Chendini Maharani",
-      specialty: "General Practitioner",
-      specialties: ["General Practitioner"],
-      experience: "",
-      image: "/doctor/Chendini Maharani.png",
-      lokasi: "Bali"
-    },
-
-    {
-      name: "Drh. Adinda, S.KH",
-      specialty: "General Veterinary Practitioner, Internal Medicine, Veterinary Dermatology, Emergency and Critical Care, Basic Surgery",
-      specialties: [
-        "General Practitioner",
-        "Internal Medicine",
-        "Dermatology",
-        "Emergency and Critical Care",
-        "Surgery"
-      ],
-      experience: "",
-      image: "/doctor/adinda 55.png",
-      lokasi: "Bali"
-    },
-
-    {
-      name: "Drh. Christiyanti Rambu Gedi",
-      specialty: "Universitas Wijaya Kusuma Surabaya",
-      specialties: ["General Practitioner"], // fallback
-      experience: "",
-      image: "/doctor/Christiyanti Rambu Gedi.png",
-      lokasi: "Bali"
-    },
-
-    {
-      name: "Drh. Putu Aditya Pratama Artha Putra, S.KH",
-      specialty: "Surgery, Internal Medicine, Vaccine, Dentistry, Urgent Care",
-      specialties: [
-        "Surgery",
-        "Internal Medicine",
-        "Vaccination",
-        "Dentistry",
-        "Urgent Care"
-      ],
-      experience: "",
-      image: "/doctor/Aditya Pratama.png",
-      lokasi: "Bali"
-    },
-
-    {
-      name: "Drh. Jessy Filomena Fernanda Bento, S.KH",
-      specialty: "General Practitioner, Special Interest Dermatology",
-      specialties: ["General Practitioner", "Dermatology"],
-      experience: "",
-      image: "/doctor/Jessy Filomena.png",
-      lokasi: "Bali"
-    },
-
-    {
-      name: "Drh. Dewi Ratnasari",
-      specialty: "General Practitioner, Special Interest Hematology and Radiography",
-      specialties: ["General Practitioner", "Hematology", "Radiography"],
-      experience: "",
-      image: "/doctor/Dewi Ratnasari.png",
-      lokasi: "Bali"
-    },
-
-    {
-      name: "Drh. Owen Fernando",
-      specialty: "-",
-      specialties: ["General Practitioner"], // fallback aman
-      experience: "",
-      image: "/doctor/Owen Fernando.png",
-      lokasi: "Bali"
-    },
-
-    {
-      name: "Drh. I Made Agus Wirawan",
-      specialty: "General Practitioner",
-      specialties: ["General Practitioner"],
-      experience: "",
-      image: "/doctor/I Made Agus Wirawan.png",
-      lokasi: "Bali"
+    if (service.category === "grooming") {
+      return GROOMERS.filter((person) => person.branchId === selectedBranch)
     }
-  ];
 
-  const groomers = [
-    { name: "Rama", lokasi: "Jakarta", image: "/groomer/rama.png" },
-    { name: "Fallen", lokasi: "Jakarta", image: "/groomer/fallen.png" }
+    if (service.category === "clinic") {
+      return DOCTORS.filter((person) => person.branchId === selectedBranch)
+    }
 
-  ]
-  const TERMS = {
-    default: [
-      "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
-      "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
-      "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
-      "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
-    ],
-    grooming: [
-      "Grooming hanya untuk anjing dan kucing.",
-      "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
-      "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
-      "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
-      "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
-    ],
-    boarding: [
-      "Boarding hanya untuk anjing dan kucing.",
-      "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
-      "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
-      "Jam operasional boarding pukul 08:00 - 20:00 WIB.",
-      "Hewan yang dijemput melebihi jam booking terakhir akan otomatis masuk layanan boarding dan dijemput keesokan hari.",
-    ],
+    return []
+  }, [selectedBranch, service])
 
-  }
-
-
-
-  // const TERMS = [
-  //   "Hewan peliharaan wajib dalam kondisi sehat dan tidak sedang sakit menular.",
-  //   "Disarankan / diwajibkan telah melakukan medical checkup oleh dokter hewan sebelum layanan.",
-  //   "Jam operasional grooming pukul 08:00 - 23:00 WIB.",
-  //   "Hewan yang datang melebihi jam booking terakhir akan otomatis masuk layanan boarding dan grooming dilakukan keesokan hari.",
-  // ]
-
-  // ─── Effects ──────────────────────────────────────────────────────────────
+  const totalDays = getTotalDays(checkIn, checkOut)
+  const totalPrice = pets.reduce((sum, pet) => sum + getPetPrice(pet, service?.item, service?.scheduleType, totalDays), 0)
 
   useEffect(() => {
     const userSession = localStorage.getItem("petshop-user")
+
     if (userSession) {
       const user = JSON.parse(userSession)
       setUserEmail(user.email)
@@ -224,203 +132,185 @@ export default function BookingPage() {
       setUserPhone(user.phone)
       setIsLoggedIn(true)
     }
-
-    if (!selectedService) return
-
-    const selected = SERVICES.find((s) => s.id === selectedService)
-    if (selected && selected.active) {
-      setStep(2)
-    } else {
-      setSelectedService("")
-      setStep(1)
-    }
-  }, [selectedService])
+  }, [])
 
   useEffect(() => {
-    if (step === 4 && (!service?.item || service.item.length === 0)) {
-      setStep(5)
-    }
     window.scrollTo({ top: 0, behavior: "smooth" })
   }, [step])
 
-  useEffect(() => {
+  const handleServiceSelect = (serviceId: string) => {
+    setSelectedService(serviceId)
+    setSelectedCity("")
+    setSelectedBranch("")
+    setServiceMode("")
+    setAddress("")
+    setSelectedDate("")
+    setSelectedTime("")
+    setCheckIn("")
+    setCheckOut("")
     setSelectedPeople("")
-  }, [selectedBranch])
-
-  // ─── Derived values ────────────────────────────────────────────────────────
-
-  const service = SERVICES.find((s) => s.id === selectedService)
-  const branch = BRANCHES.find((b) => b.id === selectedBranch)
-
-  const serviceTerms = TERMS[service?.category ?? "default"] || TERMS.default
-
-
-  // Selected doctor/groomer object based on name (for displaying specialty, image, etc.)
-  const selectedDoctor = doctors.find(
-    (doc) => doc.name === selectedPeople
-  );
-
-  // Filtered items by petType + search query (single declaration — no duplicate)
-  const filteredItems =
-    service?.item?.filter((item) => {
-      const matchPet =
-        !item.petType || item.petType.includes(petType);
-
-      const matchSearch =
-        item.name.toLowerCase().includes(searchQuery.toLowerCase());
-
-      // Jika bukan layanan klinik atau tidak ada dokter yang dipilih,
-      // maka semua item tetap ditampilkan
-      const matchDoctor =
-        service?.category !== "clinic" ||
-        !selectedDoctor ||
-        !item.specialties ||
-        item.specialties.some((spec) =>
-          selectedDoctor.specialties.includes(spec)
-        );
-
-      return matchPet && matchSearch && matchDoctor;
-    }) || [];
-
-  const mainItems = filteredItems.filter((item) => item.type === "main")
-  const additionalItems = filteredItems.filter((item) => item.type === "additional")
-
-  // People list (doctors or groomers filtered by branch)
-  const filteredPeople =
-    service?.name === "Pet Grooming"
-      ? groomers.filter((g) => g.lokasi === selectedBranch)
-      : doctors.filter((d) => d.lokasi === selectedBranch)
-
-  // Pricing
-  const mainItemPrice =
-    service?.item?.find(i => i.id === selectedMainItem)?.price || 0
-
-  const additionalItemPrice =
-    service?.item?.find(i => i.id === selectedAdditionalItem)?.price || 0
-
-  const selectedItemTotal = mainItemPrice + additionalItemPrice
-
-
-  const getTotalDays = () => {
-    if (!checkIn || !checkOut) return 0
-    const start = new Date(checkIn)
-    const end = new Date(checkOut)
-    const diffTime = end.getTime() - start.getTime()
-    return Math.ceil(diffTime / (1000 * 60 * 60 * 24)) || 0
+    setPets([createPet(1)])
+    setSearchQuery("")
   }
-  const totalDays = getTotalDays()
 
-  const totalPrice =
-    service?.scheduleType === "range" ? selectedItemTotal * (totalDays + 1) : selectedItemTotal
+  const handleCitySelect = (city: Branch["city"]) => {
+    setSelectedCity(city)
+    setSelectedBranch("")
+    setSelectedPeople("")
+  }
 
-  // Time slot helper
-  const isPastTime = (slotTime: string) => {
-    if (!selectedDate) return false
-    const now = new Date()
-    const selected = new Date(selectedDate)
-    if (
-      selected.getFullYear() !== now.getFullYear() ||
-      selected.getMonth() !== now.getMonth() ||
-      selected.getDate() !== now.getDate()
-    ) {
+  const updatePet = (petId: string, patch: Partial<PetBooking>) => {
+    setPets((currentPets) =>
+      currentPets.map((pet) => {
+        if (pet.id !== petId) return pet
+
+        return {
+          ...pet,
+          ...patch,
+          ...(patch.type ? { mainItemId: "", additionalItemId: "" } : {}),
+        }
+      }),
+    )
+  }
+
+  const addPet = () => {
+    setPets((currentPets) => [...currentPets, createPet(currentPets.length + 1)])
+  }
+
+  const removePet = (petId: string) => {
+    setPets((currentPets) => currentPets.filter((pet) => pet.id !== petId))
+  }
+
+  const goBack = () => {
+    const currentIndex = visibleSteps.indexOf(step)
+    setStep(visibleSteps[Math.max(0, currentIndex - 1)] || 1)
+  }
+
+  const goNext = () => {
+    if (!validateStep()) return
+
+    const currentIndex = visibleSteps.indexOf(step)
+    setStep(visibleSteps[currentIndex + 1] || 6)
+  }
+
+  const validateStep = () => {
+    if (step === 1 && !selectedService) {
+      alert("Pilih layanan terlebih dahulu")
       return false
     }
-    const [hour, minute] = slotTime.split(":").map(Number)
-    const slotDate = new Date()
-    slotDate.setHours(hour, minute, 0, 0)
-    return slotDate <= now
-  }
 
+    if (step === 2) {
+      if (!selectedCity) {
+        alert("Pilih kota terlebih dahulu")
+        return false
+      }
 
-  // ─── Handlers ─────────────────────────────────────────────────────────────
+      if (service?.branchRequired && !selectedBranch) {
+        alert("Pilih cabang terlebih dahulu")
+        return false
+      }
 
-  const handleSelectMainItem = (itemId: string) => {
-    setSelectedMainItem((prev) => (prev === itemId ? null : itemId))
-  }
+      if (service?.availableModes && !serviceMode) {
+        alert("Pilih tipe layanan terlebih dahulu")
+        return false
+      }
 
-  const handleSelectAdditionalItem = (itemId: string) => {
-    setSelectedAdditionalItem((prev) => (prev === itemId ? null : itemId))
+      if ((service?.requiresAddress || serviceMode === "Home Visit" || serviceMode === "Delivery") && !address.trim()) {
+        alert("Isi alamat terlebih dahulu")
+        return false
+      }
+    }
+
+    if (step === 3) {
+      if (service?.scheduleType === "single" && (!selectedDate || !selectedTime)) {
+        alert("Pilih tanggal dan waktu terlebih dahulu")
+        return false
+      }
+
+      if (service?.scheduleType === "range" && (!checkIn || !checkOut)) {
+        alert("Pilih tanggal check-in dan check-out")
+        return false
+      }
+    }
+
+    if (step === 4 && requiresPeople && !selectedPeople) {
+      alert(service?.category === "grooming" ? "Pilih groomer terlebih dahulu" : "Pilih dokter terlebih dahulu")
+      return false
+    }
+
+    if (step === 5) {
+      const hasItems = Boolean(service?.item?.length)
+      const invalidPet = pets.find((pet) => !pet.name.trim() || !pet.type || (hasItems && !pet.mainItemId))
+
+      if (invalidPet) {
+        alert("Lengkapi nama, jenis, dan layanan utama untuk setiap hewan")
+        return false
+      }
+    }
+
+    return true
   }
 
   const handleSubmit = () => {
-    if (!userEmail || !userName || !userPhone || !petName || !petType) {
-      alert("Mohon isi semua field")
+    if (!userEmail || !userName || !userPhone) {
+      alert("Mohon isi semua data pemesan")
       return
     }
 
-    const mainItemName =
-      service?.item?.find(i => i.id === selectedMainItem)?.name || "-"
+    if (!validatePetOrders(pets, service?.item)) {
+      alert("Lengkapi data hewan dan layanan utama untuk setiap hewan")
+      return
+    }
 
-    const additionalItemName =
-      service?.item?.find(i => i.id === selectedAdditionalItem)?.name || "-"
-
-    const peopleLabel =
-      service?.name === "Pet Grooming" ? "Groomer" : "Dokter"
-
+    const peopleLabel = service?.category === "grooming" ? "Groomer" : "Dokter"
     const scheduleText =
       service?.scheduleType === "single"
-        ? `Jadwal
-    - Tanggal: ${selectedDate || "-"}
-    - Waktu: ${selectedTime || "-"}`
-        : `Jadwal
-    - Check-in: ${checkIn || "-"}
-    - Check-out: ${checkOut || "-"}`
+        ? `Jadwal\n- Tanggal: ${selectedDate || "-"}\n- Waktu: ${selectedTime || "-"}`
+        : `Jadwal\n- Check-in: ${checkIn || "-"}\n- Check-out: ${checkOut || "-"}`
+
+    const petsText = pets
+      .map((pet, index) => {
+        const mainItem = findItem(service?.item, pet.mainItemId)
+        const additionalItem = findItem(service?.item, pet.additionalItemId)
+
+        return `Hewan ${index + 1}\n- Nama: ${pet.name || "-"}\n- Jenis: ${pet.type || "-"}\n- Catatan: ${pet.notes || "-"}\n- Layanan utama: ${mainItem?.name || "-"}\n- Layanan tambahan: ${additionalItem?.name || "-"}`
+      })
+      .join("\n\n")
 
     const addressText =
-      (service?.requiresAddress ||
-        serviceMode === "Home Visit" ||
-        serviceMode === "Delivery")
+      service?.requiresAddress || serviceMode === "Home Visit" || serviceMode === "Delivery"
         ? `- Alamat: ${address || "-"}`
         : ""
 
-    const peopleText =
-      service?.requiresPeople
-        ? `${peopleLabel}
-    - ${selectedPeople || "-"}`
-        : ""
-
-    const notesText = notes
-      ? `Catatan
-    - ${notes}`
-      : ""
+    const peopleText = requiresPeople ? `${peopleLabel}\n- ${selectedPeople || "-"}` : ""
 
     const message = `
-    Halo, saya ingin melakukan booking layanan.
+Halo, saya ingin melakukan booking layanan.
 
-    Layanan
-    - Nama Layanan: ${service?.name || "-"}
-    - Cabang: ${branch?.name || "-"}
-    - Tipe Layanan: ${serviceMode || "-"}
-    ${addressText}
+Layanan
+- Nama Layanan: ${service?.name || "-"}
+- Kota: ${selectedCity || "-"}
+- Cabang: ${branch?.name || "-"}
+- Tipe Layanan: ${serviceMode || "-"}
+${addressText}
 
-    ${scheduleText}
+${scheduleText}
 
-    ${peopleText}
+${peopleText}
 
-    Hewan Peliharaan
-    - Nama: ${petName || "-"}
-    - Jenis: ${petType || "-"}
+Hewan Peliharaan
+${petsText}
 
-    ${notesText}
+Customer
+- Nama: ${userName || "-"}
+- Email: ${userEmail || "-"}
+- No. HP: ${userPhone || "-"}
 
-    Item
-    - Item Utama: ${mainItemName}
-    - Additional: ${additionalItemName}
+Total Harga
+Rp ${totalPrice.toLocaleString("id-ID")}
+    `.trim()
 
-    Customer
-    - Nama: ${userName || "-"}
-    - No. HP: ${userPhone || "-"}
-
-    Total Harga
-    Rp ${totalPrice.toLocaleString("id-ID")}
-      `.trim()
-
-    const phone = branch?.phone || "628xxxx"
-
-    window.open(
-      `https://wa.me/${phone}?text=${encodeURIComponent(message)}`,
-      "_blank"
-    )
+    window.open(`https://wa.me/${branch?.phone || "628xxxx"}?text=${encodeURIComponent(message)}`, "_blank")
   }
 
   return (
@@ -429,99 +319,121 @@ export default function BookingPage() {
 
       <main className="min-h-screen bg-background py-12">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            {/* Header */}
+          <div className="mx-auto max-w-4xl">
             <div className="mb-12">
-              <h1 className="text-4xl font-bold text-primary mb-2">Pesan Layanan Kami</h1>
+              <h1 className="mb-2 text-4xl font-bold text-primary">Pesan Layanan Kami</h1>
               <p className="text-muted-foreground">
-                Langkah {step} dari 5 -{" "}
-                {step === 1
-                  ? "Pilih Layanan"
-                  : step === 2
-                    ? "Pilih Tanggal & Waktu"
-                    : step === 3
-                      ? "Data Hewan Peliharaan"
-                      : step === 4
-                        ? "Item Selection"
-                        : "Konfirmasi & Data Pemesan"}
+                Langkah {displayStep} dari {visibleSteps.length} - {stepTitle}
               </p>
             </div>
 
-            {/* Progress Bar */}
             <div className="mb-12 flex gap-2">
-              {[1, 2, 3, 4, 5].map((s) => (
+              {visibleSteps.map((item, index) => (
                 <div
-                  key={s}
-                  className={`flex-1 h-2 rounded-full transition-colors ${s <= step ? "bg-primary" : "bg-muted"}`}
-                ></div>
+                  key={item}
+                  className={`h-2 flex-1 rounded-full transition-colors ${
+                    index <= displayStep - 1 ? "bg-primary" : "bg-muted"
+                  }`}
+                />
               ))}
             </div>
 
-            <div className="bg-white rounded-lg border border-border p-8">
-              {/* Step 1: Choose Service */}
+            <div className="rounded-lg border border-border bg-white p-8">
               {step === 1 && (
                 <div className="space-y-6">
                   <h2 className="text-2xl font-bold text-foreground">Pilih Layanan</h2>
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {SERVICES.filter(svc => svc.active).map((svc) => (
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+                    {SERVICES.filter((item) => item.active).map((item) => (
                       <button
-                        key={svc.id}
-                        onClick={() => svc.active && setSelectedService(svc.id)}
-                        disabled={!svc.active}
-                        className={`p-4 rounded-lg border-2 transition-all text-left ${selectedService === svc.id
-                          ? "border-primary bg-primary/5"
-                          : "border-border hover:border-primary"
-                          }`}
+                        key={item.id}
+                        type="button"
+                        onClick={() => handleServiceSelect(item.id)}
+                        className={`rounded-lg border-2 p-4 text-left transition-all ${
+                          selectedService === item.id ? "border-primary bg-primary/5" : "border-border hover:border-primary"
+                        }`}
                       >
-                        <h3 className="font-semibold text-foreground">{svc.name}</h3>
-                        <p className="text-sm text-muted-foreground">{svc.description}</p>
-                        {/* <p className="font-bold text-primary mt-2">Rp {svc.price.toLocaleString()}</p> */}
+                        <h3 className="font-semibold text-foreground">{item.name}</h3>
+                        <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
                       </button>
                     ))}
                   </div>
                 </div>
               )}
 
-              {/* Step 2: Choose Date & Time */}
               {step === 2 && (
                 <div className="space-y-6">
-                  <h2 className="text-2xl font-bold text-foreground">Pilih Tanggal & Waktu</h2>
+                  <div>
+                    <h2 className="text-2xl font-bold text-foreground">Pilih Kota & Cabang</h2>
+                    {service && (
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        Layanan dipilih: <span className="font-semibold text-foreground">{service.name}</span>
+                      </p>
+                    )}
+                  </div>
 
-                  {service?.branchRequired && (
-                    <div>
-                      {service && (
-                        <div className="mb-4 p-3 bg-primary/10 rounded">
-                          <p className="text-sm">
-                            Layanan dipilih: <b>{service.name}</b>
-                          </p>
-                        </div>
-                      )}
-                      <label className="block text-sm font-semibold mb-2">Pilih Cabang</label>
-                      <div className="grid grid-cols-2 gap-2">
-                        {BRANCHES.map((b) => (
+                  <div>
+                    <label className="mb-3 block text-sm font-semibold">Kota</label>
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-3">
+                      {CITIES.map((city) => (
+                        <button
+                          key={city}
+                          type="button"
+                          onClick={() => handleCitySelect(city)}
+                          className={`rounded-lg border p-3 font-semibold transition ${
+                            selectedCity === city ? "border-primary bg-primary text-white" : "border-border hover:border-primary"
+                          }`}
+                        >
+                          {city}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="mb-3 block text-sm font-semibold">Cabang</label>
+                    {!selectedCity ? (
+                      <p className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
+                        Pilih kota untuk melihat cabang yang menyediakan layanan ini.
+                      </p>
+                    ) : (
+                      <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
+                        {availableBranches.map((item) => (
                           <button
-                            key={b.id}
-                            onClick={() => setSelectedBranch(b.id)}
-                            className={`p-3 border rounded ${selectedBranch === b.id ? "bg-primary text-white" : ""
-                              }`}
+                            key={item.id}
+                            type="button"
+                            onClick={() => {
+                              setSelectedBranch(item.id)
+                              setSelectedPeople("")
+                            }}
+                            className={`rounded-lg border p-4 text-left transition ${
+                              selectedBranch === item.id ? "border-primary bg-primary/5" : "border-border hover:border-primary"
+                            }`}
                           >
-                            {b.name}
+                            <p className="font-semibold text-foreground">{item.name}</p>
+                            <p className="mt-1 text-sm text-muted-foreground">{item.address}</p>
                           </button>
                         ))}
+                        {availableBranches.length === 0 && (
+                          <p className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
+                            Belum ada cabang di kota ini yang menyediakan {service?.name}.
+                          </p>
+                        )}
                       </div>
-                    </div>
-                  )}
+                    )}
+                  </div>
 
                   {service?.availableModes && (
                     <div>
-                      <label className="block text-sm font-semibold mb-2">Tipe Layanan</label>
-                      <div className="flex gap-2">
+                      <label className="mb-3 block text-sm font-semibold">Tipe Layanan</label>
+                      <div className="flex flex-wrap gap-2">
                         {service.availableModes.map((mode) => (
                           <button
                             key={mode}
+                            type="button"
                             onClick={() => setServiceMode(mode)}
-                            className={`px-4 py-2 border rounded ${serviceMode === mode ? "bg-primary text-white" : ""
-                              }`}
+                            className={`rounded-lg border px-4 py-2 font-semibold transition ${
+                              serviceMode === mode ? "border-primary bg-primary text-white" : "border-border hover:border-primary"
+                            }`}
                           >
                             {mode}
                           </button>
@@ -532,638 +444,730 @@ export default function BookingPage() {
 
                   {(service?.requiresAddress || serviceMode === "Home Visit" || serviceMode === "Delivery") && (
                     <div>
-                      <label className="block text-sm font-semibold mb-2">Alamat</label>
+                      <label className="mb-2 block text-sm font-semibold">Alamat</label>
                       <textarea
                         value={address}
-                        onChange={(e) => setAddress(e.target.value)}
+                        onChange={(event) => setAddress(event.target.value)}
                         placeholder="Masukkan alamat lengkap..."
-                        className="w-full border rounded p-2"
+                        rows={3}
+                        className="w-full rounded-lg border border-input px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
                       />
                     </div>
                   )}
+                </div>
+              )}
+
+              {step === 3 && (
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold text-foreground">Pilih Jadwal</h2>
 
                   {service?.scheduleType === "single" && (
-                    <div>
-                      <label className="block text-sm font-semibold mb-3">Tanggal</label>
-                      <input
-                        type="date"
-                        value={selectedDate}
-                        min={new Date().toISOString().split("T")[0]}
-                        onChange={(e) => setSelectedDate(e.target.value)}
-                        className="w-full px-4 py-2 border rounded-lg"
-                      />
-                    </div>
+                    <>
+                      <div>
+                        <label className="mb-3 block text-sm font-semibold">Tanggal</label>
+                        <input
+                          type="date"
+                          value={selectedDate}
+                          min={new Date().toISOString().split("T")[0]}
+                          onChange={(event) => {
+                            setSelectedDate(event.target.value)
+                            setSelectedTime("")
+                          }}
+                          className="w-full rounded-lg border px-4 py-2"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="mb-3 block text-sm font-semibold text-foreground">Waktu</label>
+                        <div className="grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5">
+                          {TIME_SLOTS.map((slot) => {
+                            const isDisabled = !selectedDate || !slot.available || isPastTime(selectedDate, slot.time)
+
+                            return (
+                              <button
+                                key={slot.time}
+                                type="button"
+                                onClick={() => !isDisabled && setSelectedTime(slot.time)}
+                                disabled={isDisabled}
+                                className={`rounded-lg border p-3 font-semibold transition-all ${
+                                  selectedTime === slot.time
+                                    ? "border-primary bg-primary text-white"
+                                    : !isDisabled
+                                      ? "border-border bg-white hover:border-primary"
+                                      : "cursor-not-allowed border-border bg-muted text-muted-foreground opacity-60"
+                                }`}
+                              >
+                                {slot.time}
+                              </button>
+                            )
+                          })}
+                        </div>
+                      </div>
+                    </>
                   )}
 
                   {service?.scheduleType === "range" && (
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                       <div>
-                        <label className="block text-sm font-semibold mb-2">Check-in</label>
+                        <label className="mb-2 block text-sm font-semibold">Check-in</label>
                         <input
                           type="date"
                           value={checkIn}
                           min={new Date().toISOString().split("T")[0]}
-                          onChange={(e) => setCheckIn(e.target.value)}
-                          className="w-full px-4 py-2 border rounded-lg"
+                          onChange={(event) => {
+                            setCheckIn(event.target.value)
+                            setCheckOut("")
+                          }}
+                          className="w-full rounded-lg border px-4 py-2"
                         />
                       </div>
 
                       <div>
-                        <label className="block text-sm font-semibold mb-2">Check-out</label>
+                        <label className="mb-2 block text-sm font-semibold">Check-out</label>
                         <input
                           type="date"
                           value={checkOut}
-                          onChange={(e) => setCheckOut(e.target.value)}
-                          min={checkIn} // 🔥 penting
-                          className="w-full px-4 py-2 border rounded-lg"
+                          min={checkIn}
+                          onChange={(event) => setCheckOut(event.target.value)}
+                          className="w-full rounded-lg border px-4 py-2"
                         />
                       </div>
                     </div>
                   )}
-
-
-                  {service?.scheduleType === "single" && (
-                    <div>
-                      <label className="block text-sm font-semibold text-foreground mb-3">Waktu</label>
-                      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
-                        {TIME_SLOTS.map((slot) => {
-                          const isDisabled = !selectedDate || !slot.available || isPastTime(slot.time)
-
-                          return (
-                            <button
-                              key={slot.time}
-                              onClick={() => !isDisabled && setSelectedTime(slot.time)}
-                              disabled={isDisabled}
-                              className={`p-3 rounded-lg border transition-all font-semibold ${selectedTime === slot.time
-                                ? "border-primary bg-primary text-white"
-                                : !isDisabled
-                                  ? "border-border hover:border-primary bg-white"
-                                  : "border-border bg-muted text-muted-foreground cursor-not-allowed opacity-60"
-                                }`}
-                            >
-                              {slot.time}
-                            </button>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-                  {service?.requiresPeople && (
-                    <div>
-                      <p className="text-sm text-muted-foreground mb-2">
-                        {service.name === "Pet Grooming"
-                          ? "Pilih groomer untuk layanan ini"
-                          : "Pilih dokter untuk layanan ini"}
-                      </p>
-
-                      <label className="block text-sm font-semibold mb-3">
-                        {service.name === "Pet Grooming" ? "Pilih Groomer" : "Pilih Dokter"}
-                      </label>
-
-                      {!selectedBranch && (
-                        <p className="text-sm text-muted-foreground mb-2">
-                          Pilih cabang terlebih dahulu
-                        </p>
-                      )}
-
-                      <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                        {filteredPeople.map((doc) => {
-                          const isSelected = selectedPeople === doc.name
-
-                          return (
-                            <button
-                              key={doc.name}
-                              onClick={() => setSelectedPeople(doc.name)}
-                              disabled={!selectedBranch}
-                              className={`border rounded-lg p-3 text-left transition ${isSelected
-                                ? "border-primary bg-primary/5"
-                                : "border-border hover:border-primary"
-                                } ${!selectedBranch ? "opacity-50 cursor-not-allowed" : ""}`}
-                            >
-                              <img
-                                src={doc.image}
-                                alt={doc.name}
-                                className="w-full h-28 object-contain rounded mb-2 bg-white"
-                              />
-
-                              <p className="text-sm font-semibold leading-tight">
-                                {doc.name}
-                              </p>
-
-                              <p className="text-xs text-muted-foreground mt-1 line-clamp-2">
-                                {doc.specialty}
-                              </p>
-                            </button>
-                          )
-                        })}
-                      </div>
-                    </div>
-                  )}
-
-
                 </div>
               )}
 
-              {/* Step 3: Pet Information */}
-              {step === 3 && (
-                <div className="space-y-6">
-                  <h2 className="text-2xl font-bold text-foreground">Data Hewan Peliharaan</h2>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-foreground mb-3">Nama Hewan Peliharaan</label>
-                    <input
-                      type="text"
-                      value={petName}
-                      onChange={(e) => setPetName(e.target.value)}
-                      placeholder="Contoh: Buddy, Whiskers"
-                      className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-foreground mb-3">Jenis Hewan</label>
-                    <select
-                      value={petType}
-                      onChange={(e) => setPetType(e.target.value)}
-                      className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    >
-                      <option value="">Pilih Jenis Hewan</option>
-                      {PET_TYPES.map((type) => (
-                        <option key={type} value={type}>
-                          {type}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block text-sm font-semibold text-foreground mb-3">Catatan Khusus</label>
-                    <textarea
-                      value={notes}
-                      onChange={(e) => setNotes(e.target.value)}
-                      placeholder="Contoh: Hewan peliharaan saya sensitif terhadap suara keras..."
-                      rows={4}
-                      className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-
-                </div>
-              )}
-
-
-              {/* Step 4: Item Selection (if applicable) */}
               {step === 4 && (
-                <div className="space-y-6">
-                  <div>
-                    <h2 className="text-2xl font-bold text-foreground">Pilih Item</h2>
+                <PeopleStep
+                  serviceCategory={service?.category}
+                  people={filteredPeople}
+                  selectedPeople={selectedPeople}
+                  onSelect={setSelectedPeople}
+                />
+              )}
 
+              {step === 5 && (
+                <div className="space-y-6">
+                  <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
+                    <div>
+                      <h2 className="text-2xl font-bold text-foreground">Data Hewan & Layanan</h2>
+                      <p className="mt-1 text-sm text-muted-foreground">
+                        Tambahkan lebih dari satu hewan dalam order yang sama, lalu pilih layanan untuk masing-masing hewan.
+                      </p>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={addPet}
+                      className="rounded-lg border border-primary px-4 py-2 text-sm font-semibold text-primary hover:bg-primary/5"
+                    >
+                      Tambah Hewan
+                    </button>
                   </div>
 
-                  {/* Search bar */}
                   <div className="relative">
-                    <svg
-                      className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground pointer-events-none"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth={1.5}
-                      viewBox="0 0 16 16"
-                    >
-                      <circle cx="6.5" cy="6.5" r="4.5" />
-                      <line x1="10" y1="10" x2="14" y2="14" />
-                    </svg>
                     <input
                       type="text"
                       value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
+                      onChange={(event) => setSearchQuery(event.target.value)}
                       placeholder="Cari nama layanan..."
-                      className="w-full pl-9 pr-4 py-2 border border-input rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary bg-background"
+                      className="w-full rounded-lg border border-input bg-background px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
                     />
                   </div>
 
-                  {/* Main items */}
-                  <div>
-                    <p className="text-sm font-semibold mb-1">
-                      Item Utama{" "}
-
-                    </p>
-
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {mainItems.map((item) => {
-                        const isSelected = selectedMainItem === item.id
-                        return (
-                          <button
-                            key={item.id}
-                            type="button"
-                            onClick={() => handleSelectMainItem(item.id)}
-                            className={`p-3 rounded-lg border text-left ${isSelected
-                              ? "border-primary bg-primary/5"
-                              : "border-border hover:border-primary"
-                              }`}
-                          >
-                            <p className="text-sm font-medium">{item.name}</p>
-                            <p className="text-xs text-muted-foreground">
-                              Rp {item.price.toLocaleString("id-ID")}
-                            </p>
-                          </button>
-                        )
-                      })}
-                      {mainItems.length === 0 && (
-                        <p className="col-span-3 text-sm text-muted-foreground py-3">
-                          Tidak ditemukan
-                        </p>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Additional items */}
-                  <div>
-                    <p className="text-sm font-semibold mb-1">
-                      Item Tambahan{" "}
-                      <span className="font-normal text-muted-foreground">(opsional, pilih 1)</span>
-                    </p>
-                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {additionalItems.map((item) => {
-                        const isSelected = selectedAdditionalItem === item.id
-                        return (
-                          <button
-                            key={item.id}
-                            type="button"
-                            onClick={() => handleSelectAdditionalItem(item.id)}
-                            className={`p-3 rounded-lg border text-left ${isSelected
-                              ? "border-emerald-500 bg-emerald-50"
-                              : "border-border hover:border-primary"
-                              }`}
-                          >
-                            <p className="text-sm font-medium">{item.name}</p>
-                            <p className="text-xs text-muted-foreground">
-                              Rp {item.price.toLocaleString("id-ID")}
-                            </p>
-                          </button>
-                        )
-                      })}
-                      {additionalItems.length === 0 && (
-                        <p className="col-span-3 text-sm text-muted-foreground py-3">
-                          Tidak ditemukan
-                        </p>
-                      )}
-                    </div>
+                  <div className="space-y-5">
+                    {pets.map((pet, index) => (
+                      <PetOrderCard
+                        key={pet.id}
+                        index={index}
+                        pet={pet}
+                        canRemove={pets.length > 1}
+                        items={getFilteredItems(service?.item, pet.type, searchQuery, service?.category, selectedPerson)}
+                        scheduleType={service?.scheduleType}
+                        totalDays={totalDays}
+                        onUpdate={(patch) => updatePet(pet.id, patch)}
+                        onRemove={() => removePet(pet.id)}
+                      />
+                    ))}
                   </div>
                 </div>
               )}
 
-              {/* Step 5: Confirmation & User Data */}
-              {
-                step === 5 && (
-                  <div className="space-y-6">
-                    <h2 className="text-2xl font-bold text-foreground">Konfirmasi Booking</h2>
+              {step === 6 && (
+                <div className="space-y-6">
+                  <h2 className="text-2xl font-bold text-foreground">Konfirmasi Booking</h2>
 
-                    {!isLoggedIn ? (
-                      <>
-                        <div className="bg-blue-50 border border-primary/20 rounded-lg p-4">
-                          <p className="text-sm text-foreground">
-                            Belum login?{" "}
-                            <Link href="/login?redirect=/booking" className="text-primary font-semibold hover:underline">
-                              Login di sini
-                            </Link>{" "}
-                            atau isi data di bawah
-                          </p>
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-semibold text-foreground mb-3">Nama Lengkap</label>
-                          <input
-                            type="text"
-                            value={userName}
-                            onChange={(e) => setUserName(e.target.value)}
-                            placeholder="Nama Lengkap Anda"
-                            className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-semibold text-foreground mb-3">Email</label>
-                          <input
-                            type="email"
-                            value={userEmail}
-                            onChange={(e) => setUserEmail(e.target.value)}
-                            placeholder="Email Anda"
-                            className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="block text-sm font-semibold text-foreground mb-3">No. Telepon</label>
-                          <input
-                            type="tel"
-                            value={userPhone}
-                            onChange={(e) => setUserPhone(e.target.value)}
-                            placeholder="No. Telepon Anda"
-                            className="w-full px-4 py-2 border border-input rounded-lg focus:outline-none focus:ring-2 focus:ring-primary"
-                          />
-                        </div>
-                      </>
-                    ) : (
-                      <div className="bg-green-50 border border-green-200 rounded-lg p-4 space-y-2">
-                        <p className="text-sm">
-                          <span className="font-semibold">Nama:</span> {userName}
-                        </p>
-                        <p className="text-sm">
-                          <span className="font-semibold">Email:</span> {userEmail}
-                        </p>
-                        <p className="text-sm">
-                          <span className="font-semibold">No. Telepon:</span> {userPhone}
+                  {!isLoggedIn ? (
+                    <>
+                      <div className="rounded-lg border border-primary/20 bg-blue-50 p-4">
+                        <p className="text-sm text-foreground">
+                          Belum login?{" "}
+                          <Link href="/login?redirect=/booking" className="font-semibold text-primary hover:underline">
+                            Login di sini
+                          </Link>{" "}
+                          atau isi data di bawah.
                         </p>
                       </div>
-                    )}
 
-                    {/* Booking Summary */}
-                    <div className="rounded-xl border border-border overflow-hidden">
-
-                      {/* Header */}
-                      <div className="bg-blue-50 dark:bg-blue-950 px-5 py-4 flex justify-between items-start">
-                        <div>
-                          <p className="text-xs font-medium text-blue-600 dark:text-blue-400 uppercase tracking-widest mb-1">
-                            Ringkasan Booking
-                          </p>
-                          <p className="text-lg font-semibold text-foreground">{service?.name}</p>
-                        </div>
-                        {/* <span className="inline-flex items-center gap-1.5 bg-green-100 dark:bg-green-900 text-green-700 dark:text-green-300 text-xs font-medium px-3 py-1 rounded-full">
-                        <span className="w-1.5 h-1.5 rounded-full bg-green-500" />
-                        Terkonfirmasi
-                      </span> */}
-                      </div>
-
-                      {/* Body */}
-                      <div className="px-5 py-4 space-y-4 text-sm">
-
-                        {/* Layanan */}
-                        <div>
-                          <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Layanan</p>
-                          <div className="space-y-2">
-                            {service?.branchRequired && (
-                              <div className="flex justify-between items-center">
-                                <span className="text-muted-foreground">Cabang</span>
-                                <span className="font-medium">{branch?.name}</span>
-                              </div>
-                            )}
-                            {service?.availableModes && (
-                              <div className="flex justify-between items-center">
-                                <span className="text-muted-foreground">Tipe layanan</span>
-                                <span className="font-medium">{serviceMode || "-"}</span>
-                              </div>
-                            )}
-                            {(service?.requiresAddress ||
-                              serviceMode === "Home Visit" ||
-
-                              serviceMode === "Delivery") && (
-                                <div className="flex justify-between items-start gap-3">
-                                  <span className="text-muted-foreground shrink-0">Alamat</span>
-                                  <span className="font-medium text-right">{address || "-"}</span>
-                                </div>
-                              )}
-                          </div>
-                        </div>
-
-                        <div className="border-t border-border" />
-
-                        {/* Jadwal */}
-                        <div>
-                          <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Jadwal</p>
-                          <div className="space-y-2">
-                            {service?.scheduleType === "single" && (
-                              <>
-                                <div className="flex justify-between items-center">
-                                  <span className="text-muted-foreground">Tanggal</span>
-                                  <span className="font-medium">{selectedDate || "-"}</span>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                  <span className="text-muted-foreground">Waktu</span>
-                                  <span className="font-medium">{selectedTime || "-"}</span>
-                                </div>
-                              </>
-                            )}
-                            {/* {service?.scheduleType === "range" && (
-                            <div className="flex justify-between">
-                              <span>Lama inap</span>
-                              <span>{totalDays} hari</span>
-                            </div>
-                          )} */}
-                            {service?.scheduleType === "range" && (
-                              <>
-                                <div className="flex justify-between items-center">
-                                  <span className="text-muted-foreground">Check-in</span>
-                                  <span className="font-medium">{checkIn || "-"}</span>
-                                </div>
-                                <div className="flex justify-between items-center">
-                                  <span className="text-muted-foreground">Check-out</span>
-                                  <span className="font-medium">{checkOut || "-"}</span>
-                                </div>
-                              </>
-                            )}
-                          </div>
-                        </div>
-                        {service?.requiresPeople && (
-                          <div className="flex justify-between items-center">
-                            {service.name === "Pet Grooming" ? (
-                              <span className="text-muted-foreground">Groomer</span>
-                            ) : (
-                              <span className="text-muted-foreground">Dokter</span>
-                            )}
-                            <span className="font-medium">{selectedPeople || "-"}</span>
-                          </div>
-                        )}
-
-
-                        <div className="border-t border-border" />
-                        {/* Hewan Peliharaan */}
-                        <div>
-                          <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Hewan Peliharaan</p>
-                          <div className="space-y-2">
-                            <div className="flex justify-between items-center">
-                              <span className="text-muted-foreground">Nama</span>
-                              <span className="font-medium">🐾 {petName || "-"}</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                              <span className="text-muted-foreground">Jenis</span>
-                              <span className="font-medium">{petType || "-"}</span>
-                            </div>
-                          </div>
-                        </div>
-                        {/* Catatan */}
-                        {notes && (
-                          <>
-
-                            <div>
-                              <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">Catatan</p>
-                              <p className="text-foreground leading-relaxed">{notes}</p>
-                            </div>
-                          </>
-                        )}
-                        <div className="border-t border-border" />
-
-                        {/* Item Tambahan */}
-                        {(selectedMainItem || selectedAdditionalItem) && (
-                          <>
-
-                            <div>
-                              <p className="text-[10px] font-medium text-muted-foreground uppercase tracking-widest mb-2">
-                                Item
-                              </p>
-                              <div className="flex flex-wrap gap-1.5">
-                                {selectedMainItem && (
-                                  <span className="inline-block bg-muted text-foreground text-xs font-medium px-3 py-1 rounded-full border border-border">
-                                    {
-                                      service?.item?.find(i => i.id === selectedMainItem)?.name
-                                    } (Utama)
-                                  </span>
-                                )}
-                                {selectedAdditionalItem && (
-                                  <span className="inline-block bg-muted text-foreground text-xs font-medium px-3 py-1 rounded-full border border-border">
-                                    {
-                                      service?.item?.find(i => i.id === selectedAdditionalItem)?.name
-                                    } (Additional)
-                                  </span>
-                                )}
-                              </div>
-                            </div>
-                          </>
-                        )}
-
-
-
-
-                      </div>
-
-                      {/* Total Harga */}
-                      <div className="flex justify-between items-center px-5 py-4 bg-muted/40 border-t border-border">
-                        <span className="text-sm text-muted-foreground">Total harga</span>
-                        <span className="text-xl font-semibold text-foreground">
-                          Rp {totalPrice.toLocaleString("id-ID")}
-                        </span>
-                      </div>
-
+                      <CustomerFields
+                        userName={userName}
+                        userEmail={userEmail}
+                        userPhone={userPhone}
+                        onNameChange={setUserName}
+                        onEmailChange={setUserEmail}
+                        onPhoneChange={setUserPhone}
+                      />
+                    </>
+                  ) : (
+                    <div className="space-y-2 rounded-lg border border-green-200 bg-green-50 p-4 text-sm">
+                      <p>
+                        <span className="font-semibold">Nama:</span> {userName}
+                      </p>
+                      <p>
+                        <span className="font-semibold">Email:</span> {userEmail}
+                      </p>
+                      <p>
+                        <span className="font-semibold">No. Telepon:</span> {userPhone}
+                      </p>
                     </div>
-                  </div>
-                )
-              }
-              <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-5 mt-6">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="text-yellow-600 text-lg">⚠️</span>
-                  <h4 className="font-semibold text-sm text-yellow-800">
-                    Syarat & Ketentuan
-                  </h4>
-                </div>
+                  )}
 
-                <ul className="space-y-2 text-sm text-yellow-900">
-                  {serviceTerms.map((term, i) => (
-                    <li key={i} className="flex items-start gap-2">
-                      <span className="mt-[6px] w-1.5 h-1.5 rounded-full bg-yellow-500 shrink-0"></span>
-                      <span className="leading-relaxed">{term}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              {/* Navigation Buttons */}
-              <div className="flex gap-3 mt-8 pt-6 border-t border-border">
+                  <BookingSummary
+                    serviceName={service?.name}
+                    city={selectedCity}
+                    branchName={branch?.name}
+                    serviceMode={serviceMode}
+                    address={address}
+                    scheduleType={service?.scheduleType}
+                    selectedDate={selectedDate}
+                    selectedTime={selectedTime}
+                    checkIn={checkIn}
+                    checkOut={checkOut}
+                    peopleLabel={service?.category === "grooming" ? "Groomer" : "Dokter"}
+                    selectedPeople={requiresPeople ? selectedPeople : ""}
+                    pets={pets}
+                    items={service?.item}
+                    totalPrice={totalPrice}
+                  />
+                </div>
+              )}
+
+              {selectedService && (
+                <div className="mt-6 rounded-xl border border-yellow-200 bg-yellow-50 p-5">
+                  <div className="mb-3 flex items-center gap-2">
+                    <span className="text-lg font-bold text-yellow-700">!</span>
+                    <h4 className="text-sm font-semibold text-yellow-800">Syarat & Ketentuan</h4>
+                  </div>
+
+                  <ul className="space-y-2 text-sm text-yellow-900">
+                    {serviceTerms.map((term) => (
+                      <li key={term} className="flex items-start gap-2">
+                        <span className="mt-[6px] h-1.5 w-1.5 shrink-0 rounded-full bg-yellow-500" />
+                        <span className="leading-relaxed">{term}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              <div className="mt-8 flex gap-3 border-t border-border pt-6">
                 <button
-                  onClick={() => {
-                    if (step === 5 && (!service?.item || service.item.length === 0)) {
-                      setStep(3)
-                      return
-                    }
-                    setStep(Math.max(1, step - 1))
-                  }}
-                  disabled={step === 1}
-                  className="px-6 py-2 border border-border rounded-lg font-semibold text-foreground hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed"
+                  type="button"
+                  onClick={goBack}
+                  disabled={displayStep === 1}
+                  className="rounded-lg border border-border px-6 py-2 font-semibold text-foreground hover:bg-muted disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Kembali
                 </button>
 
-                {step < 5 ? (
+                {step < 6 ? (
                   <button
-                    onClick={() => {
-                      if (step === 1 && !selectedService) {
-                        alert("Pilih layanan terlebih dahulu")
-                        return
-                      }
-                      if (step === 1) {
-                        const selected = SERVICES.find(s => s.id === selectedService)
-
-                        if (!selected || !selected.active) {
-                          alert("Layanan tidak tersedia")
-                          return
-                        }
-                      }
-                      if (step === 2) {
-                        if (service?.scheduleType === "single") {
-                          if (!selectedDate || !selectedTime) {
-                            alert("Pilih tanggal dan waktu terlebih dahulu")
-                            return
-                          }
-                        }
-
-                        if (service?.scheduleType === "range") {
-                          if (!checkIn || !checkOut) {
-                            alert("Pilih tanggal check-in dan check-out")
-                            return
-                          }
-                        }
-                        if (step === 2 && service?.requiresPeople && !selectedPeople) {
-                          alert("Pilih dokter/Groomer terlebih dahulu")
-                          return
-                        }
-                      }
-                      if (step === 2 && service?.branchRequired && !selectedBranch) {
-                        alert("Pilih cabang terlebih dahulu")
-                        return
-                      }
-
-                      if (step === 2 && service?.availableModes && !serviceMode) {
-                        alert("Pilih tipe layanan terlebih dahulu")
-                        return
-                      }
-                      if (step === 3 && (!petName || !petType)) {
-                        alert("Isi data hewan peliharaan terlebih dahulu")
-                        return
-                      }
-                      if (step === 3) {
-                        const hasItems = service?.item && service.item.length > 0
-
-                        if (!hasItems) {
-                          setStep(5) // skip step item
-                          return
-                        }
-                      }
-                      if (step === 4) {
-                        const hasItems = service?.item && service.item.length > 0
-                        // Jika layanan memiliki item, maka minimal 1 item utama harus dipilih
-                        if (hasItems && !selectedMainItem) {
-                          alert("Silakan pilih minimal 1 item utama terlebih dahulu")
-                          return
-                        }
-                      }
-                      setStep(step + 1)
-                    }}
-                    className="ml-auto px-6 py-2 bg-primary text-white rounded-lg font-semibold hover:bg-primary/90"
+                    type="button"
+                    onClick={goNext}
+                    className="ml-auto rounded-lg bg-primary px-6 py-2 font-semibold text-white hover:bg-primary/90"
                   >
                     Lanjut
                   </button>
                 ) : (
                   <button
+                    type="button"
                     onClick={handleSubmit}
-                    className="ml-auto px-6 py-2 bg-accent text-white rounded-lg font-semibold hover:bg-accent/90"
+                    className="ml-auto rounded-lg bg-accent px-6 py-2 font-semibold text-white hover:bg-accent/90"
                   >
                     Konfirmasi Booking
                   </button>
                 )}
               </div>
-            </div >
-          </div >
-        </div >
-      </main >
+            </div>
+          </div>
+        </div>
+      </main>
 
       <Footer />
     </>
   )
+}
+
+function PeopleStep({
+  serviceCategory,
+  people,
+  selectedPeople,
+  onSelect,
+}: {
+  serviceCategory?: string
+  people: BookingPerson[]
+  selectedPeople: string
+  onSelect: (name: string) => void
+}) {
+  const isGrooming = serviceCategory === "grooming"
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h2 className="text-2xl font-bold text-foreground">{isGrooming ? "Pilih Groomer" : "Pilih Dokter Spesialis"}</h2>
+        <p className="mt-1 text-sm text-muted-foreground">
+          {isGrooming
+            ? "Pilih groomer yang tersedia di cabang ini."
+            : "Layanan klinik berikutnya akan disaring berdasarkan spesialisasi dokter yang dipilih."}
+        </p>
+      </div>
+
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
+        {people.map((person) => {
+          const isSelected = selectedPeople === person.name
+
+          return (
+            <button
+              key={person.name}
+              type="button"
+              onClick={() => onSelect(person.name)}
+              className={`rounded-lg border p-3 text-left transition ${
+                isSelected ? "border-primary bg-primary/5" : "border-border hover:border-primary"
+              }`}
+            >
+              <img src={person.image} alt={person.name} className="mb-2 h-28 w-full rounded bg-white object-contain" />
+              <p className="text-sm font-semibold leading-tight">{person.name}</p>
+              <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{person.specialty}</p>
+            </button>
+          )
+        })}
+
+        {people.length === 0 && (
+          <p className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
+            Belum ada petugas yang tersedia untuk cabang ini.
+          </p>
+        )}
+      </div>
+    </div>
+  )
+}
+
+function PetOrderCard({
+  index,
+  pet,
+  canRemove,
+  items,
+  scheduleType,
+  totalDays,
+  onUpdate,
+  onRemove,
+}: {
+  index: number
+  pet: PetBooking
+  canRemove: boolean
+  items: ServiceItem[]
+  scheduleType?: "range" | "single"
+  totalDays: number
+  onUpdate: (patch: Partial<PetBooking>) => void
+  onRemove: () => void
+}) {
+  const mainItems = items.filter((item) => item.type === "main")
+  const additionalItems = items.filter((item) => item.type === "additional")
+  const petTotal = getPetPrice(pet, items, scheduleType, totalDays)
+
+  return (
+    <div className="rounded-xl border border-border p-5">
+      <div className="mb-4 flex items-start justify-between gap-3">
+        <h3 className="font-semibold text-foreground">Hewan {index + 1}</h3>
+        {canRemove && (
+          <button type="button" onClick={onRemove} className="text-sm font-semibold text-red-600 hover:underline">
+            Hapus
+          </button>
+        )}
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        <div>
+          <label className="mb-2 block text-sm font-semibold">Nama Hewan</label>
+          <input
+            type="text"
+            value={pet.name}
+            onChange={(event) => onUpdate({ name: event.target.value })}
+            placeholder="Contoh: Buddy"
+            className="w-full rounded-lg border border-input px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          />
+        </div>
+
+        <div>
+          <label className="mb-2 block text-sm font-semibold">Jenis Hewan</label>
+          <select
+            value={pet.type}
+            onChange={(event) => onUpdate({ type: event.target.value })}
+            className="w-full rounded-lg border border-input px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            <option value="">Pilih Jenis Hewan</option>
+            {PET_TYPES.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      <div className="mt-4">
+        <label className="mb-2 block text-sm font-semibold">Catatan Hewan</label>
+        <textarea
+          value={pet.notes}
+          onChange={(event) => onUpdate({ notes: event.target.value })}
+          placeholder="Contoh: alergi, temperamen, riwayat sakit, atau instruksi khusus..."
+          rows={3}
+          className="w-full rounded-lg border border-input px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+        />
+      </div>
+
+      <div className="mt-5 space-y-5">
+        <div>
+          <p className="mb-2 text-sm font-semibold">Layanan Utama</p>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
+            {mainItems.map((item) => (
+              <ItemButton
+                key={item.id}
+                item={item}
+                selected={pet.mainItemId === item.id}
+                onClick={() => onUpdate({ mainItemId: pet.mainItemId === item.id ? "" : item.id })}
+              />
+            ))}
+            {mainItems.length === 0 && (
+              <p className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
+                Tidak ada layanan utama yang cocok dengan jenis hewan dan spesialisasi yang dipilih.
+              </p>
+            )}
+          </div>
+        </div>
+
+        {additionalItems.length > 0 && (
+          <div>
+            <p className="mb-2 text-sm font-semibold">
+              Layanan Tambahan <span className="font-normal text-muted-foreground">(opsional)</span>
+            </p>
+            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
+              {additionalItems.map((item) => (
+                <ItemButton
+                  key={item.id}
+                  item={item}
+                  selected={pet.additionalItemId === item.id}
+                  tone="green"
+                  onClick={() =>
+                    onUpdate({ additionalItemId: pet.additionalItemId === item.id ? "" : item.id })
+                  }
+                />
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <div className="mt-5 flex justify-between border-t border-border pt-4 text-sm">
+        <span className="text-muted-foreground">Subtotal hewan</span>
+        <span className="font-semibold text-foreground">Rp {petTotal.toLocaleString("id-ID")}</span>
+      </div>
+    </div>
+  )
+}
+
+function ItemButton({
+  item,
+  selected,
+  tone = "primary",
+  onClick,
+}: {
+  item: ServiceItem
+  selected: boolean
+  tone?: "primary" | "green"
+  onClick: () => void
+}) {
+  const selectedClass = tone === "green" ? "border-emerald-500 bg-emerald-50" : "border-primary bg-primary/5"
+
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={`rounded-lg border p-3 text-left transition ${
+        selected ? selectedClass : "border-border hover:border-primary"
+      }`}
+    >
+      <p className="text-sm font-medium">{item.name}</p>
+      <p className="mt-1 text-xs text-muted-foreground">Rp {item.price.toLocaleString("id-ID")}</p>
+    </button>
+  )
+}
+
+function CustomerFields({
+  userName,
+  userEmail,
+  userPhone,
+  onNameChange,
+  onEmailChange,
+  onPhoneChange,
+}: {
+  userName: string
+  userEmail: string
+  userPhone: string
+  onNameChange: (value: string) => void
+  onEmailChange: (value: string) => void
+  onPhoneChange: (value: string) => void
+}) {
+  return (
+    <div className="space-y-4">
+      <div>
+        <label className="mb-3 block text-sm font-semibold text-foreground">Nama Lengkap</label>
+        <input
+          type="text"
+          value={userName}
+          onChange={(event) => onNameChange(event.target.value)}
+          placeholder="Nama Lengkap Anda"
+          className="w-full rounded-lg border border-input px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+        />
+      </div>
+
+      <div>
+        <label className="mb-3 block text-sm font-semibold text-foreground">Email</label>
+        <input
+          type="email"
+          value={userEmail}
+          onChange={(event) => onEmailChange(event.target.value)}
+          placeholder="Email Anda"
+          className="w-full rounded-lg border border-input px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+        />
+      </div>
+
+      <div>
+        <label className="mb-3 block text-sm font-semibold text-foreground">No. Telepon</label>
+        <input
+          type="tel"
+          value={userPhone}
+          onChange={(event) => onPhoneChange(event.target.value)}
+          placeholder="No. Telepon Anda"
+          className="w-full rounded-lg border border-input px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
+        />
+      </div>
+    </div>
+  )
+}
+
+function BookingSummary({
+  serviceName,
+  city,
+  branchName,
+  serviceMode,
+  address,
+  scheduleType,
+  selectedDate,
+  selectedTime,
+  checkIn,
+  checkOut,
+  peopleLabel,
+  selectedPeople,
+  pets,
+  items,
+  totalPrice,
+}: {
+  serviceName?: string
+  city: string
+  branchName?: string
+  serviceMode: string
+  address: string
+  scheduleType?: "range" | "single"
+  selectedDate: string
+  selectedTime: string
+  checkIn: string
+  checkOut: string
+  peopleLabel: string
+  selectedPeople: string
+  pets: PetBooking[]
+  items?: ServiceItem[]
+  totalPrice: number
+}) {
+  return (
+    <div className="overflow-hidden rounded-xl border border-border">
+      <div className="bg-blue-50 px-5 py-4">
+        <p className="mb-1 text-xs font-medium uppercase tracking-widest text-blue-600">Ringkasan Booking</p>
+        <p className="text-lg font-semibold text-foreground">{serviceName}</p>
+      </div>
+
+      <div className="space-y-4 px-5 py-4 text-sm">
+        <SummarySection title="Layanan">
+          <SummaryRow label="Kota" value={city || "-"} />
+          <SummaryRow label="Cabang" value={branchName || "-"} />
+          <SummaryRow label="Tipe layanan" value={serviceMode || "-"} />
+          {address && <SummaryRow label="Alamat" value={address} />}
+        </SummarySection>
+
+        <SummarySection title="Jadwal">
+          {scheduleType === "single" ? (
+            <>
+              <SummaryRow label="Tanggal" value={selectedDate || "-"} />
+              <SummaryRow label="Waktu" value={selectedTime || "-"} />
+            </>
+          ) : (
+            <>
+              <SummaryRow label="Check-in" value={checkIn || "-"} />
+              <SummaryRow label="Check-out" value={checkOut || "-"} />
+            </>
+          )}
+        </SummarySection>
+
+        {selectedPeople && (
+          <SummarySection title={peopleLabel}>
+            <SummaryRow label={peopleLabel} value={selectedPeople} />
+          </SummarySection>
+        )}
+
+        <SummarySection title="Hewan Peliharaan">
+          <div className="space-y-3">
+            {pets.map((pet, index) => {
+              const mainItem = findItem(items, pet.mainItemId)
+              const additionalItem = findItem(items, pet.additionalItemId)
+
+              return (
+                <div key={pet.id} className="rounded-lg bg-muted/40 p-3">
+                  <p className="font-semibold text-foreground">Hewan {index + 1}</p>
+                  <div className="mt-2 space-y-1">
+                    <SummaryRow label="Nama" value={pet.name || "-"} />
+                    <SummaryRow label="Jenis" value={pet.type || "-"} />
+                    <SummaryRow label="Catatan" value={pet.notes || "-"} />
+                    <SummaryRow label="Layanan utama" value={mainItem?.name || "-"} />
+                    <SummaryRow label="Layanan tambahan" value={additionalItem?.name || "-"} />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </SummarySection>
+      </div>
+
+      <div className="flex items-center justify-between border-t border-border bg-muted/40 px-5 py-4">
+        <span className="text-sm text-muted-foreground">Total harga</span>
+        <span className="text-xl font-semibold text-foreground">Rp {totalPrice.toLocaleString("id-ID")}</span>
+      </div>
+    </div>
+  )
+}
+
+function SummarySection({ title, children }: { title: string; children: ReactNode }) {
+  return (
+    <div className="border-b border-border pb-4 last:border-b-0 last:pb-0">
+      <p className="mb-2 text-[10px] font-medium uppercase tracking-widest text-muted-foreground">{title}</p>
+      <div className="space-y-2">{children}</div>
+    </div>
+  )
+}
+
+function SummaryRow({ label, value }: { label: string; value: string }) {
+  return (
+    <div className="flex items-start justify-between gap-3">
+      <span className="shrink-0 text-muted-foreground">{label}</span>
+      <span className="text-right font-medium text-foreground">{value}</span>
+    </div>
+  )
+}
+
+function getStepTitle(step: number, category?: string) {
+  if (step === 1) return "Pilih Layanan"
+  if (step === 2) return "Pilih Kota & Cabang"
+  if (step === 3) return "Pilih Jadwal"
+  if (step === 4) return category === "grooming" ? "Pilih Groomer" : "Pilih Dokter Spesialis"
+  if (step === 5) return "Data Hewan & Layanan"
+  return "Konfirmasi & Data Pemesan"
+}
+
+function getSelectedPerson(category: string | undefined, selectedPeople: string) {
+  if (category === "grooming") return GROOMERS.find((person) => person.name === selectedPeople)
+  if (category === "clinic") return DOCTORS.find((person) => person.name === selectedPeople)
+  return undefined
+}
+
+function getFilteredItems(
+  items: ServiceItem[] | undefined,
+  petType: string,
+  searchQuery: string,
+  category: string | undefined,
+  selectedPerson: BookingPerson | undefined,
+) {
+  return (
+    items?.filter((item) => {
+      const matchPet = !item.petType || !petType || item.petType.includes(petType as PetType)
+      const matchSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase())
+      const matchSpecialty =
+        category !== "clinic" ||
+        !selectedPerson ||
+        !item.specialties ||
+        item.specialties.some((specialty) => selectedPerson.specialties.includes(specialty))
+
+      return matchPet && matchSearch && matchSpecialty
+    }) || []
+  )
+}
+
+function getPetPrice(
+  pet: PetBooking,
+  items: ServiceItem[] | undefined,
+  scheduleType: "range" | "single" | undefined,
+  totalDays: number,
+) {
+  const itemTotal = (findItem(items, pet.mainItemId)?.price || 0) + (findItem(items, pet.additionalItemId)?.price || 0)
+  const multiplier = scheduleType === "range" ? Math.max(totalDays + 1, 1) : 1
+
+  return itemTotal * multiplier
+}
+
+function getTotalDays(checkIn: string, checkOut: string) {
+  if (!checkIn || !checkOut) return 0
+
+  const start = new Date(checkIn)
+  const end = new Date(checkOut)
+  const diffTime = end.getTime() - start.getTime()
+
+  return Math.max(Math.ceil(diffTime / (1000 * 60 * 60 * 24)), 0)
+}
+
+function findItem(items: ServiceItem[] | undefined, itemId: string) {
+  return items?.find((item) => item.id === itemId)
+}
+
+function validatePetOrders(pets: PetBooking[], items: ServiceItem[] | undefined) {
+  const hasItems = Boolean(items?.length)
+
+  return pets.every((pet) => pet.name.trim() && pet.type && (!hasItems || pet.mainItemId))
+}
+
+function isPastTime(selectedDate: string, slotTime: string) {
+  if (!selectedDate) return false
+
+  const now = new Date()
+  const selected = new Date(selectedDate)
+
+  if (
+    selected.getFullYear() !== now.getFullYear() ||
+    selected.getMonth() !== now.getMonth() ||
+    selected.getDate() !== now.getDate()
+  ) {
+    return false
+  }
+
+  const [hour, minute] = slotTime.split(":").map(Number)
+  const slotDate = new Date()
+  slotDate.setHours(hour, minute, 0, 0)
+
+  return slotDate <= now
 }

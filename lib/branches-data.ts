@@ -11,10 +11,11 @@ export interface Branch {
     weekend: string
   }
   services: string[]
+  bookingservices?: string[]
   image: string
   coordinates: {
-    lat: number
-    lng: number
+    lat?: number
+    lng?: number
   }
   featured?: boolean
 }
@@ -30,6 +31,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Hotel", "Pet Shop"],
+    "bookingservices": ["grooming", "boarding", "clinic"],
     "image": "/image/Pict 48.jpeg",
     "coordinates": {},
     "featured": false
@@ -45,6 +47,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Hotel", "Pet Shop"],
+    "bookingservices": ["grooming", "boarding", "clinic"],
     "image": "/image/Pict 48.jpeg",
     "coordinates": {},
     "featured": false
@@ -59,6 +62,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Hotel", "Pet Shop"],
+    "bookingservices": ["grooming", "boarding", "clinic"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -73,6 +77,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Hotel", "Pet Shop"],
+    "bookingservices": ["grooming", "boarding", "clinic"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -87,6 +92,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Hotel", "Pet Shop"],
+    "bookingservices": ["grooming", "boarding", "clinic"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -101,6 +107,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Hotel", "Pet Shop"],
+    "bookingservices": ["grooming", "boarding", "clinic"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -115,6 +122,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Hotel", "Pet Shop"],
+    "bookingservices": ["grooming", "boarding", "clinic"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -129,6 +137,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Hotel", "Pet Shop"],
+    "bookingservices": ["grooming", "boarding", "clinic"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -143,6 +152,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Pet Shop"],
+    "bookingservices": [],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -157,6 +167,8 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -171,6 +183,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -185,6 +198,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -199,6 +213,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -213,6 +228,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -227,6 +243,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -241,6 +258,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -255,6 +273,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -269,6 +288,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -283,6 +303,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -297,6 +318,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -311,6 +333,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Pet Shop"],
+    "bookingservices": ["grooming", "boarding", "clinic"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -325,6 +348,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -339,6 +363,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -353,6 +378,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Pet Shop"],
+    "bookingservices": ["grooming", "boarding", "clinic"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -367,6 +393,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -381,6 +408,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -395,6 +423,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -409,6 +438,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -423,6 +453,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false
@@ -437,6 +468,7 @@ export const BRANCHES: Branch[] = [
     "email": "",
     "hours": { "weekday": "08:00 - 21:00", "weekend": "08:00 - 22:00" },
     "services": ["Grooming", "Pet Shop"],
+    "bookingservices": ["grooming"],
     "image": "/image/Pict 32.jpeg",
     "coordinates": {},
     "featured": false

@@ -1,10 +1,33 @@
-import { id, tr } from "date-fns/locale"
-import { url } from "inspector/promises"
+import { BRANCHES as LOCATION_BRANCHES } from "@/lib/branches-data"
+
+export type PetType = "Anjing" | "Kucing"  | "Other"
+
+export type ServiceCategory =
+  | "grooming"
+  | "boarding"
+  | "clinic"
+  | "shop"
+  | "playground"
+  | "delivery"
+  | "petlove"
+  | "petsitter"
+  | "training"
+  | "cremation"
+  | "pettaxi"
+
+export interface ServiceItem {
+  id: string
+  name: string
+  price: number
+  type: "main" | "additional"
+  petType?: PetType[]
+  specialties?: string[]
+}
 
 export interface Service {
   id: string
   name: string
-  category: string
+  category: ServiceCategory
   description: string
   price: number
   image: string
@@ -18,15 +41,25 @@ export interface Service {
   availableModes?: ("Home Visit" | "Walk In" | "Delivery")[]
   branchRequired?: boolean
   requiresPeople?: boolean
-  item?: {
-    id: string
-    name: string
-    price: number
-    type: "main" | "additional"
-    petType?: ("Anjing" | "Kucing")[],
-    specialties?: string[]
-  }[]
+  item?: ServiceItem[]
   scheduleType?: "range" | "single"
+}
+
+export interface Branch {
+  id: string
+  name: string
+  city: "Jakarta" | "Bali" | "Lombok"
+  address: string
+  phone: string
+  services: ServiceCategory[]
+}
+
+export interface BookingPerson {
+  name: string
+  specialty: string
+  specialties: string[]
+  image: string
+  branchId: string
 }
 
 export interface TimeSlot {
@@ -47,6 +80,284 @@ export interface Booking {
 
 
 }
+
+export const CITIES: Branch["city"][] = ["Jakarta", "Bali", "Lombok"]
+
+const BOOKING_SERVICE_CATEGORIES: ServiceCategory[] = [
+  "grooming",
+  "boarding",
+  "clinic",
+  "shop",
+  "playground",
+  "delivery",
+  "petlove",
+  "petsitter",
+  "training",
+  "cremation",
+  "pettaxi",
+]
+
+const BOOKING_CITY_LABELS: Record<string, Branch["city"]> = {
+  jakarta: "Jakarta",
+  bali: "Bali",
+  lombok: "Lombok",
+}
+
+const isBookingServiceCategory = (service: string): service is ServiceCategory =>
+  BOOKING_SERVICE_CATEGORIES.includes(service as ServiceCategory)
+
+const toWhatsAppNumber = (phone: string) => {
+  const digits = phone.replace(/\D/g, "")
+
+  if (digits.startsWith("0")) return `62${digits.slice(1)}`
+
+  return digits
+}
+
+export const BRANCHES: Branch[] = LOCATION_BRANCHES.map((branch) => ({
+  id: branch.id,
+  name: branch.name,
+  city: BOOKING_CITY_LABELS[branch.city],
+  address: branch.address,
+  phone: toWhatsAppNumber(branch.whatsapp || branch.phone),
+  services: (branch.bookingservices || []).filter(isBookingServiceCategory),
+}))
+
+export const DOCTORS: BookingPerson[] = [
+  // {
+  //   name: "Drh. Fransisca Olivia Ratna Dilla",
+  //   specialty: "Special Interest, Feline Internal Medicine",
+  //   specialties: ["Feline Internal Medicine"],
+  //   experience: "",
+  //   image: "/doctor/drh Fransisca.png",
+  //   lokasi: "Jakarta"
+  // },
+  // {
+  //   name: "Drh. Brillian Firmania Puspa Agny",
+  //   specialty: "General Practitioner",
+  //   specialties: ["General Practitioner"],
+  //   experience: "",
+  //   image: "/doctor/Drh Brillian.png",
+  //   lokasi: "Jakarta"
+  // },
+  {
+    name: "Drh. Agung Supriyono",
+    specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator",
+    specialties: ["Exotic Pet", "Dermatology", "Surgery", "Stemcell Therapy"],
+    image: "/doctor/Drh Agung Supriono.png",
+    branchId: "jj-pet-house-jakarta",
+  },
+  // {
+  //   name: "Drh. Dita Pratiwi Dwi Setyowati",
+  //   specialty: "General Practitioner",
+  //   specialties: ["General Practitioner"],
+  //   experience: "",
+  //   image: "/doctor/drh Dita.png",
+  //   lokasi: "Jakarta"
+  // },
+  {
+    name: "Drh. Frida Ayu Salsana Billa",
+    specialty: "General Practitioner",
+    specialties: ["General Practitioner"],
+    image: "/doctor/Frida Ayu Salsana Billa.png",
+    branchId: "jj-pet-house-balian",
+  },
+  {
+    name: "Drh. Yunita Atok",
+    specialty: "General Practitioner",
+    specialties: ["General Practitioner"],
+    image: "/doctor/yunita atok.png",
+    branchId: "jj-pet-house-balian",
+  },
+  {
+    name: "Drh. Chendini Maharani",
+    specialty: "General Practitioner",
+    specialties: ["General Practitioner"],
+    image: "/doctor/Chendini Maharani.png",
+    branchId: "jj-pet-house-balian",
+  },
+  {
+    name: "Drh. Adinda, S.KH",
+    specialty: "General Veterinary Practitioner, Internal Medicine, Veterinary Dermatology, Emergency and Critical Care, Basic Surgery",
+    specialties: [
+      "General Practitioner",
+      "Internal Medicine",
+      "Dermatology",
+      "Emergency and Critical Care",
+      "Surgery",
+    ],
+    image: "/doctor/adinda 55.png",
+    branchId: "jj-pet-house-balian",
+  },
+  {
+    name: "Drh. Christiyanti Rambu Gedi",
+    specialty: "Universitas Wijaya Kusuma Surabaya",
+    specialties: ["General Practitioner"],
+    image: "/doctor/Christiyanti Rambu Gedi.png",
+    branchId: "jj-pet-house-balian",
+  },
+  {
+    name: "Drh. Putu Aditya Pratama Artha Putra, S.KH",
+    specialty: "Surgery, Internal Medicine, Vaccine, Dentistry, Urgent Care",
+    specialties: ["Surgery", "Internal Medicine", "Vaccination", "Dentistry", "Urgent Care"],
+    image: "/doctor/Aditya Pratama.png",
+    branchId: "jj-pet-house-balian",
+  },
+  {
+    name: "Drh. Jessy Filomena Fernanda Bento, S.KH",
+    specialty: "General Practitioner, Special Interest Dermatology",
+    specialties: ["General Practitioner", "Dermatology"],
+    image: "/doctor/Jessy Filomena.png",
+    branchId: "jj-pet-house-balian",
+  },
+  {
+    name: "Drh. Dewi Ratnasari",
+    specialty: "General Practitioner, Special Interest Hematology and Radiography",
+    specialties: ["General Practitioner", "Hematology", "Radiography"],
+    image: "/doctor/Dewi Ratnasari.png",
+    branchId: "jj-pet-house-balian",
+  },
+  {
+    name: "Drh. Owen Fernando",
+    specialty: "General Practitioner",
+    specialties: ["General Practitioner"],
+    image: "/doctor/Owen Fernando.png",
+    branchId: "jj-pet-house-balian",
+  },
+  {
+    name: "Drh. I Made Agus Wirawan",
+    specialty: "General Practitioner",
+    specialties: ["General Practitioner"],
+    image: "/doctor/I Made Agus Wirawan.png",
+    branchId: "jj-pet-house-balian",
+  },
+  
+]
+
+export const GROOMERS: BookingPerson[] = [
+  {
+    name: "Rama",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/rama.png",
+    branchId: "jj-pet-house-jakarta",
+  },
+  {
+    name: "Fallen",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/fallen.png",
+    branchId: "jj-pet-house-jakarta",
+  },
+  {
+    name: "Ama",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/Ama-pusat.jpeg",
+    branchId: "jj-pet-house-jakarta",
+  },
+
+  //Jimbaran
+  {
+    name: "Acik",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/acik-jimbaran.jpeg",
+    branchId: "jj-pet-jimbaran",
+  },
+
+  //Udayana
+  {
+    name: "Ari",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/Ari-Udayana.jpeg",
+    branchId: "jj-pet-house-udayana",
+  },
+  {
+    name: "Bio",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/Bio-Udayana.jpeg",
+    branchId: "jj-pet-house-udayana",
+  },
+  //sidakarya
+  {
+    name: "Crispinus M.Goa",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/Cris-sidakarya pemogan.jpeg",
+    branchId: "jj-pet-sidakarya",
+  },
+
+  //peliatan
+  {
+    name: "Daniel",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/Daniel-peliatan.jpeg",
+    branchId: "jj-pet-peliatan",
+  },
+
+  //dalung
+   {
+    name: "Kadek Heri Wantika",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/Kadek Heri Wantika-dalung.jpeg",
+    branchId: "jj-pet-dalung",
+  },
+  
+  //Balian
+  {
+    name: "Alin Sigalingging",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/Balian Alin Sigalingging.jpeg",
+    branchId: "jj-pet-house-balian",
+  },
+  {
+    name: "Julius Indra",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/Kennel Balian Julius Indra.jpeg",
+    branchId: "jj-pet-house-balian",
+  },
+  {
+    name: "Supendinata",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/Kennel Balian Supendinata.jpeg",
+    branchId: "jj-pet-house-balian",
+  },
+  {
+    name: "Robi Benu",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/Robi Benu-Balian.jpeg",
+    branchId: "jj-pet-house-balian",
+  },
+  
+  //kedewatan
+  {
+    name: "Rensa",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/Rensa-Kedewatan.jpeg",
+    branchId: "jj-pet-kedewatan",
+  },
+
+  //cab ayani tidak ada
+  // {
+  //   name: "Wayan Djobi Djoba",
+  //   specialty: "Dog & Cat Grooming",
+  //   specialties: ["Grooming"],
+  //   image: "/groomer/Wayan Djobi Djoba - ayani.jpeg",
+  //   branchId: "jj-pet-house-ayani",
+  // },
+ 
+  
+]
 
 export const SERVICES: Service[] = [
   {
@@ -361,4 +672,4 @@ export const TIME_SLOTS: TimeSlot[] = [
   { time: "23:00", available: true },
 ]
 
-export const PET_TYPES = ["Anjing", "Kucing", "Other"]
+export const PET_TYPES: PetType[] = ["Anjing", "Kucing", "Other"]
