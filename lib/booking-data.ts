@@ -143,7 +143,7 @@ export const DOCTORS: BookingPerson[] = [
   {
     name: "Drh. Agung Supriyono",
     specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator",
-    specialties: ["Exotic Pet", "Dermatology", "Surgery", "Stemcell Therapy"],
+    specialties: ["Exotic Pet", "Dermatology", "Surgery", "Stemcell Therapy","General Practitioner",],
     image: "/doctor/Drh Agung Supriono.png",
     branchId: "jj-pet-house-jakarta",
   },
@@ -194,12 +194,12 @@ export const DOCTORS: BookingPerson[] = [
     specialty: "Universitas Wijaya Kusuma Surabaya",
     specialties: ["General Practitioner"],
     image: "/doctor/Christiyanti Rambu Gedi.png",
-    branchId: "jj-pet-house-balian",
+    branchId: "jj-pet-house-udayana",
   },
   {
     name: "Drh. Putu Aditya Pratama Artha Putra, S.KH",
     specialty: "Surgery, Internal Medicine, Vaccine, Dentistry, Urgent Care",
-    specialties: ["Surgery", "Internal Medicine", "Vaccination", "Dentistry", "Urgent Care"],
+    specialties: ["Surgery", "Internal Medicine", "Vaccination", "Dentistry", "Urgent Care","General Practitioner",],
     image: "/doctor/Aditya Pratama.png",
     branchId: "jj-pet-house-balian",
   },
@@ -208,14 +208,14 @@ export const DOCTORS: BookingPerson[] = [
     specialty: "General Practitioner, Special Interest Dermatology",
     specialties: ["General Practitioner", "Dermatology"],
     image: "/doctor/Jessy Filomena.png",
-    branchId: "jj-pet-house-balian",
+    branchId: "jj-pet-house-udayana",
   },
   {
     name: "Drh. Dewi Ratnasari",
     specialty: "General Practitioner, Special Interest Hematology and Radiography",
     specialties: ["General Practitioner", "Hematology", "Radiography"],
     image: "/doctor/Dewi Ratnasari.png",
-    branchId: "jj-pet-house-balian",
+    branchId: "jj-pet-house-udayana",
   },
   {
     name: "Drh. Owen Fernando",
@@ -229,8 +229,37 @@ export const DOCTORS: BookingPerson[] = [
     specialty: "General Practitioner",
     specialties: ["General Practitioner"],
     image: "/doctor/I Made Agus Wirawan.png",
+    branchId: "jj-pet-house-udayana",
+  },
+  {
+    name: "Drh. Sagung Istri Wahyunin diarie,S.,kh.",
+    specialty: "General Practitioner",
+    specialties: ["General Practitioner"],
+    image: "/doctor/Sagung Istri Wahyunin.png",
+    branchId: "jj-pet-house-udayana",
+  },
+  {
+    name: "Drh. Miranti Rahma Yunita",
+    specialty: "General Practitioner",
+    specialties: ["General Practitioner"],
+    image: "/doctor/Miranti Rahma Yunita.png",
+    branchId: "jj-pet-house-udayana",
+  },
+   {
+    name: "Drh. Devi",
+    specialty: "Internal Medicine",
+    specialties: ["internal medicine"],
+    image: "/doctor/Drh. Devi - Internis.jpeg",
     branchId: "jj-pet-house-balian",
   },
+   {
+    name: "Drh. Tuis",
+    specialty: "Surgery",
+    specialties: ["Surgery"],
+    image: "/doctor/Drh Tuis - Surgeon.jpeg",
+    branchId: "jj-pet-house-balian",
+  },
+
   
 ]
 
@@ -448,60 +477,684 @@ export const SERVICES: Service[] = [
     branchRequired: true,
     item: [
       {
-        id: "consultation_general",
-        name: "Konsultasi Umum",
+        id: "sewa_alat_mikroskop",
+        name: "Sewa Alat Mikroskop",
+        price: 1500,
+        petType: ["Anjing", "Kucing", "Other"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "fee_dokter_hewan_exotic",
+        name: "FEE DOKTER HEWAN EXOTIC",
         price: 200000,
+        petType: ["Anjing", "Kucing", "Other"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "vagina_smear_test",
+        name: "VAGINA SMEAR TEST",
+        price: 230000,
         petType: ["Anjing", "Kucing"],
         type: "main",
         specialties: ["General Practitioner"]
       },
       {
-        id: "vaccination",
-        name: "Vaksinasi",
-        price: 250000,
+        id: "neuter_cat_sterilization",
+        name: "NEUTER CAT STERILIZATION",
+        price: 800000,
+        petType: ["Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "blood_test_cbc_surgery",
+        name: "BLOOD TEST / CBC SURGERY",
+        price: 288000,
         petType: ["Anjing", "Kucing"],
         type: "main",
         specialties: ["General Practitioner"]
       },
       {
-        id: "dermatology",
-        name: "Pemeriksaan Dermatologi",
+        id: "konsultasi_online",
+        name: "KONSULTASI ONLINE 10-60 menit",
+        price: 85000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "amputation_inhalasi",
+        name: "AMPUTATION-INHALASI",
+        price: 3000000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "xray_test_cv_putri_jeje",
+        name: "X-RAY TEST CV PUTRI JEJE (PER FOTO)",
+        price: 450000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "spay_dog_abortion_inhalasi",
+        name: "SPAY DOG STERILLIZATION+ABORTION-INHALASI",
+        price: 150000,
+        petType: ["Anjing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "spay_dog_abortion_general_anestesi",
+        name: "SPAY DOG STERILLIZATION+ABORTION-GENERAL ANESTESI",
+        price: 150000,
+        petType: ["Anjing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "home_visit_member",
+        name: "HOME VISIT MEMBER",
+        price: 120000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "dental_scaling_general_anestesi",
+        name: "DENTAL SCALLING DOG/CATS-GENRAL ANESTESI",
+        price: 1700000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "dental_scaling_inhalasi",
+        name: "DENTAL SCALLING DOG/CATS-INHALASI",
+        price: 2500000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "spay_dog_general_anestesi",
+        name: "SPAY DOG STERILLIZATION-GENERAL ANESTESI",
+        price: 2200000,
+        petType: ["Anjing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "spay_dog_inhalasi",
+        name: "SPAY DOG STERILLIZATION-INHALASI",
+        price: 2500000,
+        petType: ["Anjing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "neuter_dog_general_anestesi",
+        name: "NEUTER DOG STERILLIZATION-GENERAL ANESTESI",
+        price: 1200000,
+        petType: ["Anjing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "spay_cat_sterilization",
+        name: "SPAY CAT STERILIZATION",
+        price: 0,
+        petType: ["Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "spay_pyometra",
+        name: "SPAY PYOMETRA",
+        price: 214000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "handling_fee",
+        name: "HANDLING FEE",
         price: 300000,
         petType: ["Anjing", "Kucing"],
         type: "main",
-        specialties: ["Dermatology"]
+        specialties: ["General Practitioner"]
       },
       {
-        id: "surgery",
-        name: "Konsultasi Bedah",
-        price: 350000,
+        id: "ultrasonografi_diagnostic",
+        name: "ULTRASONOGRAFI DIAGNOSTIC",
+        price: 450000,
         petType: ["Anjing", "Kucing"],
         type: "main",
-        specialties: ["Surgery"]
+        specialties: ["General Practitioner"]
       },
       {
-        id: "radiography",
-        name: "Radiografi",
-        price: 400000,
+        id: "electrocardiography",
+        name: "Electrocardiography (Cardiac)",
+        price: 450000,
         petType: ["Anjing", "Kucing"],
         type: "main",
-        specialties: ["Radiography"]
+        specialties: ["General Practitioner"]
       },
       {
-        id: "hematology",
-        name: "Pemeriksaan Hematologi",
+        id: "boarding",
+        name: "BOARDING",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "visit_booking",
+        name: "VISIT BOKING",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "fine_needle_aspiration",
+        name: "Fine Needle Aspiration(FNA)",
+        price: 800000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "complete_fecal_test",
+        name: "COMPLETE FECAL TEST",
+        price: 500000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "smear_fecal",
+        name: "SMEAR FECAL",
         price: 300000,
         petType: ["Anjing", "Kucing"],
         type: "main",
-        specialties: ["Hematology"]
+        specialties: ["General Practitioner"]
       },
       {
-        id: "exotic_pet",
-        name: "Konsultasi Hewan Eksotik",
+        id: "floating_fecal_cv",
+        name: "FLOATING FECAL CV",
         price: 350000,
-        petType: ["Hewan Eksotik"],
+        petType: ["Anjing", "Kucing"],
         type: "main",
-        specialties: ["Exotic Pet"]
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "natif_fecal_cv",
+        name: "NATIF FECAL CV",
+        price: 150000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "infrared",
+        name: "INFRARED",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "oxygen",
+        name: "OXYGEN",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "general_checkup_boarding_grooming",
+        name: "GENERAL CHECK UP PET BOARDING & GROOMING",
+        price: 20000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "home_visit",
+        name: "HOME VISIT",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "hospitalization_infeksius",
+        name: "HOSPITALIZATION INFEKSIUS",
+        price: 165000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "hospitalization_non_infeksius",
+        name: "HOSPITALIZATION NON INFEKSIUS",
+        price: 150000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "desharping_teeth",
+        name: "DESHARPING TEETH",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "upcoming_booking",
+        name: "UPCOMING BOOKING",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "akupuntur",
+        name: "AKUPUNTUR",
+        price: 540000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "hemapo_spuit",
+        name: "HEMAPO + SPUIT",
+        price: 28800,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "fee_wound_treatment",
+        name: "FEE WOUND TREATMENT",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "fecal_test_citology",
+        name: "FECAL TEST CITOLOGY",
+        price: 198000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "euthanasia",
+        name: "EUTHANASIA",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "papiloma_surgery",
+        name: "PAPILOMA SURGERY",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "fee_partus",
+        name: "FEE PARTUS",
+        price: 270000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "entropion",
+        name: "ENTROPION",
+        price: 360000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "nail_clipper",
+        name: "NAIL CLIPPER",
+        price: 24000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "vaksinasi",
+        name: "VAKSINASI",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "prolapsus_vagina",
+        name: "PROLAPSUS VAGINA",
+        price: 170000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "vulnus",
+        name: "VULNUS",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "prolapsus_ani",
+        name: "PROLAPSUS ANI",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "prolapsus_oculi",
+        name: "PROLAPSUS OCULI",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "hematoma",
+        name: "HEMATOMA",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "abcess",
+        name: "ABCESS",
+        price: 360000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "scalling",
+        name: "SCALLING",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "caesar",
+        name: "CAESAR",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "neuter",
+        name: "NEUTER",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "abortion",
+        name: "ABORTION",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "miasis",
+        name: "MIASIS",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "hernia",
+        name: "HERNIA",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "scrotal_ablation",
+        name: "SCROTAL ABLATION",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "kateterisasi",
+        name: "KATETERISASI",
+        price: 270000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "cherry_eye",
+        name: "CHERRY EYE",
+        price: 72500,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "enukleasi",
+        name: "ENUKLEASI",
+        price: 360000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "tail_docking",
+        name: "TAIL DOCKING",
+        price: 360000,
+        petType: ["Anjing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "blood_test_cbc",
+        name: "BLOOD TEST / CBC",
+        price: 288000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "blood_test_kolega_sample",
+        name: "BLOOD TEST KOLEGA/SAMPLE",
+        price: 231000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "blood_smear_test",
+        name: "BLOOD SMEAR TEST",
+        price: 432000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "test_calici",
+        name: "TEST CALICI",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "complete_test_scrapping_cytology",
+        name: "COMPLETE TEST (SCRAPPING & CYTOLOGY)",
+        price: 230000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "xray_test",
+        name: "X-RAY TEST",
+        price: 450000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "ear_mites_test",
+        name: "EAR MITES TEST",
+        price: 72000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "feces_test",
+        name: "FECES TEST",
+        price: 90000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "test_pt_aptt",
+        name: "TEST PT APTT",
+        price: 432000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "collect_blood_sample_test",
+        name: "COLLECT BLOOD SAMPLE TEST",
+        price: 432000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "antibiotik_infus",
+        name: "ANTIBIOTIK INFUS",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "injeksi_gs_spuit",
+        name: "INJEKSI GS + SPUIT",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "treatment_anak_ekor",
+        name: "TREATMENT ANAK / EKOR",
+        price: 36000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "flushing_catheter",
+        name: "FLUSHING CATHETER",
+        price: 54000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "aspirasi",
+        name: "ASPIRASI",
+        price: 144000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "general_checkup",
+        name: "GENERAL CHECK UP",
+        price: 0,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "fee_dokter",
+        name: "FEE DOKTER",
+        price: 150000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "fee_infus",
+        name: "FEE INFUS",
+        price: 144000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "fee_ekplorasi_rektal",
+        name: "FEE EKPLORASI REKTAL",
+        price: 144000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "ear_cleaning",
+        name: "EAR CLEANING",
+        price: 72000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "cleaning_wound",
+        name: "CLEANING WOUND",
+        price: 72000,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
+      },
+      {
+        id: "spay",
+        name: "SPAY",
+        price: 21600,
+        petType: ["Anjing", "Kucing"],
+        type: "main",
+        specialties: ["General Practitioner"]
       }
     ],
     scheduleType: "single",

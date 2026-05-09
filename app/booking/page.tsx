@@ -18,6 +18,7 @@ import {
   type PetType,
   type ServiceItem,
 } from "@/lib/booking-data"
+import { BRANCHES as BRANCHES_LOCATION } from "@/lib/branches-data"
 
 type PetBooking = {
   id: string
@@ -90,6 +91,23 @@ export default function BookingPage() {
 
   const service = SERVICES.find((item) => item.id === selectedService)
   const branch = BRANCHES.find((item) => item.id === selectedBranch)
+  const mapBranch = useMemo(() => BRANCHES_LOCATION.find((item) => item.id === selectedBranch), [selectedBranch])
+  const mapQuery = useMemo(() => {
+    if (!mapBranch) return ""
+
+    const hasCoordinates =
+      typeof mapBranch.coordinates?.lat === "number" && typeof mapBranch.coordinates?.lng === "number"
+    if (hasCoordinates) {
+      return `${mapBranch.coordinates.lat},${mapBranch.coordinates.lng}`
+    }
+
+    return mapBranch.address || ""
+  }, [mapBranch])
+
+  const mapUrl = useMemo(() => {
+    if (!mapQuery) return ""
+    return `https://maps.google.com/maps?q=${encodeURIComponent(mapQuery)}&z=16&output=embed`
+  }, [mapQuery])
   const serviceTerms = TERMS[service?.category ?? "default"] || TERMS.default
   const requiresPeople = Boolean(service?.requiresPeople)
   const visibleSteps = requiresPeople ? [1, 2, 3, 4, 5, 6] : [1, 2, 3, 5, 6]
@@ -191,6 +209,15 @@ export default function BookingPage() {
 
     const currentIndex = visibleSteps.indexOf(step)
     setStep(visibleSteps[currentIndex + 1] || 6)
+  }
+
+  const handlePeopleSelect = (name: string) => {
+    setSelectedPeople(name)
+
+    if (step === 4 && requiresPeople) {
+      const currentIndex = visibleSteps.indexOf(4)
+      setStep(visibleSteps[currentIndex + 1] || 6)
+    }
   }
 
   const validateStep = () => {
@@ -397,22 +424,38 @@ Rp ${totalPrice.toLocaleString("id-ID")}
                       </p>
                     ) : (
                       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                        {availableBranches.map((item) => (
-                          <button
-                            key={item.id}
-                            type="button"
-                            onClick={() => {
-                              setSelectedBranch(item.id)
+                        {availableBranches.length > 0 && (
+                          <select
+                            value={selectedBranch}
+                            onChange={(event) => {
+                              setSelectedBranch(event.target.value)
                               setSelectedPeople("")
                             }}
-                            className={`rounded-lg border p-4 text-left transition ${
-                              selectedBranch === item.id ? "border-primary bg-primary/5" : "border-border hover:border-primary"
-                            }`}
+                            className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary md:col-span-2"
                           >
-                            <p className="font-semibold text-foreground">{item.name}</p>
-                            <p className="mt-1 text-sm text-muted-foreground">{item.address}</p>
-                          </button>
-                        ))}
+                            <option value="">Pilih Cabang</option>
+                            {availableBranches.map((item) => (
+                              <option key={item.id} value={item.id}>
+                                {item.name}
+                              </option>
+                            ))}
+                          </select>
+                        )}
+
+                        {selectedBranch && branch && mapUrl && (
+                          <div className="overflow-hidden rounded-lg border border-border md:col-span-2">
+                            <iframe
+                              title={`Map ${branch.name}`}
+                              src={mapUrl}
+                              width="100%"
+                              height="320"
+                              loading="lazy"
+                              referrerPolicy="no-referrer-when-downgrade"
+                              className="w-full"
+                            />
+                          </div>
+                        )}
+
                         {availableBranches.length === 0 && (
                           <p className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
                             Belum ada cabang di kota ini yang menyediakan {service?.name}.
@@ -542,7 +585,7 @@ Rp ${totalPrice.toLocaleString("id-ID")}
                   serviceCategory={service?.category}
                   people={filteredPeople}
                   selectedPeople={selectedPeople}
-                  onSelect={setSelectedPeople}
+                  onSelect={handlePeopleSelect}
                 />
               )}
 
