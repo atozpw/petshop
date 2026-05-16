@@ -598,13 +598,13 @@ Rp ${totalPrice.toLocaleString("id-ID")}
                         Tambahkan lebih dari satu hewan dalam order yang sama, lalu pilih layanan untuk masing-masing hewan.
                       </p>
                     </div>
-                    <button
+                    {/* <button
                       type="button"
                       onClick={addPet}
                       className="rounded-lg border border-primary px-4 py-2 text-sm font-semibold text-primary hover:bg-primary/5"
                     >
                       Tambah Hewan
-                    </button>
+                    </button> */}
                   </div>
 
                   <div className="relative">
@@ -631,6 +631,13 @@ Rp ${totalPrice.toLocaleString("id-ID")}
                         onRemove={() => removePet(pet.id)}
                       />
                     ))}
+                    <button
+                        type="button"
+                        onClick={addPet}
+                        className="w-full rounded-xl border-2 border-dashed border-primary px-4 py-3 text-sm font-semibold text-primary transition hover:bg-primary/5"
+                      >
+                        + Tambah Hewan Lagi
+                      </button>
                   </div>
                 </div>
               )}
