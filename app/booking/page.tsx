@@ -83,7 +83,6 @@ export default function BookingPage() {
   const [checkOut, setCheckOut] = useState("")
   const [selectedPeople, setSelectedPeople] = useState("")
   const [pets, setPets] = useState<PetBooking[]>([createPet(1)])
-  const [searchQuery, setSearchQuery] = useState("")
   const [userEmail, setUserEmail] = useState("")
   const [userName, setUserName] = useState("")
   const [userPhone, setUserPhone] = useState("")
@@ -168,7 +167,6 @@ export default function BookingPage() {
     setCheckOut("")
     setSelectedPeople("")
     setPets([createPet(1)])
-    setSearchQuery("")
   }
 
   const handleCitySelect = (city: Branch["city"]) => {
@@ -425,21 +423,14 @@ Rp ${totalPrice.toLocaleString("id-ID")}
                     ) : (
                       <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
                         {availableBranches.length > 0 && (
-                          <select
+                          <BranchDropdown
+                            branches={availableBranches}
                             value={selectedBranch}
-                            onChange={(event) => {
-                              setSelectedBranch(event.target.value)
+                            onChange={(branchId) => {
+                              setSelectedBranch(branchId)
                               setSelectedPeople("")
                             }}
-                            className="w-full rounded-lg border border-input bg-background px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-primary md:col-span-2"
-                          >
-                            <option value="">Pilih Cabang</option>
-                            {availableBranches.map((item) => (
-                              <option key={item.id} value={item.id}>
-                                {item.name}
-                              </option>
-                            ))}
-                          </select>
+                          />
                         )}
 
                         {selectedBranch && branch && mapUrl && (
@@ -607,16 +598,6 @@ Rp ${totalPrice.toLocaleString("id-ID")}
                     </button> */}
                   </div>
 
-                  <div className="relative">
-                    <input
-                      type="text"
-                      value={searchQuery}
-                      onChange={(event) => setSearchQuery(event.target.value)}
-                      placeholder="Cari nama layanan..."
-                      className="w-full rounded-lg border border-input bg-background px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-                    />
-                  </div>
-
                   <div className="space-y-5">
                     {pets.map((pet, index) => (
                       <PetOrderCard
@@ -624,7 +605,7 @@ Rp ${totalPrice.toLocaleString("id-ID")}
                         index={index}
                         pet={pet}
                         canRemove={pets.length > 1}
-                        items={getFilteredItems(service?.item, pet.type, searchQuery, service?.category, selectedPerson)}
+                        items={getFilteredItems(service?.item, pet.type, "", service?.category, selectedPerson)}
                         scheduleType={service?.scheduleType}
                         totalDays={totalDays}
                         onUpdate={(patch) => updatePet(pet.id, patch)}
@@ -833,6 +814,8 @@ function PetOrderCard({
   const mainItems = items.filter((item) => item.type === "main")
   const additionalItems = items.filter((item) => item.type === "additional")
   const petTotal = getPetPrice(pet, items, scheduleType, totalDays)
+  const selectedMainItem = findItem(items, pet.mainItemId)
+  const selectedAdditionalItem = findItem(items, pet.additionalItemId)
 
   return (
     <div className="rounded-xl border border-border p-5">
@@ -887,42 +870,30 @@ function PetOrderCard({
 
       <div className="mt-5 space-y-5">
         <div>
-          <p className="mb-2 text-sm font-semibold">Layanan Utama</p>
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
-            {mainItems.map((item) => (
-              <ItemButton
-                key={item.id}
-                item={item}
-                selected={pet.mainItemId === item.id}
-                onClick={() => onUpdate({ mainItemId: pet.mainItemId === item.id ? "" : item.id })}
-              />
-            ))}
-            {mainItems.length === 0 && (
-              <p className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">
-                Tidak ada layanan utama yang cocok dengan jenis hewan dan spesialisasi yang dipilih.
-              </p>
-            )}
-          </div>
+          <ServiceItemDropdown
+            label="Layanan Utama"
+            items={mainItems}
+            value={pet.mainItemId}
+            selectedItem={selectedMainItem}
+            emptyText="Tidak ada layanan utama yang cocok dengan jenis hewan dan spesialisasi yang dipilih."
+            placeholder="Pilih layanan utama"
+            onChange={(itemId) => onUpdate({ mainItemId: itemId })}
+          />
         </div>
 
         {additionalItems.length > 0 && (
           <div>
-            <p className="mb-2 text-sm font-semibold">
-              Layanan Tambahan <span className="font-normal text-muted-foreground">(opsional)</span>
-            </p>
-            <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3">
-              {additionalItems.map((item) => (
-                <ItemButton
-                  key={item.id}
-                  item={item}
-                  selected={pet.additionalItemId === item.id}
-                  tone="green"
-                  onClick={() =>
-                    onUpdate({ additionalItemId: pet.additionalItemId === item.id ? "" : item.id })
-                  }
-                />
-              ))}
-            </div>
+            <ServiceItemDropdown
+              label="Layanan Tambahan"
+              labelHint="(opsional)"
+              items={additionalItems}
+              value={pet.additionalItemId}
+              selectedItem={selectedAdditionalItem}
+              emptyText="Tidak ada layanan tambahan yang cocok."
+              placeholder="Pilih layanan tambahan"
+              optional
+              onChange={(itemId) => onUpdate({ additionalItemId: itemId })}
+            />
           </div>
         )}
       </div>
@@ -935,30 +906,180 @@ function PetOrderCard({
   )
 }
 
-function ItemButton({
-  item,
-  selected,
-  tone = "primary",
-  onClick,
+function BranchDropdown({
+  branches,
+  value,
+  onChange,
 }: {
-  item: ServiceItem
-  selected: boolean
-  tone?: "primary" | "green"
-  onClick: () => void
+  branches: Branch[]
+  value: string
+  onChange: (branchId: string) => void
 }) {
-  const selectedClass = tone === "green" ? "border-emerald-500 bg-emerald-50" : "border-primary bg-primary/5"
+  const [isOpen, setIsOpen] = useState(false)
+  const [query, setQuery] = useState("")
+  const selectedBranch = branches.find((branch) => branch.id === value)
+  const filteredBranches = branches.filter((branch) => {
+    const keyword = query.toLowerCase()
+
+    return branch.name.toLowerCase().includes(keyword) || branch.address.toLowerCase().includes(keyword)
+  })
+
+  const handleSelect = (branchId: string) => {
+    onChange(branchId)
+    setIsOpen(false)
+    setQuery("")
+  }
 
   return (
-    <button
-      type="button"
-      onClick={onClick}
-      className={`rounded-lg border p-3 text-left transition ${
-        selected ? selectedClass : "border-border hover:border-primary"
-      }`}
-    >
-      <p className="text-sm font-medium">{item.name}</p>
-      <p className="mt-1 text-xs text-muted-foreground">Rp {item.price.toLocaleString("id-ID")}</p>
-    </button>
+    <div className="relative md:col-span-2">
+      <button
+        type="button"
+        onClick={() => setIsOpen((current) => !current)}
+        className="flex w-full items-center justify-between gap-3 rounded-lg border border-input bg-background px-4 py-3 text-left text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+      >
+        <span className={selectedBranch ? "text-foreground" : "text-muted-foreground"}>
+          {selectedBranch ? selectedBranch.name : "Pilih Cabang"}
+        </span>
+        <span className="shrink-0 text-muted-foreground">v</span>
+      </button>
+
+      {isOpen && (
+        <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-lg border border-border bg-white shadow-lg">
+          <div className="border-b border-border p-2">
+            <input
+              type="text"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Cari nama atau alamat cabang..."
+              className="w-full rounded-md border border-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+              autoFocus
+            />
+          </div>
+
+          <div className="max-h-64 overflow-y-auto py-1">
+            {filteredBranches.map((branch) => (
+              <button
+                key={branch.id}
+                type="button"
+                onClick={() => handleSelect(branch.id)}
+                className={`w-full px-3 py-2 text-left text-sm hover:bg-muted ${
+                  value === branch.id ? "bg-primary/5 text-primary" : "text-foreground"
+                }`}
+              >
+                <span className="block font-medium">{branch.name}</span>
+                <span className="line-clamp-2 text-xs text-muted-foreground">{branch.address}</span>
+              </button>
+            ))}
+
+            {filteredBranches.length === 0 && (
+              <p className="px-3 py-4 text-sm text-muted-foreground">Cabang tidak ditemukan.</p>
+            )}
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function ServiceItemDropdown({
+  label,
+  labelHint,
+  items,
+  value,
+  selectedItem,
+  emptyText,
+  placeholder,
+  optional = false,
+  onChange,
+}: {
+  label: string
+  labelHint?: string
+  items: ServiceItem[]
+  value: string
+  selectedItem?: ServiceItem
+  emptyText: string
+  placeholder: string
+  optional?: boolean
+  onChange: (itemId: string) => void
+}) {
+  const [isOpen, setIsOpen] = useState(false)
+  const [query, setQuery] = useState("")
+  const filteredItems = items.filter((item) => item.name.toLowerCase().includes(query.toLowerCase()))
+
+  const handleSelect = (itemId: string) => {
+    onChange(itemId)
+    setIsOpen(false)
+    setQuery("")
+  }
+
+  return (
+    <div>
+      <label className="mb-2 block text-sm font-semibold">
+        {label} {labelHint && <span className="font-normal text-muted-foreground">{labelHint}</span>}
+      </label>
+
+      {items.length === 0 ? (
+        <p className="rounded-lg border border-dashed border-border p-4 text-sm text-muted-foreground">{emptyText}</p>
+      ) : (
+        <div className="relative">
+          <button
+            type="button"
+            onClick={() => setIsOpen((current) => !current)}
+            className="flex w-full items-center justify-between gap-3 rounded-lg border border-input bg-background px-4 py-3 text-left text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          >
+            <span className={selectedItem ? "text-foreground" : "text-muted-foreground"}>
+              {selectedItem ? `${selectedItem.name} - Rp ${selectedItem.price.toLocaleString("id-ID")}` : placeholder}
+            </span>
+            <span className="shrink-0 text-muted-foreground">v</span>
+          </button>
+
+          {isOpen && (
+            <div className="absolute z-20 mt-2 w-full overflow-hidden rounded-lg border border-border bg-white shadow-lg">
+              <div className="border-b border-border p-2">
+                <input
+                  type="text"
+                  value={query}
+                  onChange={(event) => setQuery(event.target.value)}
+                  placeholder="Cari nama layanan..."
+                  className="w-full rounded-md border border-input px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+                  autoFocus
+                />
+              </div>
+
+              <div className="max-h-64 overflow-y-auto py-1">
+                {optional && value && (
+                  <button
+                    type="button"
+                    onClick={() => handleSelect("")}
+                    className="w-full px-3 py-2 text-left text-sm text-muted-foreground hover:bg-muted"
+                  >
+                    Hapus pilihan
+                  </button>
+                )}
+
+                {filteredItems.map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => handleSelect(item.id)}
+                    className={`w-full px-3 py-2 text-left text-sm hover:bg-muted ${
+                      value === item.id ? "bg-primary/5 text-primary" : "text-foreground"
+                    }`}
+                  >
+                    <span className="block font-medium">{item.name}</span>
+                    <span className="text-xs text-muted-foreground">Rp {item.price.toLocaleString("id-ID")}</span>
+                  </button>
+                ))}
+
+                {filteredItems.length === 0 && (
+                  <p className="px-3 py-4 text-sm text-muted-foreground">Layanan tidak ditemukan.</p>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   )
 }
 
