@@ -394,7 +394,7 @@ export const SERVICES: Service[] = [
     name: "Pet Grooming",
     category: "grooming",
     description: "Perawatan lengkap mulai dari mandi, potong kuku & rambut, hingga styling profesional menggunakan produk premium.",
-    price: 150000,
+    price: 25000-400000,
     image: "/image/Pict 12.jpeg",
     duration: "1.5 - 2 jam",
     rating: 4.9,
@@ -406,33 +406,59 @@ export const SERVICES: Service[] = [
     branchRequired: true,
     requiresPeople: true,
     item: [
-      { id: "dog_dry_puppy", name: "Dry Grooming Dog - Puppy", price: 195000, petType: ["Anjing"], type: "main" },
-      { id: "dog_dry_small", name: "Dry Grooming Dog - Small", price: 230000, petType: ["Anjing"], type: "main" },
-      { id: "dog_dry_medium", name: "Dry Grooming Dog - Medium", price: 260000, petType: ["Anjing"], type: "main" },
-      { id: "dog_dry_large", name: "Dry Grooming Dog - Large", price: 325000, petType: ["Anjing"], type: "main" },
-      { id: "dog_dry_special", name: "Dry Grooming Dog - Special Breed", price: 390000, petType: ["Anjing"], type: "main" },
+      // DOG GROOMING
+      { id: "dog_grooming_puppy", name: "Iconic Dog Grooming - Puppy (< 5 kg)", price: 150000, petType: ["Anjing"], type: "main" },
+      { id: "dog_grooming_small", name: "Iconic Dog Grooming - Small (5 - 10 kg)", price: 175000, petType: ["Anjing"], type: "main" },
+      { id: "dog_grooming_medium", name: "Iconic Dog Grooming - Medium (10 - 20 kg)", price: 200000, petType: ["Anjing"], type: "main" },
+      { id: "dog_grooming_large", name: "Iconic Dog Grooming - Large (20 - 35 kg)", price: 250000, petType: ["Anjing"], type: "main" },
+      { id: "dog_grooming_special_breed", name: "Iconic Dog Grooming - Special Breed (> 35 kg)", price: 300000, petType: ["Anjing"], type: "main" },
 
-      { id: "cat_dry_kitten", name: "Dry Grooming Cat - Kitten", price: 165000, petType: ["Kucing"], type: "main" },
-      { id: "cat_dry_adult", name: "Dry Grooming Cat - Adult", price: 195000, petType: ["Kucing"], type: "main" },
-      { id: "cat_dry_longhair", name: "Dry Grooming Cat - Longhair", price: 250000, petType: ["Kucing"], type: "main" },
+      // CAT GROOMING
+      { id: "cat_grooming_kitten", name: "Iconic Cat Grooming - Kitten (< 3 kg)", price: 125000, petType: ["Kucing"], type: "main" },
+      { id: "cat_grooming_adult", name: "Iconic Cat Grooming - Adult (3 - 5 kg)", price: 150000, petType: ["Kucing"], type: "main" },
+      { id: "cat_grooming_adult_long_hair", name: "Iconic Cat Grooming - Adult Long Hair (3 - 6 kg)", price: 175000, petType: ["Kucing"], type: "main" },
 
-      { id: "gundul_puppy", name: "Haircut Gundul - Puppy SB", price: 145000, petType: ["Anjing"], type: "main" },
-      { id: "gundul_small", name: "Haircut Gundul - Small", price: 190000, petType: ["Anjing"], type: "main" },
-      { id: "gundul_medium", name: "Haircut Gundul - Medium", price: 230000, petType: ["Anjing"], type: "main" },
-      { id: "gundul_large", name: "Haircut Gundul - Large", price: 270000, petType: ["Anjing"], type: "main" },
-      { id: "gundul_special", name: "Haircut Gundul - Special Breed", price: 300000, petType: ["Anjing"], type: "main" },
+      // CAT STYLE GROOMING - LION CUT
+      { id: "cat_lion_cut_kitten", name: "Cat Style Grooming - Lion Cut - Kitten (< 3 kg)", price: 225000, petType: ["Kucing"], type: "main" },
+      { id: "cat_lion_cut_adult", name: "Cat Style Grooming - Lion Cut - Adult (3 - 5 kg)", price: 250000, petType: ["Kucing"], type: "main" },
+      { id: "cat_lion_cut_adult_long_hair", name: "Cat Style Grooming - Lion Cut - Adult Long Hair (3 - 6 kg)", price: 275000, petType: ["Kucing"], type: "main" },
 
-      { id: "style_puppy", name: "Haircut Style - Puppy SB", price: 250000, petType: ["Anjing"], type: "main" },
-      { id: "style_small", name: "Haircut Style - Small", price: 275000, petType: ["Anjing"], type: "main" },
-      { id: "style_medium", name: "Haircut Style - Medium", price: 300000, petType: ["Anjing"], type: "main" },
-      { id: "style_large", name: "Haircut Style - Large", price: 350000, petType: ["Anjing"], type: "main" },
-      { id: "style_special", name: "Haircut Style - Special Breed", price: 400000, petType: ["Anjing"], type: "main" },
+      // PET CARE - BULU KUSUT
+      { id: "petcare_bulu_kusut_puppy", name: "Perawatan Bulu Kusut - Puppy (< 5 kg)", price: 25000, petType: ["Anjing"], type: "additional" },
+      { id: "petcare_bulu_kusut_small", name: "Perawatan Bulu Kusut - Small (5 - 10 kg)", price: 35000, petType: ["Anjing"], type: "additional" },
+      { id: "petcare_bulu_kusut_medium", name: "Perawatan Bulu Kusut - Medium (10 - 20 kg)", price: 45000, petType: ["Anjing"], type: "additional" },
+      { id: "petcare_bulu_kusut_large", name: "Perawatan Bulu Kusut - Large (20 - 35 kg)", price: 55000, petType: ["Anjing"], type: "additional" },
+      { id: "petcare_bulu_kusut_special_breed", name: "Perawatan Bulu Kusut - Special Breed (> 35 kg)", price: 75000, petType: ["Anjing"], type: "additional" },
 
-      { id: "kusut_puppy", name: "Perawatan Bulu Kusut - Puppy SB", price: 25000, petType: ["Anjing"], type: "additional" },
-      { id: "kusut_small", name: "Perawatan Bulu Kusut - Small", price: 35000, petType: ["Anjing", "Kucing"], type: "additional" },
-      { id: "kusut_medium", name: "Perawatan Bulu Kusut - Medium", price: 45000, petType: ["Anjing", "Kucing"], type: "additional" },
-      { id: "kusut_large", name: "Perawatan Bulu Kusut - Large", price: 55000, petType: ["Anjing", "Kucing"], type: "additional" },
-      { id: "kusut_special", name: "Perawatan Bulu Kusut - Special Breed", price: 75000, petType: ["Anjing", "Kucing"], type: "additional" }
+      // HAIRCUT GUNDUL
+      { id: "dog_haircut_gundul_puppy", name: "Haircut Gundul - Puppy (< 5 kg)", price: 145000, petType: ["Anjing"], type: "main" },
+      { id: "dog_haircut_gundul_small", name: "Haircut Gundul - Small (5 - 10 kg)", price: 190000, petType: ["Anjing"], type: "main" },
+      { id: "dog_haircut_gundul_medium", name: "Haircut Gundul - Medium (10 - 20 kg)", price: 230000, petType: ["Anjing"], type: "main" },
+      { id: "dog_haircut_gundul_large", name: "Haircut Gundul - Large (20 - 35 kg)", price: 275000, petType: ["Anjing"], type: "main" },
+      { id: "dog_haircut_gundul_special_breed", name: "Haircut Gundul - Special Breed (> 35 kg)", price: 300000, petType: ["Anjing"], type: "main" },
+
+      // HAIRCUT STYLE
+      { id: "dog_haircut_style_puppy", name: "Haircut Style - Puppy (< 5 kg)", price: 250000, petType: ["Anjing"], type: "main" },
+      { id: "dog_haircut_style_small", name: "Haircut Style - Small (5 - 10 kg)", price: 275000, petType: ["Anjing"], type: "main" },
+      { id: "dog_haircut_style_medium", name: "Haircut Style - Medium (10 - 20 kg)", price: 300000, petType: ["Anjing"], type: "main" },
+      { id: "dog_haircut_style_large", name: "Haircut Style - Large (20 - 35 kg)", price: 350000, petType: ["Anjing"], type: "main" },
+      { id: "dog_haircut_style_special_breed", name: "Haircut Style - Special Breed (> 35 kg)", price: 400000, petType: ["Anjing"], type: "main" },
+
+      // EXTRA SERVICES
+      { id: "extra_deshedding_small", name: "De-shedding (Buang Bulu Rontok) - Small", price: 25000, petType: ["Anjing", "Kucing"], type: "extra" },
+      { id: "extra_deshedding_large", name: "De-shedding (Buang Bulu Rontok) - Large", price: 75000, petType: ["Anjing", "Kucing"], type: "extra" },
+
+      { id: "extra_anal_gland", name: "Pembersihan Anal Gland", price: 25000, petType: ["Anjing", "Kucing"], type: "extra" },
+
+      { id: "extra_ear_cleaning", name: "Pembersihan Telinga (Ear Cleaning)", price: 20000, petType: ["Anjing", "Kucing"], type: "extra" },
+
+      { id: "extra_nail_cut", name: "Potong Kuku Saja", price: 15000, petType: ["Anjing", "Kucing"], type: "extra" },
+
+      { id: "extra_aroma_therapy_min", name: "Aroma Therapy / Parfum - Basic", price: 20000, petType: ["Anjing", "Kucing"], type: "extra" },
+      { id: "extra_aroma_therapy_max", name: "Aroma Therapy / Parfum - Premium", price: 40000, petType: ["Anjing", "Kucing"], type: "extra" },
+
+      { id: "extra_handling_fee_min", name: "Handling Fee (Aggressive Pet) - Basic", price: 50000, petType: ["Anjing", "Kucing"], type: "extra" },
+      { id: "extra_handling_fee_max", name: "Handling Fee (Aggressive Pet) - Heavy", price: 100000, petType: ["Anjing", "Kucing"], type: "extra" }
     ],
     scheduleType: "single"
   },
@@ -442,7 +468,7 @@ export const SERVICES: Service[] = [
     name: "Pet Boarding",
     category: "boarding",
     description: "Layanan penitipan hewan dengan fasilitas nyaman, pemberian makan terjadwal, dan pengawasan 24 jam.",
-    price: 250000,
+    price: 100000-350000,
     image: "/image/Pict 39.jpeg",
     duration: "Per malam",
     rating: 4.8,
@@ -453,9 +479,14 @@ export const SERVICES: Service[] = [
     branchRequired: true,
     item: [
       { id: "small_room_normal", name: "Small Room (Normal)", price: 100000, petType: ["Anjing", "Kucing"], type: "main" },
-      { id: "large_room_normal", name: "Large Room (Normal)", price: 175000, petType: ["Anjing", "Kucing"], type: "main" },
       { id: "small_room_high", name: "Small Room (High Season)", price: 200000, petType: ["Anjing", "Kucing"], type: "main" },
-      { id: "large_room_high", name: "Large Room (High Season)", price: 350000, petType: ["Anjing", "Kucing"], type: "main" }
+
+      { id: "large_room_normal", name: "Large Room (Normal)", price: 175000, petType: ["Anjing"], type: "main" },
+      { id: "large_room_high", name: "Large Room (High Season)", price: 350000, petType: ["Anjing"], type: "main" },
+      
+      { id: "adult_room_normal", name: "Adult Room (Normal)", price: 125000, petType: ["Kucing"], type: "main" },
+      { id: "adult_room_high", name: "Adult Room (High Season)", price: 250000, petType: ["Kucing"], type: "main" }
+      
     ],
     scheduleType: "range"
 
