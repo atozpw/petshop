@@ -1,6 +1,6 @@
 import { BRANCHES as LOCATION_BRANCHES } from "@/lib/branches-data"
 
-export type PetType = "Anjing" | "Kucing"  | "Other"
+export type PetType = "Anjing" | "Kucing" | "Other"
 
 export type ServiceCategory =
   | "grooming"
@@ -143,7 +143,7 @@ export const DOCTORS: BookingPerson[] = [
   {
     name: "Drh. Agung Supriyono",
     specialty: "Exotic Pet, Dermatology, Surgery Expert, Stemcell Therapy, Animal Communicator",
-    specialties: ["Exotic Pet", "Dermatology", "Surgery", "Stemcell Therapy","General Practitioner",],
+    specialties: ["Exotic Pet", "Dermatology", "Surgery", "Stemcell Therapy", "General Practitioner",],
     image: "/doctor/Drh Agung Supriono.png",
     branchId: "jj-pet-house-jakarta",
   },
@@ -199,7 +199,7 @@ export const DOCTORS: BookingPerson[] = [
   {
     name: "Drh. Putu Aditya Pratama Artha Putra, S.KH",
     specialty: "Surgery, Internal Medicine, Vaccine, Dentistry, Urgent Care",
-    specialties: ["Surgery", "Internal Medicine", "Vaccination", "Dentistry", "Urgent Care","General Practitioner",],
+    specialties: ["Surgery", "Internal Medicine", "Vaccination", "Dentistry", "Urgent Care", "General Practitioner",],
     image: "/doctor/Aditya Pratama.png",
     branchId: "jj-pet-house-balian",
   },
@@ -245,14 +245,14 @@ export const DOCTORS: BookingPerson[] = [
     image: "/doctor/Miranti Rahma Yunita.png",
     branchId: "jj-pet-house-udayana",
   },
-   {
+  {
     name: "Drh. Devi",
     specialty: "Internal Medicine",
     specialties: ["internal medicine"],
     image: "/doctor/Drh. Devi - Internis.jpeg",
     branchId: "jj-pet-house-balian",
   },
-   {
+  {
     name: "Drh. Tuis",
     specialty: "Surgery",
     specialties: ["Surgery"],
@@ -260,29 +260,15 @@ export const DOCTORS: BookingPerson[] = [
     branchId: "jj-pet-house-balian",
   },
 
-  
+
 ]
 
 export const GROOMERS: BookingPerson[] = [
-  {
-    name: "Rama",
-    specialty: "Dog & Cat Grooming",
-    specialties: ["Grooming"],
-    image: "/groomer/rama.png",
-    branchId: "jj-pet-house-jakarta",
-  },
   {
     name: "Fallen",
     specialty: "Dog & Cat Grooming",
     specialties: ["Grooming"],
     image: "/groomer/fallen.png",
-    branchId: "jj-pet-house-jakarta",
-  },
-  {
-    name: "Ama",
-    specialty: "Dog & Cat Grooming",
-    specialties: ["Grooming"],
-    image: "/groomer/Ama-pusat.jpeg",
     branchId: "jj-pet-house-jakarta",
   },
 
@@ -329,14 +315,14 @@ export const GROOMERS: BookingPerson[] = [
   },
 
   //dalung
-   {
+  {
     name: "Kadek Heri Wantika",
     specialty: "Dog & Cat Grooming",
     specialties: ["Grooming"],
     image: "/groomer/Kadek Heri Wantika-dalung.jpeg",
     branchId: "jj-pet-dalung",
   },
-  
+
   //Balian
   {
     name: "Alin Sigalingging",
@@ -366,7 +352,14 @@ export const GROOMERS: BookingPerson[] = [
     image: "/groomer/Robi Benu-Balian.jpeg",
     branchId: "jj-pet-house-balian",
   },
-  
+  {
+    name: "Ama",
+    specialty: "Dog & Cat Grooming",
+    specialties: ["Grooming"],
+    image: "/groomer/Ama-pusat.jpeg",
+    branchId: "jj-pet-house-balian",
+  },
+
   //kedewatan
   {
     name: "Rensa",
@@ -384,8 +377,8 @@ export const GROOMERS: BookingPerson[] = [
   //   image: "/groomer/Wayan Djobi Djoba - ayani.jpeg",
   //   branchId: "jj-pet-house-ayani",
   // },
- 
-  
+
+
 ]
 
 export const SERVICES: Service[] = [
