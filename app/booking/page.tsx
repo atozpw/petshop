@@ -356,9 +356,8 @@ Rp ${totalPrice.toLocaleString("id-ID")}
               {visibleSteps.map((item, index) => (
                 <div
                   key={item}
-                  className={`h-2 flex-1 rounded-full transition-colors ${
-                    index <= displayStep - 1 ? "bg-primary" : "bg-muted"
-                  }`}
+                  className={`h-2 flex-1 rounded-full transition-colors ${index <= displayStep - 1 ? "bg-primary" : "bg-muted"
+                    }`}
                 />
               ))}
             </div>
@@ -373,9 +372,8 @@ Rp ${totalPrice.toLocaleString("id-ID")}
                         key={item.id}
                         type="button"
                         onClick={() => handleServiceSelect(item.id)}
-                        className={`rounded-lg border-2 p-4 text-left transition-all ${
-                          selectedService === item.id ? "border-primary bg-primary/5" : "border-border hover:border-primary"
-                        }`}
+                        className={`rounded-lg border-2 p-4 text-left transition-all ${selectedService === item.id ? "border-primary bg-primary/5" : "border-border hover:border-primary"
+                          }`}
                       >
                         <h3 className="font-semibold text-foreground">{item.name}</h3>
                         <p className="mt-1 text-sm text-muted-foreground">{item.description}</p>
@@ -404,9 +402,8 @@ Rp ${totalPrice.toLocaleString("id-ID")}
                           key={city}
                           type="button"
                           onClick={() => handleCitySelect(city)}
-                          className={`rounded-lg border p-3 font-semibold transition ${
-                            selectedCity === city ? "border-primary bg-primary text-white" : "border-border hover:border-primary"
-                          }`}
+                          className={`rounded-lg border p-3 font-semibold transition ${selectedCity === city ? "border-primary bg-primary text-white" : "border-border hover:border-primary"
+                            }`}
                         >
                           {city}
                         </button>
@@ -465,9 +462,8 @@ Rp ${totalPrice.toLocaleString("id-ID")}
                             key={mode}
                             type="button"
                             onClick={() => setServiceMode(mode)}
-                            className={`rounded-lg border px-4 py-2 font-semibold transition ${
-                              serviceMode === mode ? "border-primary bg-primary text-white" : "border-border hover:border-primary"
-                            }`}
+                            className={`rounded-lg border px-4 py-2 font-semibold transition ${serviceMode === mode ? "border-primary bg-primary text-white" : "border-border hover:border-primary"
+                              }`}
                           >
                             {mode}
                           </button>
@@ -523,13 +519,12 @@ Rp ${totalPrice.toLocaleString("id-ID")}
                                 type="button"
                                 onClick={() => !isDisabled && setSelectedTime(slot.time)}
                                 disabled={isDisabled}
-                                className={`rounded-lg border p-3 font-semibold transition-all ${
-                                  selectedTime === slot.time
-                                    ? "border-primary bg-primary text-white"
-                                    : !isDisabled
-                                      ? "border-border bg-white hover:border-primary"
-                                      : "cursor-not-allowed border-border bg-muted text-muted-foreground opacity-60"
-                                }`}
+                                className={`rounded-lg border p-3 font-semibold transition-all ${selectedTime === slot.time
+                                  ? "border-primary bg-primary text-white"
+                                  : !isDisabled
+                                    ? "border-border bg-white hover:border-primary"
+                                    : "cursor-not-allowed border-border bg-muted text-muted-foreground opacity-60"
+                                  }`}
                               >
                                 {slot.time}
                               </button>
@@ -613,12 +608,12 @@ Rp ${totalPrice.toLocaleString("id-ID")}
                       />
                     ))}
                     <button
-                        type="button"
-                        onClick={addPet}
-                        className="w-full rounded-xl border-2 border-dashed border-primary px-4 py-3 text-sm font-semibold text-primary transition hover:bg-primary/5"
-                      >
-                        + Tambah Hewan Lagi
-                      </button>
+                      type="button"
+                      onClick={addPet}
+                      className="w-full rounded-xl border-2 border-dashed border-primary px-4 py-3 text-sm font-semibold text-primary transition hover:bg-primary/5"
+                    >
+                      + Tambah Hewan Lagi
+                    </button>
                   </div>
                 </div>
               )}
@@ -771,9 +766,8 @@ function PeopleStep({
               key={person.name}
               type="button"
               onClick={() => onSelect(person.name)}
-              className={`rounded-lg border p-3 text-left transition ${
-                isSelected ? "border-primary bg-primary/5" : "border-border hover:border-primary"
-              }`}
+              className={`rounded-lg border p-3 text-left transition ${isSelected ? "border-primary bg-primary/5" : "border-border hover:border-primary"
+                }`}
             >
               <img src={person.image} alt={person.name} className="mb-2 h-28 w-full rounded bg-white object-contain" />
               <p className="text-sm font-semibold leading-tight">{person.name}</p>
@@ -935,7 +929,7 @@ function BranchDropdown({
       <button
         type="button"
         onClick={() => setIsOpen((current) => !current)}
-        className="flex w-full items-center justify-between gap-3 rounded-lg border border-input bg-background px-4 py-3 text-left text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+        className="flex w-full items-center justify-between gap-3 rounded-lg border border-input px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-primary"
       >
         <span className={selectedBranch ? "text-foreground" : "text-muted-foreground"}>
           {selectedBranch ? selectedBranch.name : "Pilih Cabang"}
@@ -962,9 +956,8 @@ function BranchDropdown({
                 key={branch.id}
                 type="button"
                 onClick={() => handleSelect(branch.id)}
-                className={`w-full px-3 py-2 text-left text-sm hover:bg-muted ${
-                  value === branch.id ? "bg-primary/5 text-primary" : "text-foreground"
-                }`}
+                className={`w-full px-3 py-2 text-left text-sm hover:bg-muted ${value === branch.id ? "bg-primary/5 text-primary" : "text-foreground"
+                  }`}
               >
                 <span className="block font-medium">{branch.name}</span>
                 <span className="line-clamp-2 text-xs text-muted-foreground">{branch.address}</span>
@@ -1025,7 +1018,7 @@ function ServiceItemDropdown({
           <button
             type="button"
             onClick={() => setIsOpen((current) => !current)}
-            className="flex w-full items-center justify-between gap-3 rounded-lg border border-input bg-background px-4 py-3 text-left text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            className="flex w-full items-center justify-between gap-3 rounded-lg border border-input px-4 py-3 text-left focus:outline-none focus:ring-2 focus:ring-primary"
           >
             <span className={selectedItem ? "text-foreground" : "text-muted-foreground"}>
               {selectedItem ? `${selectedItem.name} - Rp ${selectedItem.price.toLocaleString("id-ID")}` : placeholder}
@@ -1062,9 +1055,8 @@ function ServiceItemDropdown({
                     key={item.id}
                     type="button"
                     onClick={() => handleSelect(item.id)}
-                    className={`w-full px-3 py-2 text-left text-sm hover:bg-muted ${
-                      value === item.id ? "bg-primary/5 text-primary" : "text-foreground"
-                    }`}
+                    className={`w-full px-3 py-2 text-left text-sm hover:bg-muted ${value === item.id ? "bg-primary/5 text-primary" : "text-foreground"
+                      }`}
                   >
                     <span className="block font-medium">{item.name}</span>
                     <span className="text-xs text-muted-foreground">Rp {item.price.toLocaleString("id-ID")}</span>
